@@ -45,8 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AntiClickjackingMiddleware.cs" />
+    <Compile Include="Delegates.cs" />
     <Compile Include="HeaderConstants.cs" />
+    <Compile Include="OwinEnvironmentExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rfc6454Utility.cs" />
+    <Compile Include="StringExtension.cs" />
+    <Compile Include="XFrameOption.cs" />
     <Compile Include="XssProtectionHeaderMiddleware.cs" />
   </ItemGroup>
   <ItemGroup>

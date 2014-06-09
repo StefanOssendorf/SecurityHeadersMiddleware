@@ -1,14 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 
 namespace OwinContrib.Security {
-    public delegate Task AppFunc(IDictionary<string, object> env);
-
-    public delegate AppFunc MidFunc(AppFunc next);
-
-    public delegate void BuildFunc(MidFunc builder);
-
     public static class XssProtectionHeaderMiddleware {
         public static BuildFunc XssProtectionHeader(this BuildFunc builder) {
             builder(XssProtectionHeader());
@@ -18,7 +10,7 @@ namespace OwinContrib.Security {
             return
                 next =>
                     env => {
-                        var context = new OwinContext(env);
+                        var context = env.AsContext();
                         context
                             .Response
                             .OnSendingHeaders(resp => { ((IOwinResponse)resp).Headers[HeaderConstants.XssProtection] = "1; mode=block"; }, context.Response);

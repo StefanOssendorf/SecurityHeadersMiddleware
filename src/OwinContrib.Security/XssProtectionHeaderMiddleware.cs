@@ -10,10 +10,9 @@ namespace OwinContrib.Security {
             return
                 next =>
                     env => {
-                        var context = env.AsContext();
-                        context
-                            .Response
-                            .OnSendingHeaders(resp => { ((IOwinResponse)resp).Headers[HeaderConstants.XssProtection] = "1; mode=block"; }, context.Response);
+                        var response = env.AsContext().Response;
+                        response
+                            .OnSendingHeaders(resp => { ((IOwinResponse)resp).Headers[HeaderConstants.XssProtection] = "1; mode=block"; }, response);
                         return next(env);
                     };
         }

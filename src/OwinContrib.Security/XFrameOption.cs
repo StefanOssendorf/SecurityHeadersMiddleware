@@ -1,6 +1,6 @@
 ﻿namespace OwinContrib.Security {
     public enum XFrameOption {
-        Deny,
-        SameOrigin
+        Deny = 1,
+        SameOrigin = 2
     }
 }

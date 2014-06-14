@@ -3,6 +3,7 @@ using System.Net.Http;
 using Machine.Specifications;
 using Microsoft.Owin.Testing;
 using Owin;
+using OwinContrib.Security.Infrastructure;
 
 namespace OwinContrib.Security.Tests {
     [Subject(typeof(XssProtectionHeaderMiddleware))]

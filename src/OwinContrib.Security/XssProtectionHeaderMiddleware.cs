@@ -1,11 +1,16 @@
-﻿using Microsoft.Owin;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Owin;
+using OwinContrib.Security.Infrastructure;
 
 namespace OwinContrib.Security {
+    using MidFunc = Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>;    
     public static class XssProtectionHeaderMiddleware {
-        public static BuildFunc XssProtectionHeader(this BuildFunc builder) {
-            builder(XssProtectionHeader());
-            return builder;
-        }
+        /// <summary>
+        /// Adds the "X-Xss-Protection" header with value "1; mode=block".
+        /// </summary>
+        /// <returns></returns>
         public static MidFunc XssProtectionHeader() {
             return
                 next =>

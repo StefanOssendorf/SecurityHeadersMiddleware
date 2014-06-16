@@ -70,7 +70,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OwinContrib.Security\OwinContrib.SecurityHeaders.csproj">
+    <ProjectReference Include="..\OwinContrib.SecurityHeaders\OwinContrib.SecurityHeaders.csproj">
       <Project>{53953109-6B63-4A49-BDA3-EB78E1506FA9}</Project>
       <Name>OwinContrib.SecurityHeaders</Name>
     </ProjectReference>

@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace OwinContrib.Security {
-    using AppFunc = Func<IDictionary<string, object>, Task>;
-    using MidFunc = Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>;
-    using BuildFunc = Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>;
-    
+namespace OwinContrib.SecurityHeaders {
     public static class SecurityMiddleware {
         #region AntiClickjacking
         /// <summary>
@@ -14,7 +10,7 @@ namespace OwinContrib.Security {
         /// </summary>
         /// <param name="builder"></param>
         /// <returns></returns>
-        public static BuildFunc AntiClickjackingHeader(this BuildFunc builder) {
+        public static Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> AntiClickjackingHeader(this Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> builder) {
             builder(AntiClickjackingMiddleware.AntiClickjackingHeader(XFrameOption.Deny));
             return builder;
         }
@@ -24,7 +20,7 @@ namespace OwinContrib.Security {
         /// <param name="builder"></param>
         /// <param name="option">Chosen value.</param>
         /// <returns></returns>
-        public static BuildFunc AntiClickjackingHeader(this BuildFunc builder, XFrameOption option) {
+        public static Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> AntiClickjackingHeader(this Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> builder, XFrameOption option) {
             builder(AntiClickjackingMiddleware.AntiClickjackingHeader(option));
             return builder;
         }
@@ -34,7 +30,7 @@ namespace OwinContrib.Security {
         /// <param name="builder"></param>
         /// <param name="origins"></param>
         /// <returns></returns>
-        public static BuildFunc AntiClickjackingHeader(this BuildFunc builder, params string[] origins) {
+        public static Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> AntiClickjackingHeader(this Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> builder, params string[] origins) {
             builder(AntiClickjackingMiddleware.AntiClickjackingHeader(origins));
             return builder;
         }
@@ -44,7 +40,7 @@ namespace OwinContrib.Security {
         /// <param name="builder"></param>
         /// <param name="origins"></param>
         /// <returns></returns>
-        public static BuildFunc AntiClickjackingHeader(this BuildFunc builder, params Uri[] origins) {
+        public static Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> AntiClickjackingHeader(this Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> builder, params Uri[] origins) {
             builder(AntiClickjackingMiddleware.AntiClickjackingHeader(origins));
             return builder;
         }
@@ -55,7 +51,7 @@ namespace OwinContrib.Security {
         /// </summary>
         /// <param name="builder"></param>
         /// <returns></returns>
-        public static BuildFunc XssProtectionHeader(this BuildFunc builder) {
+        public static Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> XssProtectionHeader(this Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> builder) {
             builder(XssProtectionHeaderMiddleware.XssProtectionHeader());
             return builder;
         }

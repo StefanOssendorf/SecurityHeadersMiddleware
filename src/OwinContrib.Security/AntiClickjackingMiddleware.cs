@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading.Tasks;
-using OwinContrib.Security.Infrastructure;
+using OwinContrib.SecurityHeaders.Infrastructure;
 
-namespace OwinContrib.Security {
-    using MidFunc = Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>;
+namespace OwinContrib.SecurityHeaders {
     public static class AntiClickjackingMiddleware {
         /// <summary>
         /// Adds the "X-Frame-Options" header with given option.
         /// </summary>
         /// <param name="option"></param>
         /// <returns></returns>
-        public static MidFunc AntiClickjackingHeader(XFrameOption option) {
+        public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> AntiClickjackingHeader(XFrameOption option) {
             Contract.Requires<ArgumentOutOfRangeException>(option == XFrameOption.Deny || option == XFrameOption.SameOrigin);
             return AntiClickjackingHeader((int)option, new Uri[0]);
         }
@@ -22,7 +21,7 @@ namespace OwinContrib.Security {
         /// </summary>
         /// <param name="origins"></param>
         /// <returns></returns>
-        public static MidFunc AntiClickjackingHeader(params string[] origins) {
+        public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> AntiClickjackingHeader(params string[] origins) {
             Contract.Requires<ArgumentNullException>(origins != null);
             Contract.Requires<ArgumentOutOfRangeException>(origins.Length > 0);
             var uriOrigins = origins.Where(o => !string.IsNullOrWhiteSpace(o)).Select(o => new Uri(o)).ToArray();
@@ -33,13 +32,13 @@ namespace OwinContrib.Security {
         /// </summary>
         /// <param name="origins"></param>
         /// <returns></returns>
-        public static MidFunc AntiClickjackingHeader(params Uri[] origins) {
+        public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> AntiClickjackingHeader(params Uri[] origins) {
             Contract.Requires<ArgumentNullException>(origins != null);
             Contract.Requires<ArgumentOutOfRangeException>(origins.Length > 0);
             return AntiClickjackingHeader(3, origins);
         }
 
-        internal static MidFunc AntiClickjackingHeader(int option, params Uri[] origins) {
+        internal static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> AntiClickjackingHeader(int option, params Uri[] origins) {
             return next =>
                 env => {
                     var context = env.AsContext();

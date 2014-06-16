@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Machine.Specifications;
 using Microsoft.Owin.Testing;
 using Owin;
-using OwinContrib.Security.Infrastructure;
+using OwinContrib.SecurityHeaders.Infrastructure;
 
-namespace OwinContrib.Security.Tests {
+namespace OwinContrib.SecurityHeaders.Tests {
     public abstract class AntiClickjackingSpecBase {
         protected static HttpClient Subject;
         protected static HttpResponseMessage Response;

@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Owin;
 
-namespace OwinContrib.Security.Tests {
-    using BuildFunc = Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>;
+namespace OwinContrib.SecurityHeaders.Tests {
     internal static class AppBuilderExtensions {
-        internal static BuildFunc Use(this IAppBuilder builder) {
+        internal static Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> Use(this IAppBuilder builder) {
             return middleware => builder.Use(middleware);
         }
 
-        internal static IAppBuilder Use(this BuildFunc middleware, IAppBuilder builder) {
+        internal static IAppBuilder Use(this Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> middleware, IAppBuilder builder) {
             return builder;
         }
     }

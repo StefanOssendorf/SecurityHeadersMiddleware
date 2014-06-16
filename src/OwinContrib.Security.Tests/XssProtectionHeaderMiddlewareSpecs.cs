@@ -3,9 +3,9 @@ using System.Net.Http;
 using Machine.Specifications;
 using Microsoft.Owin.Testing;
 using Owin;
-using OwinContrib.Security.Infrastructure;
+using OwinContrib.SecurityHeaders.Infrastructure;
 
-namespace OwinContrib.Security.Tests {
+namespace OwinContrib.SecurityHeaders.Tests {
     [Subject(typeof(XssProtectionHeaderMiddleware))]
     public class XssProtectionHeaderMiddlewareSpecs {
         private static TestServer Server;

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwinContrib.Security", "OwinContrib.Security\OwinContrib.Security.csproj", "{53953109-6B63-4A49-BDA3-EB78E1506FA9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwinContrib.SecurityHeaders", "OwinContrib.Security\OwinContrib.SecurityHeaders.csproj", "{53953109-6B63-4A49-BDA3-EB78E1506FA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwinContrib.Security.Tests", "OwinContrib.Security.Tests\OwinContrib.Security.Tests.csproj", "{753D4EEA-13E5-429B-93AC-4A7E7A1FACD3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwinContrib.SecurityHeaders.Tests", "OwinContrib.Security.Tests\OwinContrib.SecurityHeaders.Tests.csproj", "{753D4EEA-13E5-429B-93AC-4A7E7A1FACD3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{E768EE25-8180-4CAA-88F4-B9C8A5E16E66}"
 	ProjectSection(SolutionItems) = preProject

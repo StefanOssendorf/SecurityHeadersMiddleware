@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace OwinContrib.SecurityHeaders {
-    public static class SecurityMiddleware {
+    public static class SecurityHeaderMiddleware {
         #region AntiClickjacking
         /// <summary>
         /// Adds the "X-Frame-Options" header with value DENY.
@@ -53,6 +53,12 @@ namespace OwinContrib.SecurityHeaders {
         /// <returns></returns>
         public static Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> XssProtectionHeader(this Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> builder) {
             builder(XssProtectionHeaderMiddleware.XssProtectionHeader());
+            return builder;
+        }
+        #endregion
+        #region Strict Transport Security
+        public static Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> StrictTransportSecurity(this Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> builder) {
+            builder(StrictTransportSecurityMiddleware.StrictTransportSecurityHeader(new StrictTransportSecurityOptions()));
             return builder;
         }
         #endregion

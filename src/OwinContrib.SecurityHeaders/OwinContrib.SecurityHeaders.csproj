@@ -88,7 +88,9 @@
     <Compile Include="Infrastructure\StringExtension.cs" />
     <Compile Include="OwinEnvironmentExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SecurityMiddleware.cs" />
+    <Compile Include="SecurityHeaderMiddleware.cs" />
+    <Compile Include="StrictTransportSecurityMiddleware.cs" />
+    <Compile Include="StrictTransportSecurityOptions.cs" />
     <Compile Include="XFrameOption.cs" />
     <Compile Include="XssProtectionHeaderMiddleware.cs" />
   </ItemGroup>

@@ -10,7 +10,10 @@ namespace OwinContrib.SecurityHeaders.Tests {
             return source.Headers.GetValues(HeaderConstants.XFrameOptions).First();
         }
         public static IEnumerable<string> StsHeader(this HttpResponseMessage source) {
-            return source.Headers.GetValues(HeaderConstants.StrictTransportSecurity).Single().Split(new []{';'} , StringSplitOptions.RemoveEmptyEntries).Select(value => value.Trim());
+            return source.Headers.GetValues(HeaderConstants.StrictTransportSecurity).Single().Split(new[] {';'}, StringSplitOptions.RemoveEmptyEntries).Select(value => value.Trim());
+        }
+        public static string XContentTypeOptions(this HttpResponseMessage source) {
+            return source.Headers.GetValues(HeaderConstants.XContentTypeOptions).Single();
         }
     }
 }

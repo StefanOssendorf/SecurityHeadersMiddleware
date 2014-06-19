@@ -7,20 +7,21 @@ using OwinContrib.SecurityHeaders.Infrastructure;
 namespace OwinContrib.SecurityHeaders {
     using AppFunc = Func<IDictionary<string, object>, Task>;
     using MidFunc = Func<Func<IDictionary<string, object>, Task>,Func<IDictionary<string, object>, Task>>;
-    public static class StrictTransportSecurityMiddleware {
+    public static class StrictTransportSecurityHeaderMiddleware {
         public static MidFunc StrictTransportSecurityHeader(StrictTransportSecurityOptions options) {
             return next =>
                 env => {
                     var context = env.AsContext();
+                    var request = context.Request;
 
-                    if (RedirectToSecureTransport(options, context.Request)) {
+                    if (RedirectToSecureTransport(options, request)) {
                         SetResponseForRedirect(context, options);
-                        return Task.FromResult(true);
+                        return Task.FromResult(0);
                     }
 
                     // Only over secure transport (http://tools.ietf.org/html/rfc6797#section-7.2)
                     // Quotation: "An HSTS Host MUST NOT include the STS header field in HTTP responses conveyed over non-secure transport."
-                    if (context.Request.IsSecure) {
+                    if (request.IsSecure) {
                         var response = context.Response;
                         var state = new {
                             Options = options,
@@ -39,14 +40,12 @@ namespace OwinContrib.SecurityHeaders {
             response.ReasonPhrase = options.RedirectReasonPhrase(301);
             response.Headers[HeaderConstants.Location] = options.RedirectUriBuilder(context.Request.Uri);
         }
-
         private static void ApplyHeader(dynamic obj) {
             var options = (StrictTransportSecurityOptions)obj.Options;
             var response = (OwinResponse)obj.Response;
 
             response.Headers[HeaderConstants.StrictTransportSecurity] = ConstructHeaderValue(options);
         }
-
         private static string ConstructHeaderValue(StrictTransportSecurityOptions options) {
             var age = MaxAge(options.MaxAge);
             var subDomains = IncludeSubDomains(options.IncludeSubDomains);

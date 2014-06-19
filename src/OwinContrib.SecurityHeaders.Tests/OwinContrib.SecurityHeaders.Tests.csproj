@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="AntiClickJackingMiddlewareSpecs.cs" />
     <Compile Include="AppBuilderExtensions.cs" />
+    <Compile Include="ContentTypeOptionsMiddleware.cs" />
     <Compile Include="HeaderHelper.cs" />
     <Compile Include="OwinEnvironmentSpecBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

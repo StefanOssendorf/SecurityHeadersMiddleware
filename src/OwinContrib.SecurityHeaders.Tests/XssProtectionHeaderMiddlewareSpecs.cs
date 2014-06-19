@@ -7,7 +7,6 @@ using OwinContrib.SecurityHeaders.Infrastructure;
 namespace OwinContrib.SecurityHeaders.Tests {
     [Subject(typeof(XssProtectionHeaderMiddleware))]
     public class XssProtectionHeaderMiddlewareSpecs : OwinEnvironmentSpecBase {
-
         private Establish context = () => Client = TestServer.Create(app => {
             app.Use().XssProtectionHeader();
             app.Run(async context => await context.Response.WriteAsync("All fine"));

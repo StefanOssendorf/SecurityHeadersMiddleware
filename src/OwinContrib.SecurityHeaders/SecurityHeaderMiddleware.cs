@@ -58,7 +58,16 @@ namespace OwinContrib.SecurityHeaders {
         #endregion
         #region Strict Transport Security
         public static Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> StrictTransportSecurity(this Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> builder) {
-            builder(StrictTransportSecurityMiddleware.StrictTransportSecurityHeader(new StrictTransportSecurityOptions()));
+            return StrictTransportSecurity(builder, new StrictTransportSecurityOptions());
+        }
+        public static Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> StrictTransportSecurity(this Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> builder, StrictTransportSecurityOptions options) {
+            builder(StrictTransportSecurityHeaderMiddleware.StrictTransportSecurityHeader(options));
+            return builder;
+        }
+        #endregion 
+        #region Content Type Options
+        public static Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> ContentTypeOptions(this Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> builder) {
+            builder(ContenTypeOptionsHeaderMiddleware.ContentTypeOptionsHeader());
             return builder;
         }
         #endregion

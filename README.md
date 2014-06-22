@@ -15,10 +15,10 @@ Middlewares to set useful security-related HTTP headers in your OWIN application
 
 #### Using
 See the tests as examples of usage:
-- Strict-Transport-Security
-- X-Frame-Options
-- X-XSS-Protection
-- X-Content-Type-Options 
+- [Strict-Transport-Security](https://github.com/StefanOssendorf/OwinContrib.SecurityHeaders/blob/master/src/OwinContrib.SecurityHeaders.Tests/StrictTransportSecurityMiddlewareSpecs.cs)
+- [X-Frame-Options](https://github.com/StefanOssendorf/OwinContrib.SecurityHeaders/blob/master/src/OwinContrib.SecurityHeaders.Tests/AntiClickJackingMiddlewareSpecs.cs)
+- [X-XSS-Protection](https://github.com/StefanOssendorf/OwinContrib.SecurityHeaders/blob/master/src/OwinContrib.SecurityHeaders.Tests/XssProtectionHeaderMiddlewareSpecs.cs)
+- [X-Content-Type-Options](https://github.com/StefanOssendorf/OwinContrib.SecurityHeaders/blob/master/src/OwinContrib.SecurityHeaders.Tests/ContentTypeOptionsMiddleware.cs) 
 
 #### Utilities
 [MarkdownPad 2](http://markdownpad.com/ "MarkdownPad 2")

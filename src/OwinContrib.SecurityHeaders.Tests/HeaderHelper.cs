@@ -15,5 +15,9 @@ namespace OwinContrib.SecurityHeaders.Tests {
         public static string XContentTypeOptions(this HttpResponseMessage source) {
             return source.Headers.GetValues(HeaderConstants.XContentTypeOptions).Single();
         }
+
+        public static string XssProtection(this HttpResponseMessage soruce) {
+            return soruce.Headers.GetValues(HeaderConstants.XssProtection).First();
+        }
     }
 }

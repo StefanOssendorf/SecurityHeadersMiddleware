@@ -52,7 +52,10 @@ namespace OwinContrib.SecurityHeaders {
         /// <param name="builder"></param>
         /// <returns></returns>
         public static Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> XssProtectionHeader(this Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> builder) {
-            builder(XssProtectionHeaderMiddleware.XssProtectionHeader());
+            return XssProtectionHeader(builder, false);
+        }
+        public static Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> XssProtectionHeader(this Action<Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>> builder, bool disabled) {
+            builder(XssProtectionHeaderMiddleware.XssProtectionHeader(disabled));
             return builder;
         }
         #endregion

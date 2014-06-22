@@ -26,7 +26,7 @@ namespace OwinContrib.SecurityHeaders.Tests {
     internal static class XssClientHelper {
         public static HttpClient CreateClient(bool disabled) {
             return TestServer.Create(app => {
-                app.Use().XssProtectionHeader(disabled);
+                app.UseOwin().XssProtectionHeader(disabled);
                 app.Run(async context => await context.Response.WriteAsync("All fine"));
             }).HttpClient;
         }

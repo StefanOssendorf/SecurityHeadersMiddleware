@@ -5,15 +5,14 @@ using Microsoft.Owin;
 using OwinContrib.SecurityHeaders.Infrastructure;
 
 namespace OwinContrib.SecurityHeaders {
-    using AppFunc = Func<IDictionary<string, object>, Task>;
-    using MidFunc = Func<Func<IDictionary<string, object>, Task>,Func<IDictionary<string, object>, Task>>;
-    public static class StrictTransportSecurityHeaderMiddleware {
+    using MidFunc = Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>;
+
+    internal static class StrictTransportSecurityHeaderMiddleware {
         public static MidFunc StrictTransportSecurityHeader(StrictTransportSecurityOptions options) {
             return next =>
                 env => {
                     var context = env.AsContext();
                     var request = context.Request;
-
                     if (RedirectToSecureTransport(options, request)) {
                         SetResponseForRedirect(context, options);
                         return Task.FromResult(0);
@@ -27,10 +26,8 @@ namespace OwinContrib.SecurityHeaders {
                             Options = options,
                             Response = response
                         };
-
                         response.OnSendingHeaders(ApplyHeader, state);
                     }
-                    
                     return next(env);
                 };
         }
@@ -43,18 +40,12 @@ namespace OwinContrib.SecurityHeaders {
         private static void ApplyHeader(dynamic obj) {
             var options = (StrictTransportSecurityOptions)obj.Options;
             var response = (OwinResponse)obj.Response;
-
             response.Headers[HeaderConstants.StrictTransportSecurity] = ConstructHeaderValue(options);
         }
         private static string ConstructHeaderValue(StrictTransportSecurityOptions options) {
             var age = MaxAge(options.MaxAge);
             var subDomains = IncludeSubDomains(options.IncludeSubDomains);
-
-            if (subDomains == "") {
-                return age;
-            }
-
-            return "{0}; {1}".FormatWith(age, subDomains);
+            return "{0}{1}".FormatWith(age, subDomains);
         }
 
         #region [ Helper ]
@@ -62,7 +53,7 @@ namespace OwinContrib.SecurityHeaders {
             return "max-age={0}".FormatWith(seconds);
         }
         private static string IncludeSubDomains(bool includeSubDomains) {
-            return includeSubDomains ? "includeSubDomains" : "";
+            return includeSubDomains ? "; includeSubDomains" : "";
         }
         private static bool RedirectToSecureTransport(StrictTransportSecurityOptions options, IOwinRequest request) {
             return options.RedirectToSecureTransport && !request.IsSecure;

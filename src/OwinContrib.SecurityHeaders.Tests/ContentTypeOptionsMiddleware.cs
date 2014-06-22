@@ -18,7 +18,7 @@ namespace OwinContrib.SecurityHeaders.Tests {
     internal static class CtoClientHelper {
         public static HttpClient Create() {
             return TestServer.Create(builder => {
-                builder.Use().ContentTypeOptions();
+                builder.UseOwin().ContentTypeOptions();
                 builder
                     .Use((context, next) => {
                         context.Response.StatusCode = 200;

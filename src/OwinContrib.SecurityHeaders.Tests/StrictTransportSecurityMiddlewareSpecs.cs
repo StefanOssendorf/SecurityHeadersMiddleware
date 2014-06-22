@@ -69,7 +69,7 @@ namespace OwinContrib.SecurityHeaders.Tests {
         }
         public static HttpClient Create(StrictTransportSecurityOptions strictTransportSecurityOptions) {
             return TestServer.Create(builder => {
-                builder.Use().StrictTransportSecurity(strictTransportSecurityOptions);
+                builder.UseOwin().StrictTransportSecurity(strictTransportSecurityOptions);
                 builder.Use((context, next) => {
                     context.Response.StatusCode = 200;
                     context.Response.ReasonPhrase = "OK";

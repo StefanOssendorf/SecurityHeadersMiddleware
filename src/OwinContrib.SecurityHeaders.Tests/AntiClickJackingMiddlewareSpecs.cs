@@ -56,16 +56,16 @@ namespace OwinContrib.SecurityHeaders.Tests {
 
     internal static class ClientHelper {
         public static HttpClient CreateClient() {
-            return CreateClient(b => b.Use().AntiClickjackingHeader());
+            return CreateClient(b => b.UseOwin().AntiClickjackingHeader());
         }
         public static HttpClient CreateClient(XFrameOption option) {
-            return CreateClient(b => b.Use().AntiClickjackingHeader(option));
+            return CreateClient(b => b.UseOwin().AntiClickjackingHeader(option));
         }
         public static HttpClient CreateClient(params string[] origins) {
-            return CreateClient(b => b.Use().AntiClickjackingHeader(origins));
+            return CreateClient(b => b.UseOwin().AntiClickjackingHeader(origins));
         }
         public static HttpClient CreateClient(params Uri[] origins) {
-            return CreateClient(b => b.Use().AntiClickjackingHeader(origins));
+            return CreateClient(b => b.UseOwin().AntiClickjackingHeader(origins));
         }
         private static HttpClient CreateClient(Action<IAppBuilder> registerAntiClickjackingMiddleware) {
             return TestServer.Create(builder => {

@@ -1,44 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading.Tasks;
 using OwinContrib.SecurityHeaders.Infrastructure;
 
 namespace OwinContrib.SecurityHeaders {
-    public static class AntiClickjackingMiddleware {
-        /// <summary>
-        /// Adds the "X-Frame-Options" header with given option.
-        /// </summary>
-        /// <param name="option"></param>
-        /// <returns></returns>
-        public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> AntiClickjackingHeader(XFrameOption option) {
-            Contract.Requires<ArgumentOutOfRangeException>(option == XFrameOption.Deny || option == XFrameOption.SameOrigin);
+    using MidFunc = Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>;
+
+    internal static class AntiClickjackingMiddleware {
+        public static MidFunc AntiClickjackingHeader(XFrameOption option) {
             return AntiClickjackingHeader((int)option, new Uri[0]);
         }
-        /// <summary>
-        /// Adds the "X-Frame-Options" with DENY when the request uri is not provided. Otherwise the request uri with ALLOW-FROM value.
-        /// </summary>
-        /// <param name="origins"></param>
-        /// <returns></returns>
-        public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> AntiClickjackingHeader(params string[] origins) {
-            Contract.Requires<ArgumentNullException>(origins != null);
-            Contract.Requires<ArgumentOutOfRangeException>(origins.Length > 0);
+        public static MidFunc AntiClickjackingHeader(params string[] origins) {
             var uriOrigins = origins.Where(o => !string.IsNullOrWhiteSpace(o)).Select(o => new Uri(o)).ToArray();
             return AntiClickjackingHeader(uriOrigins);
         }
-        /// <summary>
-        /// Adds the "X-Frame-Options" with DENY when the request uri is not provided. Otherwise the request uri with ALLOW-FROM value.
-        /// </summary>
-        /// <param name="origins"></param>
-        /// <returns></returns>
-        public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> AntiClickjackingHeader(params Uri[] origins) {
-            Contract.Requires<ArgumentNullException>(origins != null);
-            Contract.Requires<ArgumentOutOfRangeException>(origins.Length > 0);
+        public static MidFunc AntiClickjackingHeader(params Uri[] origins) {
             return AntiClickjackingHeader(3, origins);
         }
 
-        internal static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> AntiClickjackingHeader(int option, params Uri[] origins) {
+        public static MidFunc AntiClickjackingHeader(int option, params Uri[] origins) {
             return next =>
                 env => {
                     var context = env.AsContext();

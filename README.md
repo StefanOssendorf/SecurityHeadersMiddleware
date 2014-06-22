@@ -1,4 +1,4 @@
-# Security Headers Middlewares #
+# Security Header Middlewares #
 
 ----------
 Middlewares to set useful security-related HTTP headers in your OWIN application. (From [OWASP list](https://www.owasp.org/index.php/List_of_useful_HTTP_headers "OWASP list"))

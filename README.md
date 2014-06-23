@@ -22,5 +22,6 @@ See the tests as examples of usage:
 - [X-XSS-Protection](https://github.com/StefanOssendorf/OwinContrib.SecurityHeaders/blob/master/src/OwinContrib.SecurityHeaders.Tests/XssProtectionHeaderMiddlewareSpecs.cs)
 - [X-Content-Type-Options](https://github.com/StefanOssendorf/OwinContrib.SecurityHeaders/blob/master/src/OwinContrib.SecurityHeaders.Tests/ContentTypeOptionsMiddleware.cs) 
 
-#### Utilities
+#### Developed with
 [MarkdownPad 2](http://markdownpad.com/ "MarkdownPad 2")
+[JetBrains ReSharper](http://www.jetbrains.com/resharper/ "R#")

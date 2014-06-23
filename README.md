@@ -1,6 +1,8 @@
-# Security Header Middlewares #
+Security Header Middlewares
+===========
 
-----------
+[![Build status](https://ci.appveyor.com/api/projects/status/pb44y7kh1nnv2712)](https://ci.appveyor.com/project/StefanOssendorf/owincontrib-securityheaders)
+
 Middlewares to set useful security-related HTTP headers in your OWIN application. (From [OWASP list](https://www.owasp.org/index.php/List_of_useful_HTTP_headers "OWASP list"))
 
 **Already implemented**

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OwinContrib.SecurityHeaders {
+namespace SecurityHeadersMiddleware {
     public class StrictTransportSecurityOptions {
         private Func<int, string> mRedirectReasonPhrase;
         private Func<Uri, string> mRedirectUriBuilder;

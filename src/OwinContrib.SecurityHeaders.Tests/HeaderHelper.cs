@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using OwinContrib.SecurityHeaders.Infrastructure;
+using SecurityHeadersMiddleware.Infrastructure;
 
-namespace OwinContrib.SecurityHeaders.Tests {
+namespace SecurityHeadersMiddleware.Tests {
     internal static class HeaderHelper {
         public static string XFrameOptionsHeader(this HttpResponseMessage source) {
             return source.Headers.GetValues(HeaderConstants.XFrameOptions).First();

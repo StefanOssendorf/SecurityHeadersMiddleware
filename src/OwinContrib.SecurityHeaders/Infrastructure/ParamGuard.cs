@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OwinContrib.SecurityHeaders.Infrastructure {
+namespace SecurityHeadersMiddleware.Infrastructure {
     public static class ParamGuard {
         public static void MustNotNull(this object source, string paramName) {
             if (source == null) {

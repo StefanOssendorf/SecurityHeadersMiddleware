@@ -7,8 +7,8 @@
     <ProjectGuid>{53953109-6B63-4A49-BDA3-EB78E1506FA9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OwinContrib.SecurityHeaders</RootNamespace>
-    <AssemblyName>OwinContrib.SecurityHeaders</AssemblyName>
+    <RootNamespace>SecurityHeadersMiddleware</RootNamespace>
+    <AssemblyName>SecurityHeadersMiddleware</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
@@ -90,7 +90,7 @@
     <Compile Include="Infrastructure\StringExtension.cs" />
     <Compile Include="OwinEnvironmentExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SecurityHeaderMiddlewares.cs" />
+    <Compile Include="SecurityHeaders.cs" />
     <Compile Include="StrictTransportSecurityHeaderMiddleware.cs" />
     <Compile Include="StrictTransportSecurityOptions.cs" />
     <Compile Include="XFrameOption.cs" />

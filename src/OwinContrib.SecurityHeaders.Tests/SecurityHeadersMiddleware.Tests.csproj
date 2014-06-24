@@ -7,8 +7,8 @@
     <ProjectGuid>{753D4EEA-13E5-429B-93AC-4A7E7A1FACD3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OwinContrib.SecurityHeaders.Tests</RootNamespace>
-    <AssemblyName>OwinContrib.SecurityHeaders.Tests</AssemblyName>
+    <RootNamespace>SecurityHeadersMiddleware.Tests</RootNamespace>
+    <AssemblyName>SecurityHeadersMiddleware.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -74,9 +74,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OwinContrib.SecurityHeaders\OwinContrib.SecurityHeaders.csproj">
+    <ProjectReference Include="..\OwinContrib.SecurityHeaders\SecurityHeadersMiddleware.csproj">
       <Project>{53953109-6B63-4A49-BDA3-EB78E1506FA9}</Project>
-      <Name>OwinContrib.SecurityHeaders</Name>
+      <Name>SecurityHeadersMiddleware</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

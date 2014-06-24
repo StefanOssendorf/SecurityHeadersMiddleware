@@ -4,7 +4,7 @@ using Machine.Specifications;
 using Microsoft.Owin.Testing;
 using Owin;
 
-namespace OwinContrib.SecurityHeaders.Tests {
+namespace SecurityHeadersMiddleware.Tests {
     [Subject(typeof(ContenTypeOptionsHeaderMiddleware))]
     public class When_using_contentTypeOptionsHeaderMiddleware : OwinEnvironmentSpecBase {
         private Establish context = () => Client = CtoClientHelper.Create();

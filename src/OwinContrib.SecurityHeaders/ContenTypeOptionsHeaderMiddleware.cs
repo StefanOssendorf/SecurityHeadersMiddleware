@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Owin;
-using OwinContrib.SecurityHeaders.Infrastructure;
+using SecurityHeadersMiddleware.Infrastructure;
 
-namespace OwinContrib.SecurityHeaders {
-    using MidFunc = Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>;
-
+namespace SecurityHeadersMiddleware {
     internal static class ContenTypeOptionsHeaderMiddleware {
-        public static MidFunc ContentTypeOptionsHeader() {
+        public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> ContentTypeOptionsHeader() {
             return next =>
                 env => {
                     var response = env.AsContext().Response;

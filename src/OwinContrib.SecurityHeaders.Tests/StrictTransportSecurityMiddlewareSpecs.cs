@@ -5,10 +5,10 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Machine.Specifications;
 using Microsoft.Owin.Testing;
+using SecurityHeadersMiddleware.Infrastructure;
 using Owin;
-using OwinContrib.SecurityHeaders.Infrastructure;
 
-namespace OwinContrib.SecurityHeaders.Tests {
+namespace SecurityHeadersMiddleware.Tests {
     [Subject(typeof(StrictTransportSecurityHeaderMiddleware))]
     public class When_using_sts_default_implementation_over_non_secure_transport : OwinEnvironmentSpecBase {
         private Establish context = () => { Client = StsClientHelper.Create(); };

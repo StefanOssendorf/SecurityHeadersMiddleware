@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Owin;
-using OwinContrib.SecurityHeaders.Infrastructure;
+using SecurityHeadersMiddleware.Infrastructure;
 
-namespace OwinContrib.SecurityHeaders {
-    using MidFunc = Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>;
-
+namespace SecurityHeadersMiddleware {
     internal static class StrictTransportSecurityHeaderMiddleware {
-        public static MidFunc StrictTransportSecurityHeader(StrictTransportSecurityOptions options) {
+        public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> StrictTransportSecurityHeader(StrictTransportSecurityOptions options) {
             return next =>
                 env => {
                     var context = env.AsContext();

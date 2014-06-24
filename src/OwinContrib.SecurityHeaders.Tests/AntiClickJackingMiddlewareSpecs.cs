@@ -5,7 +5,7 @@ using Machine.Specifications;
 using Microsoft.Owin.Testing;
 using Owin;
 
-namespace OwinContrib.SecurityHeaders.Tests {
+namespace SecurityHeadersMiddleware.Tests {
     public abstract class AntiClickjackingSpecBase : OwinEnvironmentSpecBase {
         private Because of = () => { Response = Client.GetAsync("http://example.com").Await(); };
     }

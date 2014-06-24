@@ -8,9 +8,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 		Roadmap.txt = Roadmap.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwinContrib.SecurityHeaders", "OwinContrib.SecurityHeaders\OwinContrib.SecurityHeaders.csproj", "{53953109-6B63-4A49-BDA3-EB78E1506FA9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityHeadersMiddleware", "OwinContrib.SecurityHeaders\SecurityHeadersMiddleware.csproj", "{53953109-6B63-4A49-BDA3-EB78E1506FA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwinContrib.SecurityHeaders.Tests", "OwinContrib.SecurityHeaders.Tests\OwinContrib.SecurityHeaders.Tests.csproj", "{753D4EEA-13E5-429B-93AC-4A7E7A1FACD3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityHeadersMiddleware.Tests", "OwinContrib.SecurityHeaders.Tests\SecurityHeadersMiddleware.Tests.csproj", "{753D4EEA-13E5-429B-93AC-4A7E7A1FACD3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

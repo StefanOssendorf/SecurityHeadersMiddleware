@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using OwinContrib.SecurityHeaders.Infrastructure;
+using SecurityHeadersMiddleware.Infrastructure;
 
-namespace OwinContrib.SecurityHeaders {
-    using BuildFunc = Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>>;
-
-    public static class SecurityHeaderMiddlewares {
+namespace SecurityHeadersMiddleware {
+    public static class SecurityHeaders {
         #region AntiClickjacking
         /// <summary>
         /// Adds the "X-Frame-Options" header with value DENY to the response.
         /// </summary>
         /// <param name="builder">The OWIN builder instance.</param>
         /// <returns>The OWIN builder instance.</returns>
-        public static BuildFunc AntiClickjackingHeader(this BuildFunc builder) {
+        public static Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> AntiClickjackingHeader(this Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> builder) {
             return AntiClickjackingHeader(builder, XFrameOption.Deny);
         }
         /// <summary>
@@ -22,7 +20,7 @@ namespace OwinContrib.SecurityHeaders {
         /// <param name="builder">The OWIN builder instance.</param>
         /// <param name="option">The X-Frame option.</param>
         /// <returns>The OWIN builder instance.</returns>
-        public static BuildFunc AntiClickjackingHeader(this BuildFunc builder, XFrameOption option) {
+        public static Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> AntiClickjackingHeader(this Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> builder, XFrameOption option) {
             builder(_ => AntiClickjackingMiddleware.AntiClickjackingHeader(option));
             return builder;
         }
@@ -32,7 +30,7 @@ namespace OwinContrib.SecurityHeaders {
         /// <param name="builder">The OWIN builder instance.</param>
         /// <param name="origins">The allowed uris.</param>
         /// <returns>The OWIN builder instance.</returns>
-        public static BuildFunc AntiClickjackingHeader(this BuildFunc builder, params string[] origins) {
+        public static Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> AntiClickjackingHeader(this Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> builder, params string[] origins) {
             origins.MustNotNull("origins");
             origins.MustHaveAtLeastOneValue("origins");
             builder(_ => AntiClickjackingMiddleware.AntiClickjackingHeader(origins));
@@ -44,7 +42,7 @@ namespace OwinContrib.SecurityHeaders {
         /// <param name="builder">The OWIN builder instance.</param>
         /// <param name="origins">The allowed uirs.</param>
         /// <returns>The OWIN builder instance.</returns>
-        public static BuildFunc AntiClickjackingHeader(this BuildFunc builder, params Uri[] origins) {
+        public static Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> AntiClickjackingHeader(this Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> builder, params Uri[] origins) {
             origins.MustNotNull("origins");
             origins.MustHaveAtLeastOneValue("origins");
             builder(_ => AntiClickjackingMiddleware.AntiClickjackingHeader(origins));
@@ -58,7 +56,7 @@ namespace OwinContrib.SecurityHeaders {
         /// </summary>
         /// <param name="builder">The OWIN builder instance.</param>
         /// <returns>The OWIN builder instance.</returns>
-        public static BuildFunc XssProtectionHeader(this BuildFunc builder) {
+        public static Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> XssProtectionHeader(this Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> builder) {
             return XssProtectionHeader(builder, false);
         }
         /// <summary>
@@ -67,7 +65,7 @@ namespace OwinContrib.SecurityHeaders {
         /// <param name="builder">The OWIN builder instance.</param>
         /// <param name="disabled">true to set the heade value to "0". false to set the header value to"1; mode=block".</param>
         /// <returns>The OWIN builder instance.</returns>
-        public static BuildFunc XssProtectionHeader(this BuildFunc builder, bool disabled) {
+        public static Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> XssProtectionHeader(this Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> builder, bool disabled) {
             builder(_ => XssProtectionHeaderMiddleware.XssProtectionHeader(disabled));
             return builder;
         }
@@ -79,7 +77,7 @@ namespace OwinContrib.SecurityHeaders {
         /// </summary>
         /// <param name="builder">The OWIN builder instance.</param>
         /// <returns>The OWIN builder instance.</returns>
-        public static BuildFunc StrictTransportSecurity(this BuildFunc builder) {
+        public static Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> StrictTransportSecurity(this Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> builder) {
             return StrictTransportSecurity(builder, new StrictTransportSecurityOptions());
         }
         /// <summary>
@@ -88,7 +86,7 @@ namespace OwinContrib.SecurityHeaders {
         /// <param name="builder">The OWIN builder instance.</param>
         /// <param name="options">The Strict-Transport-Security options.</param>
         /// <returns>The OWIN builder instance.</returns>
-        public static BuildFunc StrictTransportSecurity(this BuildFunc builder, StrictTransportSecurityOptions options) {
+        public static Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> StrictTransportSecurity(this Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> builder, StrictTransportSecurityOptions options) {
             builder(_ => StrictTransportSecurityHeaderMiddleware.StrictTransportSecurityHeader(options));
             return builder;
         }
@@ -100,7 +98,7 @@ namespace OwinContrib.SecurityHeaders {
         /// </summary>
         /// <param name="builder">The OWIN builder instance.</param>
         /// <returns>The OWIN builder instance.</returns>
-        public static BuildFunc ContentTypeOptions(this BuildFunc builder) {
+        public static Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> ContentTypeOptions(this Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> builder) {
             builder(_ => ContenTypeOptionsHeaderMiddleware.ContentTypeOptionsHeader());
             return builder;
         }

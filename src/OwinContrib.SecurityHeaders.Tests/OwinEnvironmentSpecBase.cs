@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace OwinContrib.SecurityHeaders.Tests {
+namespace SecurityHeadersMiddleware.Tests {
     public abstract class OwinEnvironmentSpecBase {
         protected static HttpClient Client;
         protected static HttpResponseMessage Response;

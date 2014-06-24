@@ -1,4 +1,4 @@
-﻿namespace OwinContrib.SecurityHeaders.Infrastructure {
+﻿namespace SecurityHeadersMiddleware.Infrastructure {
     internal static class HeaderConstants {
         public const string XssProtection = "X-Xss-Protection";
         public const string XFrameOptions = "X-Frame-Options";

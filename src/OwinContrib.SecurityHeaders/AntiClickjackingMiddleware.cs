@@ -2,24 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using OwinContrib.SecurityHeaders.Infrastructure;
+using SecurityHeadersMiddleware.Infrastructure;
 
-namespace OwinContrib.SecurityHeaders {
-    using MidFunc = Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>;
-
+namespace SecurityHeadersMiddleware {
     internal static class AntiClickjackingMiddleware {
-        public static MidFunc AntiClickjackingHeader(XFrameOption option) {
+        public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> AntiClickjackingHeader(XFrameOption option) {
             return AntiClickjackingHeader((int)option, new Uri[0]);
         }
-        public static MidFunc AntiClickjackingHeader(params string[] origins) {
+        public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> AntiClickjackingHeader(params string[] origins) {
             var uriOrigins = origins.Where(o => !string.IsNullOrWhiteSpace(o)).Select(o => new Uri(o)).ToArray();
             return AntiClickjackingHeader(uriOrigins);
         }
-        public static MidFunc AntiClickjackingHeader(params Uri[] origins) {
+        public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> AntiClickjackingHeader(params Uri[] origins) {
             return AntiClickjackingHeader(3, origins);
         }
 
-        public static MidFunc AntiClickjackingHeader(int option, params Uri[] origins) {
+        public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> AntiClickjackingHeader(int option, params Uri[] origins) {
             return next =>
                 env => {
                     var context = env.AsContext();

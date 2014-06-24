@@ -1,10 +1,9 @@
-﻿using System.Linq;
-using System.Net.Http;
+﻿using System.Net.Http;
 using Machine.Specifications;
 using Microsoft.Owin.Testing;
 using Owin;
 
-namespace OwinContrib.SecurityHeaders.Tests {
+namespace SecurityHeadersMiddleware.Tests {
     [Subject(typeof(XssProtectionHeaderMiddleware))]
     public class When_protection_is_enabled : OwinEnvironmentSpecBase {
         private Establish context = () => Client = XssClientHelper.CreateClient(false);

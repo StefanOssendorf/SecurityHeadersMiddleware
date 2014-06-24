@@ -1,4 +1,4 @@
-Security Header Middlewares
+Security Headers Middleware
 ===========
 
 [![Build status](https://ci.appveyor.com/api/projects/status/pb44y7kh1nnv2712)](https://ci.appveyor.com/project/StefanOssendorf/owincontrib-securityheaders)

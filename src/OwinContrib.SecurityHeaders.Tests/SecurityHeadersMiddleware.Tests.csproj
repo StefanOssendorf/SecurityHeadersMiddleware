@@ -30,11 +30,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Machine.Specifications">
-      <HintPath>..\packages\Machine.Specifications.0.7.0\lib\net45\Machine.Specifications.dll</HintPath>
+    <Reference Include="FluentAssertions">
+      <HintPath>..\packages\FluentAssertions.3.0.107\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
-    <Reference Include="Machine.Specifications.Clr4">
-      <HintPath>..\packages\Machine.Specifications.0.7.0\lib\net45\Machine.Specifications.Clr4.dll</HintPath>
+    <Reference Include="FluentAssertions.Core">
+      <HintPath>..\packages\FluentAssertions.3.0.107\lib\net45\FluentAssertions.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Machine.Specifications, Version=0.8.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Machine.Specifications.0.8.3\lib\net45\Machine.Specifications.dll</HintPath>
+    </Reference>
+    <Reference Include="Machine.Specifications.Clr4, Version=0.8.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Machine.Specifications.0.8.3\lib\net45\Machine.Specifications.Clr4.dll</HintPath>
     </Reference>
     <Reference Include="Machine.Specifications.Should">
       <HintPath>..\packages\Machine.Specifications.Should.0.7.2\lib\net45\Machine.Specifications.Should.dll</HintPath>
@@ -59,11 +67,19 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="xunit">
+      <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AntiClickJackingMiddlewareSpecs.cs" />
     <Compile Include="AppBuilderExtensions.cs" />
+    <Compile Include="ContentSecurityPolicyTests.cs" />
     <Compile Include="ContentTypeOptionsMiddleware.cs" />
+    <Compile Include="CspSourceListTests.cs" />
     <Compile Include="HeaderHelper.cs" />
     <Compile Include="OwinEnvironmentSpecBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,6 +93,10 @@
     <ProjectReference Include="..\OwinContrib.SecurityHeaders\SecurityHeadersMiddleware.csproj">
       <Project>{53953109-6B63-4A49-BDA3-EB78E1506FA9}</Project>
       <Name>SecurityHeadersMiddleware</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SecurityHeadersMiddleware.OwinAppBuilder\SecurityHeadersMiddleware.OwinAppBuilder.csproj">
+      <Project>{d3381ffc-ffa0-478d-9708-199e2f9789f5}</Project>
+      <Name>SecurityHeadersMiddleware.OwinAppBuilder</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

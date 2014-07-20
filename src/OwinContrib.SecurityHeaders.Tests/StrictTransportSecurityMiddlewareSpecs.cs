@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Machine.Specifications;
 using Microsoft.Owin.Testing;
 using SecurityHeadersMiddleware.Infrastructure;
+using SecurityHeadersMiddleware.OwinAppBuilder;
 using Owin;
 
 namespace SecurityHeadersMiddleware.Tests {

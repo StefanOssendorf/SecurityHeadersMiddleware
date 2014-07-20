@@ -82,7 +82,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AntiClickjackingMiddleware.cs" />
+    <Compile Include="ContentSecurityPolicyMiddleware.cs" />
     <Compile Include="ContenTypeOptionsHeaderMiddleware.cs" />
     <Compile Include="Infrastructure\HeaderConstants.cs" />
     <Compile Include="Infrastructure\ParamGuard.cs" />

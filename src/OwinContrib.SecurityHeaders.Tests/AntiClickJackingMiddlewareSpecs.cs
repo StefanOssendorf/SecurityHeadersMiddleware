@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Machine.Specifications;
 using Microsoft.Owin.Testing;
 using Owin;
+using SecurityHeadersMiddleware.OwinAppBuilder;
 
 namespace SecurityHeadersMiddleware.Tests {
     public abstract class AntiClickjackingSpecBase : OwinEnvironmentSpecBase {

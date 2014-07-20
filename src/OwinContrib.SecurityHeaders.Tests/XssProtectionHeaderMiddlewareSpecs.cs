@@ -2,6 +2,7 @@
 using Machine.Specifications;
 using Microsoft.Owin.Testing;
 using Owin;
+using SecurityHeadersMiddleware.OwinAppBuilder;
 
 namespace SecurityHeadersMiddleware.Tests {
     [Subject(typeof(XssProtectionHeaderMiddleware))]

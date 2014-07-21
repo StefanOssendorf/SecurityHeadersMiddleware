@@ -91,9 +91,28 @@ namespace SecurityHeadersMiddleware {
             host.MustNotNull("host");
             host.MustNotBeWhiteSpace("host");
 
+            var parts = SplitIntoHostSourceParts(host);
+
             string schemeOfHostListRegex = @"([a-z][a-z0-9+\-.]*://)?";
-            string hostOfHostListRegex = @"\*(?!.)|(\*.)?[a-z0-9\-]+(\.[a-z0-9\-]+)*";
+            string hostOfHostListRegex = @"\*(?!.)|(\*.)?[a-z0-9\-]+(?!\*)(\.[a-z0-9\-]+)*";
             string portOfHostListRegex = @":((?!.)?([0-9]+|\*)(?!.))";
+
+
+            // Parts validieren
+            var hostPart = parts.Host;
+            if (hostPart.Contains("*") && hostPart.IndexOf("*") != 0) {
+                throw new FormatException();
+            }
+
+            if (!Regex.IsMatch(hostPart, @"[a-z0-9\-]$")) {
+                throw new FormatException();
+            }
+
+            const string hostRegex = @"(\*(?!.)|(\*.)?[a-z0-9\-]+(\.[a-z0-9\-]+)*)";
+            if (!Regex.IsMatch(hostPart, hostRegex)) {
+                throw new FormatException();
+            }
+
 
             throw new NotImplementedException();
         }
@@ -107,24 +126,45 @@ namespace SecurityHeadersMiddleware {
         private HostSourceParts SplitIntoHostSourceParts(string hostsource) {
             var parts = new HostSourceParts();
 
-            // Prüfen ob Host vorhanden
-            var index = hostsource.IndexOf(":");
-            if (IsHostSchemeFormat(hostsource, index)) {
-                parts.Scheme = hostsource.Substring(0, index + 3);
-                hostsource = hostsource.Substring(index + 3);
+            // Prüfen ob Scheme vorhanden
+            string outTmp = "";
+            if (TryGetSchemePart(hostsource, out outTmp)) {
+                parts.Scheme = outTmp;
+                hostsource = hostsource.Substring(outTmp.Length + 1);
             }
+
+            // Prüfen ob Host vorhanden
+            parts.Host = GetHostPart(hostsource);
+            hostsource = hostsource.Substring(parts.Host.Length + 1);
             
             // Prüfen ob ein Path vorhanden ist
-            index = hostsource.IndexOf("/");
+
+            return parts;
+        }
+        private string GetHostPart(string hostsource) {
+            var hostPart = hostsource;
+
+            var index = hostsource.IndexOf(":");
             if (index > 0) {
-                
+                hostPart = hostsource.Substring(0, index);
             }
 
+            index = hostsource.IndexOf("/");
+            if (index > 0) {
+                hostPart = hostsource.Substring(0, index);
+            }
 
-            return null;
+            return hostPart;
         }
-        private bool IsHostSchemeFormat(string host, int index) {
-            return host.Substring(index, 3) == "://";
+        private bool TryGetSchemePart(string hostsource, out string scheme) {
+            scheme = null;
+            const string schemeRegex = @"[a-z][a-z0-9+\-.]*://";
+            var match = Regex.Match(hostsource, schemeRegex, RegexOptions.IgnoreCase);
+            if (!match.Success) {
+                return false;
+            }
+            scheme = match.Groups[0].Value;
+            return true;
         }
 
         internal void AddNonce(string nonce) {

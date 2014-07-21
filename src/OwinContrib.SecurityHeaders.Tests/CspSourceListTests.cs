@@ -128,5 +128,11 @@ namespace SecurityHeadersMiddleware.Tests {
             list.ToHeaderValue().Trim().ShouldEqual("http:");
         }
 
+        [Fact]
+        public void When_adding_an_invalid_host_part_it_should_throw_a_formatException() {
+            var list = new CspSourceList();
+
+            Assert.Throws<FormatException>(() => list.AddHost("ftp://*.example./abcd/"));
+        }
     }
 }

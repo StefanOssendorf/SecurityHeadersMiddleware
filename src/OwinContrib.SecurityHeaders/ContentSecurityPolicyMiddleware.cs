@@ -47,7 +47,7 @@ namespace SecurityHeadersMiddleware {
     public class CspSourceList {
         private bool mIsNone;
         private readonly List<string> mSchemes;
-        private readonly List<CspKeyword> mKeywords; 
+        private readonly List<CspKeyword> mKeywords;
         private const string SchemeRegexExact = @"(^[a-z][a-z0-9+\-.]*)(:?)$";
 
         public CspSourceList() {
@@ -85,20 +85,20 @@ namespace SecurityHeadersMiddleware {
         public void AddHost(Uri host) {
             AddHost(host.GetComponents(UriComponents.SchemeAndServer | UriComponents.Path, UriFormat.UriEscaped));
         }
-        
+
         public void AddHost(string host) {
             ThrowIfNoneIsSet();
             host.MustNotNull("host");
             host.MustNotBeWhiteSpace("host");
 
             var parts = SplitIntoHostSourceParts(host);
+            VerifyParts(parts);
 
-            string schemeOfHostListRegex = @"([a-z][a-z0-9+\-.]*://)?";
-            string hostOfHostListRegex = @"\*(?!.)|(\*.)?[a-z0-9\-]+(?!\*)(\.[a-z0-9\-]+)*";
-            string portOfHostListRegex = @":((?!.)?([0-9]+|\*)(?!.))";
+            
+            
+            string portOfHostListRegex = @":((?!.)?([0-9]+|\*)(?!.))";           
 
 
-            // Parts validieren
             var hostPart = parts.Host;
             if (hostPart.Contains("*") && hostPart.IndexOf("*") != 0) {
                 throw new FormatException();
@@ -112,9 +112,50 @@ namespace SecurityHeadersMiddleware {
             if (!Regex.IsMatch(hostPart, hostRegex)) {
                 throw new FormatException();
             }
+        }
+        private void VerifyParts(HostSourceParts parts) {
+            VerifyHost(parts.Host);
+            VerifyScheme(parts.Scheme);
+            VerifyPort(parts.Port);
+            VerifyPath(parts.Path);
+        }
+        private void VerifyScheme(string scheme) {
+            if (scheme.IsNullOrWhiteSpace()) {
+                return;
+            }
+            const string schemeRegex = @"^[a-z][a-z0-9+\-.]*://$";
+            if (RegexVerify(scheme, schemeRegex)) {
+                return;
+            }
+            const string msg =  "The extracted scheme '{0}' does not satisfy the required format.{1}" +
+                                "Valid schemes:{1}ftp:// or a-12.adcd://{1}" + 
+                                "First character must be a letter and has to end with ://{1}" +
+                                "For more informatin see: {2} (scheme-part definition from host-source)";
 
+            throw new FormatException(msg.FormatWith(scheme, Environment.NewLine, "http://www.w3.org/TR/CSP2/#host-source"));
+        }
+        private void VerifyHost(string host) {
+            if (host.IsNullOrWhiteSpace()) {
+                return;
+            }
+            const string hostRegex = @"^(\*(?!.)|(\*.)?[a-z0-9\-]+(?!\*)(\.[a-z0-9\-]+)*)$";
+            if (RegexVerify(host, hostRegex)) {
+                return;
+            }
+            const string msg = "The extracted host '{0}' does not satisfy the required format.{1}" +
+                               "Valid hosts:{1}* or *.example or example.-com{1}" +
+                               "For more information see:{2} (host-part)";
+            throw new FormatException(msg.FormatWith(host, Environment.NewLine, "http://www.w3.org/TR/CSP2/#host-part"));
+        }
+        private void VerifyPort(string port) {
+            throw  new FormatException();
+        }
+        private void VerifyPath(string path) {
+            throw new FormatException();
+        }
 
-            throw new NotImplementedException();
+        private bool RegexVerify(string input, string pattern) {
+            return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
         }
 
         public void SetToNone() {
@@ -122,48 +163,91 @@ namespace SecurityHeadersMiddleware {
             mSchemes.Clear();
             mKeywords.Clear();
         }
-        
+
         private HostSourceParts SplitIntoHostSourceParts(string hostsource) {
             var parts = new HostSourceParts();
 
-            // Prüfen ob Scheme vorhanden
-            string outTmp = "";
-            if (TryGetSchemePart(hostsource, out outTmp)) {
-                parts.Scheme = outTmp;
-                hostsource = hostsource.Substring(outTmp.Length + 1);
+            string part = "";
+            if (TryGetSchemePart(hostsource, out part)) {
+                parts.Scheme = part;
+                hostsource = hostsource.Substring(part.Length);
             }
 
-            // Prüfen ob Host vorhanden
             parts.Host = GetHostPart(hostsource);
-            hostsource = hostsource.Substring(parts.Host.Length + 1);
-            
-            // Prüfen ob ein Path vorhanden ist
+            hostsource = hostsource.Substring(parts.Host.Length);
+
+            if (TryGetPortPart(hostsource, out part)) {
+                parts.Port = part;
+                hostsource = hostsource.Substring(part.Length);
+            }
+
+            if (TryGetPathPart(hostsource, out part)) {
+                parts.Path = part;
+            }
 
             return parts;
         }
+
+        private bool TryGetSchemePart(string hostsource, out string scheme) {
+            scheme = null;
+            if (hostsource.IsNullOrWhiteSpace()) {
+                return false;
+            }
+
+            var index = hostsource.IndexOf("://");
+            if (index > 0) {
+                scheme = hostsource.Substring(0, index + 3);
+            }
+            return index > 0;
+        }
         private string GetHostPart(string hostsource) {
+            if (hostsource.IsNullOrWhiteSpace()) {
+                return null;
+            }
             var hostPart = hostsource;
 
             var index = hostsource.IndexOf(":");
             if (index > 0) {
-                hostPart = hostsource.Substring(0, index);
+                return hostsource.Substring(0, index);
             }
 
             index = hostsource.IndexOf("/");
             if (index > 0) {
-                hostPart = hostsource.Substring(0, index);
+                return hostsource.Substring(0, index);
             }
 
             return hostPart;
         }
-        private bool TryGetSchemePart(string hostsource, out string scheme) {
-            scheme = null;
-            const string schemeRegex = @"[a-z][a-z0-9+\-.]*://";
-            var match = Regex.Match(hostsource, schemeRegex, RegexOptions.IgnoreCase);
-            if (!match.Success) {
+        private bool TryGetPortPart(string hostsource, out string port) {
+            port = null;
+            if (hostsource.IsNullOrWhiteSpace()) {
                 return false;
             }
-            scheme = match.Groups[0].Value;
+            if (hostsource[0] != ':') {
+                return false;
+            }
+            var index = hostsource.IndexOf("/");
+            port = index > 0 ? hostsource.Substring(0, index) : hostsource;
+            return true;
+        }
+        private bool TryGetPathPart(string hostsource, out string path) {
+            path = null;
+            if (hostsource.IsNullOrWhiteSpace()) {
+                return false;
+            }
+            var index = hostsource.IndexOf("?");
+            
+            if (index > 0) {
+                path = hostsource.Substring(0, index);
+                return true;
+            }
+            index = hostsource.IndexOf("#");
+            if (index > 0) {
+                path = hostsource.Substring(0, index);
+                return true;
+            }
+
+            path = hostsource;
             return true;
         }
 

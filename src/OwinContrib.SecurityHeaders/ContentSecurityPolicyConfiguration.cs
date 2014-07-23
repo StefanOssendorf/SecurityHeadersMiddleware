@@ -56,32 +56,43 @@
         /// See http://www.w3.org/TR/CSP2/#directive-object-src
         /// </summary>
         public CspSourceList ObjectSrc { get; private set; }
+        
         /// <summary>
         /// Gets the plugin-types directive source-list.<br/>
         /// See http://www.w3.org/TR/CSP2/#directive-plugin-types
         /// </summary>
-        public CspSourceList PluginTypes { get; private set; }
+        // TODO: media-type-list
+        //public CspSourceList PluginTypes { get; private set; }
+        
         /// <summary>
         /// Gets the referrer directive source-list.<br/>
         /// See http://www.w3.org/TR/CSP11/#directive-referrer
         /// </summary>
-        public CspSourceList Referrer { get; private set; }
+        // TODO: referrer keywords
+        //public CspSourceList Referrer { get; private set; }
+        
         /// <summary>
         /// Gets the reflected-xss directive source-list.<br/>
         /// See http://www.w3.org/TR/CSP2/#directive-reflected-xss <br/>
         /// Info: "(...) subsume the functionality provided by the proprietary X-XSS-Protection HTTP header (...)"
         /// </summary>
-        public CspSourceList ReflectedXss { get; private set; }
+        // TODO: relfected-xss keywords
+        //public CspSourceList ReflectedXss { get; private set; }
+
         /// <summary>
         /// Gets the report-uri directive source-list.<br/>
         /// See http://www.w3.org/TR/CSP2/#directive-report-uri
         /// </summary>
-        public CspSourceList ReportUri { get; private set; }
+        // TODO: URI from RFC3986
+        //public CspSourceList ReportUri { get; private set; }
+        
         /// <summary>
         /// Gets the sandbox directive source-list.<br/>
         /// See http://www.w3.org/TR/CSP2/#directive-sandbox
         /// </summary>
-        public CspSourceList Sandbox { get; private set; }
+        // TODO: Sandbox-token (RFC7230)
+        //public CspSourceList Sandbox { get; private set; }
+        
         /// <summary>
         /// Gets the script-src directive source-list.<br/>
         /// See http://www.w3.org/TR/CSP2/#directive-script-src <br/>

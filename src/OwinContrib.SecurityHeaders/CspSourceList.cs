@@ -184,10 +184,14 @@ namespace SecurityHeadersMiddleware {
             return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | options);
         }
 
+        /// <summary>
+        /// Sets the source-list to 'none'.<br/>After this nothing can be added and will cause an <see cref="InvalidOperationException"/>.
+        /// </summary>
         public void SetToNone() {
             mIsNone = true;
             mSchemes.Clear();
             mKeywords.Clear();
+            mHosts.Clear();
         }
 
         private HostSourceParts SplitIntoHostSourceParts(string hostsource) {
@@ -278,8 +282,10 @@ namespace SecurityHeadersMiddleware {
         }
 
         internal void AddNonce(string nonce) {
+            //TODO: Maybe later...
         }
         internal void AddHash(string hash) {
+            //TODO: Maybe later...
         }
 
 

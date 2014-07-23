@@ -12,7 +12,13 @@ namespace SecurityHeadersMiddleware {
         /// Keyword: 'unsafe-inline'
         /// </summary>
         UnsafeInline,
+        /// <summary>
+        /// Keyword: 'unsafe-eval'
+        /// </summary>
         UnsafeEval,
+        /// <summary>
+        /// Keyword: 'unsafe-redirect'
+        /// </summary>
         UnsafeRedirect
     }
 }

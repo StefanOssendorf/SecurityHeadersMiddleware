@@ -86,8 +86,12 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AntiClickjackingMiddleware.cs" />
+    <Compile Include="ContentSecurityPolicyConfiguration.cs" />
     <Compile Include="ContentSecurityPolicyMiddleware.cs" />
     <Compile Include="ContenTypeOptionsHeaderMiddleware.cs" />
+    <Compile Include="CspKeyword.cs" />
+    <Compile Include="CspSourceList.cs" />
+    <Compile Include="HostSourceParts.cs" />
     <Compile Include="Infrastructure\HeaderConstants.cs" />
     <Compile Include="Infrastructure\ParamGuard.cs" />
     <Compile Include="Infrastructure\Rfc6454Utility.cs" />

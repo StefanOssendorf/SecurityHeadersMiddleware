@@ -14,9 +14,9 @@ namespace SecurityHeadersMiddleware.Infrastructure {
             }
         }
 
-        public static void MustNotBeWhiteSpace(this string source, string paramName) {
+        public static void MustNotBeWhiteSpaceOrEmpty(this string source, string paramName) {
             if (string.IsNullOrWhiteSpace(source)) {
-                throw new ArgumentException("{0} have to be not only contains white-space characters.".FormatWith(paramName));
+                throw new ArgumentException("{0} have to be not empty or only contains white-space characters.".FormatWith(paramName));
             }
         }
     }

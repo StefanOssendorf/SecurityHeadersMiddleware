@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Machine.Specifications;
 using Xunit;
 
@@ -88,7 +89,7 @@ namespace SecurityHeadersMiddleware.Tests {
             list.AddKeyword(CspKeyword.UnsafeInline);
             list.AddKeyword(CspKeyword.UnsafeRedirect);
 
-            list.ToHeaderValue().Trim().ShouldEqual("'self' 'unsafeeval' 'unsafeinline' 'unsaferedirect'");
+            list.ToHeaderValue().Trim().ShouldEqual("'self' 'unsafe-eval' 'unsafe-inline' 'unsafe-redirect'");
         }
 
         [Fact]
@@ -133,6 +134,59 @@ namespace SecurityHeadersMiddleware.Tests {
             var list = new CspSourceList();
 
             Assert.Throws<FormatException>(() => list.AddHost("ftp://*.example./abcd/"));
+        }
+
+        [Fact]
+        public void When_adding_an_invalid_port_part_it_should_throw_a_formatException() {
+            var list = new CspSourceList();
+
+            Assert.Throws<FormatException>(() => list.AddHost("*.example.com:1as"));
+        }
+
+        [Fact]
+        public void When_adding_an_invalid_path_it_should_throw_a_formatException() {
+            var list = new CspSourceList();
+
+            Assert.Throws<FormatException>(() => list.AddHost("*.example.com/%1"));
+        }
+
+        [Fact]
+        public void When_adding_one_host_it_should_create_the_correct_header_value() {
+            var list = new CspSourceList();
+            list.AddHost("http://*.example.com:*/path/file.js");
+
+            list.ToHeaderValue().Trim().ShouldEqual("http://*.example.com:*/path/file.js");
+        }
+        [Fact]
+        public void When_adding_an_empty_host_it_should_throw_a_argumentException() {
+            var list = new CspSourceList();
+
+            Assert.Throws<ArgumentException>(() => list.AddHost(""));
+        }
+
+        [Fact]
+        public void When_adding_scheme_host_and_keyword_it_should_create_correct_header_value() {
+            var list = new CspSourceList();
+            list.AddScheme("https");
+            list.AddKeyword(CspKeyword.Self);
+            list.AddHost("https://www.example.com/");
+
+            list.ToHeaderValue().Trim().ShouldEqual("https:  https://www.example.com/  'self'");
+        }
+
+        [Fact]
+        public void When_adding_a_valid_uri_as_host_it_should_not_throw_a_exception() {
+            var list = new CspSourceList();
+
+            Assert.DoesNotThrow(() => list.AddHost(new Uri("https://www.example.com/abcd/")));
+        }
+
+        [Fact]
+        public void When_adding_keyword_unsafeinline_it_should_create_the_correct_header_value() {
+            var list = new CspSourceList();
+            list.AddKeyword(CspKeyword.UnsafeInline);
+
+            list.ToHeaderValue().Trim().ShouldEqual("'unsafe-inline'");
         }
     }
 }

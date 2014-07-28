@@ -1,4 +1,5 @@
 ﻿namespace SecurityHeadersMiddleware.Tests {
-    public class ContentSecurityPolicyTests { 
+    public class CspMiddlewareTests { 
+
     }
 }

@@ -1,4 +1,10 @@
-﻿namespace SecurityHeadersMiddleware {
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using SecurityHeadersMiddleware.Infrastructure;
+
+namespace SecurityHeadersMiddleware {
     public class ContentSecurityPolicyConfiguration {
         /// <summary>
         /// Gets the base-uri directive source-list.<br/>
@@ -56,21 +62,21 @@
         /// See http://www.w3.org/TR/CSP2/#directive-object-src
         /// </summary>
         public CspSourceList ObjectSrc { get; private set; }
-        
+
         /// <summary>
         /// Gets the plugin-types directive source-list.<br/>
         /// See http://www.w3.org/TR/CSP2/#directive-plugin-types
         /// </summary>
         // TODO: media-type-list
         //public CspSourceList PluginTypes { get; private set; }
-        
+
         /// <summary>
         /// Gets the referrer directive source-list.<br/>
         /// See http://www.w3.org/TR/CSP11/#directive-referrer
         /// </summary>
         // TODO: referrer keywords
         //public CspSourceList Referrer { get; private set; }
-        
+
         /// <summary>
         /// Gets the reflected-xss directive source-list.<br/>
         /// See http://www.w3.org/TR/CSP2/#directive-reflected-xss <br/>
@@ -85,14 +91,14 @@
         /// </summary>
         // TODO: URI from RFC3986
         //public CspSourceList ReportUri { get; private set; }
-        
+
         /// <summary>
         /// Gets the sandbox directive source-list.<br/>
         /// See http://www.w3.org/TR/CSP2/#directive-sandbox
         /// </summary>
         // TODO: Sandbox-token (RFC7230)
         //public CspSourceList Sandbox { get; private set; }
-        
+
         /// <summary>
         /// Gets the script-src directive source-list.<br/>
         /// See http://www.w3.org/TR/CSP2/#directive-script-src <br/>
@@ -105,5 +111,66 @@
         /// Info: Hash and Nonce not implemented yet.
         /// </summary>
         public CspSourceList StyleSrc { get; set; }
+
+
+        public ContentSecurityPolicyConfiguration() {
+            BaseUri = new CspSourceList();
+            ChildSrc = new CspSourceList();
+            ConnectSrc = new CspSourceList();
+            DefaultSrc = new CspSourceList();
+            FontSrc = new CspSourceList();
+            FormAction = new CspSourceList();
+            FrameAncestors = new CspSourceList();
+            FrameSrc = new CspSourceList();
+            ImgSrc = new CspSourceList();
+            MediaSrc = new CspSourceList();
+            ObjectSrc = new CspSourceList();
+            ScriptSrc = new CspSourceList();
+            StyleSrc = new CspSourceList();
+        }
+
+        public string ToHeaderValue() {
+            var values = new List<string>(16);
+            values.Add(BuildDirectiveValue("base-uri", BaseUri));
+            values.Add(BuildDirectiveValue("child-src", ChildSrc));
+            values.Add(BuildDirectiveValue("connect-src", ConnectSrc));
+            values.Add(BuildDirectiveValue("default-src", DefaultSrc));
+            values.Add(BuildDirectiveValue("font-src", FontSrc));
+            values.Add(BuildDirectiveValue("form-action", FormAction));
+            values.Add(BuildDirectiveValue("frame-ancestors", FrameAncestors));
+            values.Add(BuildDirectiveValue("frame-src", FrameSrc));
+            values.Add(BuildDirectiveValue("img-src", ImgSrc));
+            values.Add(BuildDirectiveValue("media-src", MediaSrc));
+            values.Add(BuildDirectiveValue("object-src", ObjectSrc));
+            //values.Add(BuildDirectiveValue("plugin-types", PluginTypes));
+            //values.Add(BuildDirectiveValue("referrer", Referrer));
+            //values.Add(BuildDirectiveValue("reflected-xss", ReflectedXss));
+            //values.Add(BuildDirectiveValue("report-uri", ReportUri));
+            //values.Add(BuildDirectiveValue("sandbox", Sandbox));
+            values.Add(BuildDirectiveValue("script-src", ScriptSrc));
+            values.Add(BuildDirectiveValue("style-src", StyleSrc));
+
+            var sb = new StringBuilder();
+            for (int i = 0; i < values.Count; i++) {
+                var value = values[i];
+                if (value.IsNullOrWhiteSpace()) {
+                    continue;
+                }
+                if (sb.Length > 0) {
+                    sb.Append("; ");
+                }
+                sb.Append(value);
+            }
+
+            return sb.ToString();
+        }
+
+        private string BuildDirectiveValue(string directiveName, CspSourceList sourceList) {
+            var directiveValue = sourceList.ToDirectiveValue();
+            if (directiveValue.IsNullOrWhiteSpace()) {
+                return "";
+            }
+            return "{0} {1}".FormatWith(directiveName, directiveValue);
+        }
     }
 }

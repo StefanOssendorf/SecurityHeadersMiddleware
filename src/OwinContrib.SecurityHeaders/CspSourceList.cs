@@ -98,13 +98,13 @@ namespace SecurityHeadersMiddleware {
 
             mHosts.Add(host);
         }
-        private void VerifyParts(HostSourceParts parts) {
+        private static void VerifyParts(HostSourceParts parts) {
             VerifyHost(parts.Host);
             VerifyScheme(parts.Scheme);
             VerifyPort(parts.Port);
             VerifyPath(parts.Path);
         }
-        private void VerifyScheme(string scheme) {
+        private static void VerifyScheme(string scheme) {
             if (scheme.IsNullOrWhiteSpace()) {
                 return;
             }
@@ -119,7 +119,7 @@ namespace SecurityHeadersMiddleware {
 
             throw new FormatException(msg.FormatWith(scheme, Environment.NewLine, "http://www.w3.org/TR/CSP2/#host-source"));
         }
-        private void VerifyHost(string host) {
+        private static void VerifyHost(string host) {
             if (host.IsNullOrWhiteSpace()) {
                 throw new FormatException("At least the host-part is required.{1}For more information see: {2} (host-part)".FormatWith("http://www.w3.org/TR/CSP2/#host-source"));
             }
@@ -132,7 +132,7 @@ namespace SecurityHeadersMiddleware {
                                "For more information see: {2} (host-part).";
             throw new FormatException(msg.FormatWith(host, Environment.NewLine, "http://www.w3.org/TR/CSP2/#host-source"));
         }
-        private void VerifyPort(string port) {
+        private static void VerifyPort(string port) {
             if (port.IsNullOrWhiteSpace()) {
                 return;
             }
@@ -147,7 +147,7 @@ namespace SecurityHeadersMiddleware {
 
             throw new FormatException(msg.FormatWith(port, Environment.NewLine, "http://www.w3.org/TR/CSP2/#host-source"));
         }
-        private void VerifyPath(string path) {
+        private static void VerifyPath(string path) {
             if (path.IsNullOrWhiteSpace()) {
                 return;
             }
@@ -176,11 +176,11 @@ namespace SecurityHeadersMiddleware {
             throw new FormatException(msg.FormatWith(path, Environment.NewLine, "http://www.w3.org/TR/CSP2/#host-source"));
         }
 
-        private bool RegexVerify(string input, string pattern) {
+        private static bool RegexVerify(string input, string pattern) {
             return RegexVerify(input, pattern, RegexOptions.None);
         }
 
-        private bool RegexVerify(string input, string pattern, RegexOptions options) {
+        private static bool RegexVerify(string input, string pattern, RegexOptions options) {
             return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | options);
         }
 
@@ -194,7 +194,7 @@ namespace SecurityHeadersMiddleware {
             mHosts.Clear();
         }
 
-        private HostSourceParts SplitIntoHostSourceParts(string hostsource) {
+        private static HostSourceParts SplitIntoHostSourceParts(string hostsource) {
             var parts = new HostSourceParts();
 
             string part = "";
@@ -218,7 +218,7 @@ namespace SecurityHeadersMiddleware {
             return parts;
         }
 
-        private bool TryGetSchemePart(string hostsource, out string scheme) {
+        private static bool TryGetSchemePart(string hostsource, out string scheme) {
             scheme = null;
             if (hostsource.IsNullOrWhiteSpace()) {
                 return false;
@@ -230,7 +230,7 @@ namespace SecurityHeadersMiddleware {
             }
             return index > 0;
         }
-        private string GetHostPart(string hostsource) {
+        private static string GetHostPart(string hostsource) {
             if (hostsource.IsNullOrWhiteSpace()) {
                 return null;
             }
@@ -248,7 +248,7 @@ namespace SecurityHeadersMiddleware {
 
             return hostPart;
         }
-        private bool TryGetPortPart(string hostsource, out string port) {
+        private static bool TryGetPortPart(string hostsource, out string port) {
             port = null;
             if (hostsource.IsNullOrWhiteSpace()) {
                 return false;
@@ -260,7 +260,7 @@ namespace SecurityHeadersMiddleware {
             port = index > 0 ? hostsource.Substring(0, index) : hostsource;
             return true;
         }
-        private bool TryGetPathPart(string hostsource, out string path) {
+        private static bool TryGetPathPart(string hostsource, out string path) {
             path = null;
             if (hostsource.IsNullOrWhiteSpace()) {
                 return false;
@@ -294,16 +294,16 @@ namespace SecurityHeadersMiddleware {
                 throw new InvalidOperationException("This list ist set to 'none'. No additional values are allowed. Don't set this liste to 'none' to add new values.");
             }
         }
-        internal string ToHeaderValue() {
+        internal string ToDirectiveValue() {
             if (mIsNone) {
                 return "'none'";
             }
 
             var sb = new StringBuilder();
 
-            sb.AppendFormat(" {0} ", BuildSchemeValues().Trim());
-            sb.AppendFormat(" {0} ", BuildHostValues().Trim());
-            sb.AppendFormat(" {0} ", BuildKeywordValues().Trim());
+            sb.AppendFormat(" {0} ", TrimAndEscape(BuildSchemeValues()));
+            sb.AppendFormat(" {0} ", TrimAndEscape(BuildHostValues()));
+            sb.AppendFormat(" {0} ", TrimAndEscape(BuildKeywordValues()));
 
             return sb.ToString().Trim();
         }
@@ -332,6 +332,10 @@ namespace SecurityHeadersMiddleware {
                 sb.AppendFormat("'{0}' ", value);
             }
             return sb.ToString();
+        }
+
+        private static string TrimAndEscape(string input) {
+            return input.Trim().Replace(";", "%3B").Replace(",", "%2C");
         }
 
     }

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+using FluentAssertions;
 using Machine.Specifications;
 using Xunit;
 
@@ -16,7 +16,7 @@ namespace SecurityHeadersMiddleware.Tests {
             var list = new CspSourceList();
             list.AddScheme("http");
 
-            list.ToHeaderValue().Trim().ShouldEqual("http:");
+            list.ToDirectiveValue().Trim().ShouldEqual("http:");
         }
 
         [Fact]
@@ -26,7 +26,7 @@ namespace SecurityHeadersMiddleware.Tests {
             list.AddScheme("ftp");
             list.AddScheme("https");
 
-            list.ToHeaderValue().ShouldEqual("http: ftp: https:");
+            list.ToDirectiveValue().ShouldEqual("http: ftp: https:");
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace SecurityHeadersMiddleware.Tests {
             var list = new CspSourceList();
             list.SetToNone();
 
-            list.ToHeaderValue().ShouldEqual("'none'");
+            list.ToDirectiveValue().ShouldEqual("'none'");
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace SecurityHeadersMiddleware.Tests {
             var list = new CspSourceList();
             list.AddKeyword(CspKeyword.Self);
 
-            list.ToHeaderValue().Trim().ShouldEqual("'self'");
+            list.ToDirectiveValue().Trim().ShouldEqual("'self'");
         }
 
         [Fact]
@@ -77,7 +77,7 @@ namespace SecurityHeadersMiddleware.Tests {
             list.AddKeyword(CspKeyword.Self);
             list.AddKeyword(CspKeyword.Self);
 
-            list.ToHeaderValue().Trim().ShouldEqual("'self'");
+            list.ToDirectiveValue().Trim().ShouldEqual("'self'");
         }
 
         [Fact]
@@ -89,7 +89,7 @@ namespace SecurityHeadersMiddleware.Tests {
             list.AddKeyword(CspKeyword.UnsafeInline);
             list.AddKeyword(CspKeyword.UnsafeRedirect);
 
-            list.ToHeaderValue().Trim().ShouldEqual("'self' 'unsafe-eval' 'unsafe-inline' 'unsafe-redirect'");
+            list.ToDirectiveValue().Trim().ShouldEqual("'self' 'unsafe-eval' 'unsafe-inline' 'unsafe-redirect'");
         }
 
         [Fact]
@@ -126,7 +126,7 @@ namespace SecurityHeadersMiddleware.Tests {
             list.AddScheme("http:");
             list.AddScheme("http");
 
-            list.ToHeaderValue().Trim().ShouldEqual("http:");
+            list.ToDirectiveValue().Trim().ShouldEqual("http:");
         }
 
         [Fact]
@@ -155,7 +155,7 @@ namespace SecurityHeadersMiddleware.Tests {
             var list = new CspSourceList();
             list.AddHost("http://*.example.com:*/path/file.js");
 
-            list.ToHeaderValue().Trim().ShouldEqual("http://*.example.com:*/path/file.js");
+            list.ToDirectiveValue().Trim().ShouldEqual("http://*.example.com:*/path/file.js");
         }
         [Fact]
         public void When_adding_an_empty_host_it_should_throw_a_argumentException() {
@@ -171,7 +171,7 @@ namespace SecurityHeadersMiddleware.Tests {
             list.AddKeyword(CspKeyword.Self);
             list.AddHost("https://www.example.com/");
 
-            list.ToHeaderValue().Trim().ShouldEqual("https:  https://www.example.com/  'self'");
+            list.ToDirectiveValue().Trim().ShouldEqual("https:  https://www.example.com/  'self'");
         }
 
         [Fact]
@@ -186,7 +186,22 @@ namespace SecurityHeadersMiddleware.Tests {
             var list = new CspSourceList();
             list.AddKeyword(CspKeyword.UnsafeInline);
 
-            list.ToHeaderValue().Trim().ShouldEqual("'unsafe-inline'");
+            list.ToDirectiveValue().Trim().ShouldEqual("'unsafe-inline'");
+        }
+
+        [Fact]
+        public void When_using_a_semicolon_in_a_value_it_should_be_escaped() {
+            var list = new CspSourceList();
+            list.AddHost("http://example.com/abcd;/asdas");
+
+            list.ToDirectiveValue().Should().Be("http://example.com/abcd%3B/asdas");
+        }
+
+        public void When_using_a_comma_in_a_value_it_should_be_escaped() {
+            var list = new CspSourceList();
+            list.AddHost("http://example.com/abcd,/asdas");
+
+            list.ToDirectiveValue().Should().Be("http://example.com/abcd%2C/asdas");
         }
     }
 }

@@ -126,6 +126,21 @@ namespace SecurityHeadersMiddleware.OwinAppBuilder {
         }
         #endregion
 
+        #region Content Security Policy
+        /// <summary>
+        /// Adds the "Content-Security-Policy" header with the given configuration to the response.
+        /// </summary>
+        /// <param name="builder">The IAppBuilder instance.</param>
+        /// <param name="configuration">The Content-Security-Policy configuration.</param>
+        /// <returns>The IAppBuilder instance.</returns>
+        public static IAppBuilder ContentSecurityPolicy(this IAppBuilder builder, ContentSecurityPolicyConfiguration configuration) {
+            builder.MustNotNull("builder");
+
+            builder.UseOwin().ContentSecurityPolicy(configuration);
+            return builder;
+        }
+        #endregion
+
 
         internal static BuildFunc UseOwin(this IAppBuilder builder) {
             return middleware => builder.Use(middleware(builder.Properties));

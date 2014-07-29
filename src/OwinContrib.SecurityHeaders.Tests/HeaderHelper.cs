@@ -16,8 +16,12 @@ namespace SecurityHeadersMiddleware.Tests {
             return source.Headers.GetValues(HeaderConstants.XContentTypeOptions).Single();
         }
 
-        public static string XssProtection(this HttpResponseMessage soruce) {
-            return soruce.Headers.GetValues(HeaderConstants.XssProtection).First();
+        public static string XssProtection(this HttpResponseMessage source) {
+            return source.Headers.GetValues(HeaderConstants.XssProtection).First();
+        }
+
+        public static string Csp(this HttpResponseMessage source) {
+            return source.Headers.GetValues(HeaderConstants.ContentSecurityPolicy).First();
         }
     }
 }

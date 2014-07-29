@@ -103,5 +103,19 @@ namespace SecurityHeadersMiddleware {
             return builder;
         }
         #endregion
+
+        #region Content Security Policy
+        /// <summary>
+        /// Adds the "Content-Security-Policy" (CSP) header with the given configuration to the response.
+        /// </summary>
+        /// <param name="builder">The OWIN builder instance.</param>
+        /// <param name="configuration">The Content-Security-Policy configuration.</param>
+        /// <returns>The OWIN builder instance.</returns>
+        public static Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> ContentSecurityPolicy(this Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> builder, ContentSecurityPolicyConfiguration configuration) {
+            configuration.MustNotNull("configuration");
+            builder(_ => ContentSecurityPolicyMiddleware.ContentSecurityPolicyHeader(configuration));
+            return builder;
+        }
+        #endregion
     }
 }

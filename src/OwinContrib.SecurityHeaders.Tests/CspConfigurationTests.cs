@@ -34,7 +34,7 @@ namespace SecurityHeadersMiddleware.Tests {
         }
 
         [Fact]
-        public void Each_source_type_should_be_separated_by_a_semicolon() {
+        public void Source_types_should_be_separated_by_a_semicolon() {
             var config = new ContentSecurityPolicyConfiguration();
             config.StyleSrc.AddKeyword(CspKeyword.Self);
             config.ImgSrc.AddScheme("https");
@@ -45,7 +45,5 @@ namespace SecurityHeadersMiddleware.Tests {
             
             split.Length.Should().Be(4);
         }
-
-        
     }
 }

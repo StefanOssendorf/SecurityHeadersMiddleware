@@ -197,6 +197,7 @@ namespace SecurityHeadersMiddleware.Tests {
             list.ToDirectiveValue().Should().Be("http://example.com/abcd%3B/asdas");
         }
 
+        [Fact]
         public void When_using_a_comma_in_a_value_it_should_be_escaped() {
             var list = new CspSourceList();
             list.AddHost("http://example.com/abcd,/asdas");

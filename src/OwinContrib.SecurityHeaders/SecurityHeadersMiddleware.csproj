@@ -90,6 +90,7 @@
     <Compile Include="ContentSecurityPolicyMiddleware.cs" />
     <Compile Include="ContenTypeOptionsHeaderMiddleware.cs" />
     <Compile Include="CspKeyword.cs" />
+    <Compile Include="CspMediaTypeList.cs" />
     <Compile Include="CspSourceList.cs" />
     <Compile Include="HostSourceParts.cs" />
     <Compile Include="Infrastructure\HeaderConstants.cs" />

@@ -14,7 +14,7 @@ namespace SecurityHeadersMiddleware.Tests {
         public async Task When_adding_csp_middleware_a_response_should_serve_the_csp_header() {
             var config = new ContentSecurityPolicyConfiguration();
             config.ScriptSrc.AddScheme("https:");
-            config.ImgSrc.AddKeyword(CspKeyword.Self);
+            config.ImgSrc.AddKeyword(SourceListKeyword.Self);
             var client = CspClientHelper.Create(config);
             var response = await client.GetAsync("https://wwww.example.com");
 
@@ -25,7 +25,7 @@ namespace SecurityHeadersMiddleware.Tests {
         public async Task When_adding_csp_middleware_the_response_should_contain_the_expected_csp_directives() {
             var config = new ContentSecurityPolicyConfiguration();
             config.ScriptSrc.AddScheme("https:");
-            config.ImgSrc.AddKeyword(CspKeyword.Self);
+            config.ImgSrc.AddKeyword(SourceListKeyword.Self);
             var client = CspClientHelper.Create(config);
             var response = await client.GetAsync("https://wwww.example.com");
             var headerValue = response.Csp();

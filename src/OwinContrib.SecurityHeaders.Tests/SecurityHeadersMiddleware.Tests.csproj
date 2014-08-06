@@ -78,6 +78,7 @@
     <Compile Include="AntiClickJackingMiddlewareSpecs.cs" />
     <Compile Include="AppBuilderExtensions.cs" />
     <Compile Include="CspConfigurationTests.cs" />
+    <Compile Include="CspMediaTypeListTests.cs" />
     <Compile Include="CspMiddlewareTests.cs" />
     <Compile Include="ContentTypeOptionsMiddleware.cs" />
     <Compile Include="CspSourceListTests.cs" />

@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using SecurityHeadersMiddleware.Infrastructure;
 
 namespace SecurityHeadersMiddleware {
-    public class CspMediaTypeList {
+    public class CspMediaTypeList : IDirectiveValueBuilder {
         private readonly List<string> mMediaTypes;
-        private static readonly List<string> mDiscreteTypes;
+        private const string TSpecial = "()<>@,;:\\\"/[]?= ";
 
-
-        static CspMediaTypeList() {
-            mDiscreteTypes = new List<string> {
-                "text", "image", "audio", "video", "application"
-            };
-        }
         public CspMediaTypeList() {
             mMediaTypes = new List<string>();
         }
@@ -25,38 +20,51 @@ namespace SecurityHeadersMiddleware {
             VerifyMediaType(mediaType);
             mMediaTypes.Add(mediaType);
         }
-        private void VerifyMediaType(string mediaType) {
+        private static void VerifyMediaType(string mediaType) {
             var split = mediaType.Split(new[] { "/" }, StringSplitOptions.None);
-            if (split.Length != 2) {
+            if (split.Length != 2 || split[0].Length == 0 || split[1].Length == 0) {
                 const string msg = "Mediatype value '{0}' does not satisfy the required format.{1}" +
                                    "Valid mediatypes: text/plain or text/html{1}" +
-                                   "For more informatin see: {2} (media-type).";
+                                   "For more information see: {2} (media-type).";
                 throw new FormatException(msg.FormatWith(mediaType, Environment.NewLine, "http://www.w3.org/TR/CSP2/#media-type-list1"));
             }
 
-            VerifyType(split[0].ToLower());
-            VeritySubType(split[1].ToLower());
+            VerifyType(split[0].ToLower(), mediaType);
+            VeritySubType(split[1].ToLower(), mediaType);
         }
-        private void VerifyType(string type) {
-            if (mDiscreteTypes.Any(t => t == type)) {
+        private static void VerifyType(string type, string mediaType) {
+            if (type.All(IsToken)) {
                 return;
             }
-            if (TryVerifyAsXToken(type)) {
+            const string msg = "The type part '{0} of mediatype '{1}' does not satisfy the required format.{2}" +
+                               "Type contains illegal characters.{2}" +
+                               "For more information see: {3} (media-type).";
+            throw new FormatException(msg.FormatWith(type, mediaType, Environment.NewLine, "http://www.w3.org/TR/CSP2/#media-type-list1"));
+        }
+
+        private static void VeritySubType(string subType, string mediaType) {
+            if (subType.All(IsToken)) {
                 return;
             }
-
-            throw new NotImplementedException();
+            const string msg = "The subtype part '{0} of mediatype '{1}' does not satisfy the required format.{2}" +
+                               "Subtype contains illegal characters.{2}" +
+                               "For more information see: {3} (media-type).";
+            throw new FormatException(msg.FormatWith(subType, mediaType, Environment.NewLine, "http://www.w3.org/TR/CSP2/#media-type-list1"));
         }
-        private bool TryVerifyAsXToken(string maybeXToken) {
-            if (!maybeXToken.StartsWith("x-")) {
-                return false;
+
+        private static bool IsToken(char value) {
+            return value.IsAscii() && !value.IsCTL() && TSpecial.All(c => c != value);
+        }
+
+        public string ToDirectiveValue() {
+            if (mMediaTypes.Count == 0) {
+                return "";
             }
-
-
-            return true;
-        }
-        private void VeritySubType(string subType) {
-            throw new NotImplementedException();
+            var sb = new StringBuilder();
+            foreach (var mediaType in mMediaTypes) {
+                sb.AppendFormat(" {0} ", mediaType);
+            }
+            return sb.ToString();
         }
     }
 }

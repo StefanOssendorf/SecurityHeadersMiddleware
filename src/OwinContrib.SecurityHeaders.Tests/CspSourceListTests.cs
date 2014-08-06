@@ -50,7 +50,7 @@ namespace SecurityHeadersMiddleware.Tests {
             var list = new CspSourceList();
             list.SetToNone();
 
-            Assert.Throws<InvalidOperationException>(() => list.AddKeyword(CspKeyword.Self));
+            Assert.Throws<InvalidOperationException>(() => list.AddKeyword(SourceListKeyword.Self));
         }
 
         [Fact]
@@ -64,7 +64,7 @@ namespace SecurityHeadersMiddleware.Tests {
         [Fact]
         public void When_adding_a_keyword_it_should_create_the_correct_value_for_the_header() {
             var list = new CspSourceList();
-            list.AddKeyword(CspKeyword.Self);
+            list.AddKeyword(SourceListKeyword.Self);
 
             list.ToDirectiveValue().Trim().ShouldEqual("'self'");
         }
@@ -72,10 +72,10 @@ namespace SecurityHeadersMiddleware.Tests {
         [Fact]
         public void When_adding_a_keyword_multiple_times_it_should_return_it_only_once_in_header_value() {
             var list = new CspSourceList();
-            list.AddKeyword(CspKeyword.Self);
-            list.AddKeyword(CspKeyword.Self);
-            list.AddKeyword(CspKeyword.Self);
-            list.AddKeyword(CspKeyword.Self);
+            list.AddKeyword(SourceListKeyword.Self);
+            list.AddKeyword(SourceListKeyword.Self);
+            list.AddKeyword(SourceListKeyword.Self);
+            list.AddKeyword(SourceListKeyword.Self);
 
             list.ToDirectiveValue().Trim().ShouldEqual("'self'");
         }
@@ -83,11 +83,11 @@ namespace SecurityHeadersMiddleware.Tests {
         [Fact]
         public void When_addin_mutliple_keywords_it_should_create_the_keywords_whiteSpace_separated() {
             var list = new CspSourceList();
-            list.AddKeyword(CspKeyword.Self);
-            list.AddKeyword(CspKeyword.UnsafeEval);
-            list.AddKeyword(CspKeyword.Self);
-            list.AddKeyword(CspKeyword.UnsafeInline);
-            list.AddKeyword(CspKeyword.UnsafeRedirect);
+            list.AddKeyword(SourceListKeyword.Self);
+            list.AddKeyword(SourceListKeyword.UnsafeEval);
+            list.AddKeyword(SourceListKeyword.Self);
+            list.AddKeyword(SourceListKeyword.UnsafeInline);
+            list.AddKeyword(SourceListKeyword.UnsafeRedirect);
 
             list.ToDirectiveValue().Trim().ShouldEqual("'self' 'unsafe-eval' 'unsafe-inline' 'unsafe-redirect'");
         }
@@ -168,7 +168,7 @@ namespace SecurityHeadersMiddleware.Tests {
         public void When_adding_scheme_host_and_keyword_it_should_create_correct_header_value() {
             var list = new CspSourceList();
             list.AddScheme("https");
-            list.AddKeyword(CspKeyword.Self);
+            list.AddKeyword(SourceListKeyword.Self);
             list.AddHost("https://www.example.com/");
 
             list.ToDirectiveValue().Trim().ShouldEqual("https:  https://www.example.com/  'self'");
@@ -184,7 +184,7 @@ namespace SecurityHeadersMiddleware.Tests {
         [Fact]
         public void When_adding_keyword_unsafeinline_it_should_create_the_correct_header_value() {
             var list = new CspSourceList();
-            list.AddKeyword(CspKeyword.UnsafeInline);
+            list.AddKeyword(SourceListKeyword.UnsafeInline);
 
             list.ToDirectiveValue().Trim().ShouldEqual("'unsafe-inline'");
         }

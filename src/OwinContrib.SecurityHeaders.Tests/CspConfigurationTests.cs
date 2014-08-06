@@ -25,7 +25,7 @@ namespace SecurityHeadersMiddleware.Tests {
         public void When_set_two_sources_they_should_be_separated_by_a_semicolon() {
             var config = new ContentSecurityPolicyConfiguration();
             config.ScriptSrc.AddScheme("https");
-            config.ImgSrc.AddKeyword(CspKeyword.Self);
+            config.ImgSrc.AddKeyword(SourceListKeyword.Self);
 
             var value = config.ToHeaderValue();
             var split = value.Split(new[] { ";" }, StringSplitOptions.None);
@@ -38,9 +38,9 @@ namespace SecurityHeadersMiddleware.Tests {
         [Fact]
         public void Source_types_should_be_separated_by_a_semicolon() {
             var config = new ContentSecurityPolicyConfiguration();
-            config.StyleSrc.AddKeyword(CspKeyword.Self);
+            config.StyleSrc.AddKeyword(SourceListKeyword.Self);
             config.ImgSrc.AddScheme("https");
-            config.MediaSrc.AddKeyword(CspKeyword.UnsafeInline);
+            config.MediaSrc.AddKeyword(SourceListKeyword.UnsafeInline);
             config.BaseUri.AddScheme("https");
 
             var split = config.ToHeaderValue().Split(new[] { ";" }, StringSplitOptions.None);
@@ -52,19 +52,21 @@ namespace SecurityHeadersMiddleware.Tests {
         [Fact]
         public void All_source_types_should_be_in_the_header_value() {
             var config = new ContentSecurityPolicyConfiguration();
-            config.BaseUri.AddKeyword(CspKeyword.Self);
-            config.ChildSrc.AddKeyword(CspKeyword.Self);
-            config.ConnectSrc.AddKeyword(CspKeyword.Self);
-            config.DefaultSrc.AddKeyword(CspKeyword.Self);
-            config.FontSrc.AddKeyword(CspKeyword.Self);
-            config.FormAction.AddKeyword(CspKeyword.Self);
-            config.FrameAncestors.AddKeyword(CspKeyword.Self);
-            config.FrameSrc.AddKeyword(CspKeyword.Self);
-            config.ImgSrc.AddKeyword(CspKeyword.Self);
-            config.MediaSrc.AddKeyword(CspKeyword.Self);
-            config.ObjectSrc.AddKeyword(CspKeyword.Self);
-            config.ScriptSrc.AddKeyword(CspKeyword.Self);
-            config.StyleSrc.AddKeyword(CspKeyword.Self);
+            config.BaseUri.AddKeyword(SourceListKeyword.Self);
+            config.ChildSrc.AddKeyword(SourceListKeyword.Self);
+            config.ConnectSrc.AddKeyword(SourceListKeyword.Self);
+            config.DefaultSrc.AddKeyword(SourceListKeyword.Self);
+            config.FontSrc.AddKeyword(SourceListKeyword.Self);
+            config.FormAction.AddKeyword(SourceListKeyword.Self);
+            config.FrameAncestors.AddKeyword(SourceListKeyword.Self);
+            config.FrameSrc.AddKeyword(SourceListKeyword.Self);
+            config.ImgSrc.AddKeyword(SourceListKeyword.Self);
+            config.MediaSrc.AddKeyword(SourceListKeyword.Self);
+            config.ObjectSrc.AddKeyword(SourceListKeyword.Self);
+            config.ScriptSrc.AddKeyword(SourceListKeyword.Self);
+            config.StyleSrc.AddKeyword(SourceListKeyword.Self);
+            config.PluginTypes.AddMediaType("application/xml");
+            config.Referrer = ReferrerKeyword.OriginWhenCossOrigin;
 
             var expected = new List<string> {
                 "base-uri", "child-src", "connect-src", "default-src","font-src", "form-action", "frame-ancestors", "frame-src",

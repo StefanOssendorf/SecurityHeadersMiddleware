@@ -1,9 +1,9 @@
 namespace SecurityHeadersMiddleware {
     /// <summary>
-    /// Specifies the allowed keywords through CSP.<br/>
+    /// Specifies the allowed source list keywords according to the CSP.<br/>
     /// See http://www.w3.org/TR/CSP2/#keyword-source
     /// </summary>
-    public enum CspKeyword {
+    public enum SourceListKeyword {
         /// <summary>
         /// Keyword: 'self'
         /// </summary>

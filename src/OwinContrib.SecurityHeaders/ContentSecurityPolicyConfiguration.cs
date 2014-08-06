@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using SecurityHeadersMiddleware.Infrastructure;
 
@@ -67,15 +65,13 @@ namespace SecurityHeadersMiddleware {
         /// Gets the plugin-types directive source-list.<br/>
         /// See http://www.w3.org/TR/CSP2/#directive-plugin-types
         /// </summary>
-        // TODO: media-type-list
-        //public CspSourceList PluginTypes { get; private set; }
+        public CspMediaTypeList PluginTypes { get; private set; }
 
         /// <summary>
         /// Gets the referrer directive source-list.<br/>
         /// See http://www.w3.org/TR/CSP11/#directive-referrer
         /// </summary>
-        // TODO: referrer keywords
-        //public CspSourceList Referrer { get; private set; }
+        public ReferrerKeyword Referrer { get; set; }
 
         /// <summary>
         /// Gets the reflected-xss directive source-list.<br/>
@@ -127,6 +123,8 @@ namespace SecurityHeadersMiddleware {
             ObjectSrc = new CspSourceList();
             ScriptSrc = new CspSourceList();
             StyleSrc = new CspSourceList();
+            PluginTypes = new CspMediaTypeList();
+            Referrer = ReferrerKeyword.NotSet;
         }
 
         public string ToHeaderValue() {
@@ -142,8 +140,8 @@ namespace SecurityHeadersMiddleware {
             values.Add(BuildDirectiveValue("img-src", ImgSrc));
             values.Add(BuildDirectiveValue("media-src", MediaSrc));
             values.Add(BuildDirectiveValue("object-src", ObjectSrc));
-            //values.Add(BuildDirectiveValue("plugin-types", PluginTypes));
-            //values.Add(BuildDirectiveValue("referrer", Referrer));
+            values.Add(BuildDirectiveValue("plugin-types", PluginTypes));
+            values.Add(BuildDirectiveValue("referrer", ReferrerDirectiveValueBuilder.Get(Referrer)));
             //values.Add(BuildDirectiveValue("reflected-xss", ReflectedXss));
             //values.Add(BuildDirectiveValue("report-uri", ReportUri));
             //values.Add(BuildDirectiveValue("sandbox", Sandbox));
@@ -165,8 +163,10 @@ namespace SecurityHeadersMiddleware {
             return sb.ToString();
         }
 
-        private string BuildDirectiveValue(string directiveName, CspSourceList sourceList) {
-            var directiveValue = sourceList.ToDirectiveValue();
+        private static string BuildDirectiveValue(string directiveName, IDirectiveValueBuilder sourceList) {
+            return BuildDirectiveValue(directiveName, sourceList.ToDirectiveValue());
+        }
+        private static string BuildDirectiveValue(string directiveName, string directiveValue) {
             if (directiveValue.IsNullOrWhiteSpace()) {
                 return "";
             }

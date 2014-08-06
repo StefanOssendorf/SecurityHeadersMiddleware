@@ -12,10 +12,10 @@ namespace SecurityHeadersMiddleware {
     /// <summary>
     /// Represents a source-list according to the CSP specification (http://www.w3.org/TR/CSP2/#source-list).
     /// </summary>
-    public class CspSourceList {
+    public class CspSourceList : IDirectiveValueBuilder {
         private bool mIsNone;
         private readonly List<string> mSchemes;
-        private readonly List<CspKeyword> mKeywords;
+        private readonly List<SourceListKeyword> mKeywords;
         private readonly List<string> mHosts;
 
 
@@ -24,7 +24,7 @@ namespace SecurityHeadersMiddleware {
         /// </summary>
         public CspSourceList() {
             mSchemes = new List<string>();
-            mKeywords = new List<CspKeyword>();
+            mKeywords = new List<SourceListKeyword>();
             mHosts = new List<string>();
             mIsNone = false;
         }
@@ -33,7 +33,7 @@ namespace SecurityHeadersMiddleware {
         /// Adds a keyword to the source-list.
         /// </summary>
         /// <param name="keyword">The keyword.</param>
-        public void AddKeyword(CspKeyword keyword) {
+        public void AddKeyword(SourceListKeyword keyword) {
             ThrowIfNoneIsSet();
             if (mKeywords.Contains(keyword)) {
                 return;
@@ -294,7 +294,7 @@ namespace SecurityHeadersMiddleware {
                 throw new InvalidOperationException("This list ist set to 'none'. No additional values are allowed. Don't set this liste to 'none' to add new values.");
             }
         }
-        internal string ToDirectiveValue() {
+        public string ToDirectiveValue() {
             if (mIsNone) {
                 return "'none'";
             }

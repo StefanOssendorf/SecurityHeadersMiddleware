@@ -66,7 +66,8 @@ namespace SecurityHeadersMiddleware.Tests {
             config.ScriptSrc.AddKeyword(SourceListKeyword.Self);
             config.StyleSrc.AddKeyword(SourceListKeyword.Self);
             config.PluginTypes.AddMediaType("application/xml");
-            config.Referrer = ReferrerKeyword.OriginWhenCossOrigin;
+            config.Referrer = ReferrerKeyword.None;
+            config.ReflectedXss = ReflectedXssKeyword.Allow;
 
             var expected = new List<string> {
                 "base-uri", "child-src", "connect-src", "default-src","font-src", "form-action", "frame-ancestors", "frame-src",

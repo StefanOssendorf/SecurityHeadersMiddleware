@@ -78,8 +78,7 @@ namespace SecurityHeadersMiddleware {
         /// See http://www.w3.org/TR/CSP2/#directive-reflected-xss <br/>
         /// Info: "(...) subsume the functionality provided by the proprietary X-XSS-Protection HTTP header (...)"
         /// </summary>
-        // TODO: relfected-xss keywords
-        //public CspSourceList ReflectedXss { get; private set; }
+        public ReflectedXssKeyword ReflectedXss { get; set; }
 
         /// <summary>
         /// Gets the report-uri directive source-list.<br/>
@@ -125,6 +124,7 @@ namespace SecurityHeadersMiddleware {
             StyleSrc = new CspSourceList();
             PluginTypes = new CspMediaTypeList();
             Referrer = ReferrerKeyword.NotSet;
+            ReflectedXss = ReflectedXssKeyword.NotSet;
         }
 
         public string ToHeaderValue() {
@@ -142,7 +142,7 @@ namespace SecurityHeadersMiddleware {
             values.Add(BuildDirectiveValue("object-src", ObjectSrc));
             values.Add(BuildDirectiveValue("plugin-types", PluginTypes));
             values.Add(BuildDirectiveValue("referrer", ReferrerDirectiveValueBuilder.Get(Referrer)));
-            //values.Add(BuildDirectiveValue("reflected-xss", ReflectedXss));
+            values.Add(BuildDirectiveValue("reflected-xss", ReflectedXssDirectiveValueBuilder.Get(ReflectedXss))); //TODO: Tests
             //values.Add(BuildDirectiveValue("report-uri", ReportUri));
             //values.Add(BuildDirectiveValue("sandbox", Sandbox));
             values.Add(BuildDirectiveValue("script-src", ScriptSrc));

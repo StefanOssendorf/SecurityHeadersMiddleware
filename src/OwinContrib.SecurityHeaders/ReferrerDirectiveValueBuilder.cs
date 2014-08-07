@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace SecurityHeadersMiddleware {
     internal class ReferrerDirectiveValueBuilder : IDirectiveValueBuilder {
@@ -27,7 +29,7 @@ namespace SecurityHeadersMiddleware {
         }
 
         private readonly ReferrerKeyword mKeyword;
-        public ReferrerDirectiveValueBuilder(ReferrerKeyword keyword) {
+        private ReferrerDirectiveValueBuilder(ReferrerKeyword keyword) {
             mKeyword = keyword;
         }
         public string ToDirectiveValue() {
@@ -46,6 +48,42 @@ namespace SecurityHeadersMiddleware {
                     return "unsafe-url";
                 default:
                     throw new InvalidEnumArgumentException();
+            }
+        }
+    }
+
+    internal class ReflectedXssDirectiveValueBuilder : IDirectiveValueBuilder {
+        private readonly ReflectedXssKeyword mKeyword;
+        private static readonly Dictionary<ReflectedXssKeyword, IDirectiveValueBuilder> Cache;
+
+        static ReflectedXssDirectiveValueBuilder() {
+            Cache = new Dictionary<ReflectedXssKeyword, IDirectiveValueBuilder> {
+                {
+                    ReflectedXssKeyword.NotSet, new ReflectedXssDirectiveValueBuilder(ReflectedXssKeyword.NotSet)
+                },
+                {
+                    ReflectedXssKeyword.Block, new ReflectedXssDirectiveValueBuilder(ReflectedXssKeyword.Block)
+                },
+                {
+                    ReflectedXssKeyword.Allow, new ReflectedXssDirectiveValueBuilder(ReflectedXssKeyword.Allow)
+                },
+                {
+                    ReflectedXssKeyword.Filter, new ReflectedXssDirectiveValueBuilder(ReflectedXssKeyword.Filter)
+                }
+            };
+        }
+        private ReflectedXssDirectiveValueBuilder(ReflectedXssKeyword keyword) {
+            mKeyword = keyword;
+        }
+        internal static IDirectiveValueBuilder Get(ReflectedXssKeyword word) {
+            return Cache[word];
+        }
+        public string ToDirectiveValue() {
+            switch (mKeyword) {
+                case ReflectedXssKeyword.NotSet:
+                    return "";
+                default:
+                    return mKeyword.ToString().ToLower();
             }
         }
     }

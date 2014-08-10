@@ -10,7 +10,7 @@ Middlewares to set useful security-related HTTP headers in your OWIN application
 - X-Frame-Options incl. supporting multiple origins
 - X-XSS-Protection inlc. disabling (but I don't know why).
 - X-Content-Type-Options
-- Content-Security-Policy (most but not all, will add the rest asap)
+- Content-Security-Policy
 
 **Outstanding**
 

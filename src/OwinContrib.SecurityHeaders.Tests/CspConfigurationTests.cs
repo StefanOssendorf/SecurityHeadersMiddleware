@@ -68,6 +68,8 @@ namespace SecurityHeadersMiddleware.Tests {
             config.PluginTypes.AddMediaType("application/xml");
             config.Referrer = ReferrerKeyword.None;
             config.ReflectedXss = ReflectedXssKeyword.Allow;
+            config.ReportUri.AddReportUri("https://www.example.com/report-uri");
+            config.Sandbox.AddToken("allow-scripts");
 
             var expected = new List<string> {
                 "base-uri", "child-src", "connect-src", "default-src","font-src", "form-action", "frame-ancestors", "frame-src",

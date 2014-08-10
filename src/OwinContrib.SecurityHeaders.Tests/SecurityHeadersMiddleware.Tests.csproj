@@ -81,11 +81,14 @@
     <Compile Include="CspMediaTypeListTests.cs" />
     <Compile Include="CspMiddlewareTests.cs" />
     <Compile Include="ContentTypeOptionsMiddleware.cs" />
+    <Compile Include="CspSandboxTokenListTests.cs" />
     <Compile Include="CspSourceListTests.cs" />
+    <Compile Include="CspUriReferenceListTests.cs" />
     <Compile Include="HeaderHelper.cs" />
     <Compile Include="OwinEnvironmentSpecBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReferrerKeywordTests.cs" />
+    <Compile Include="ReflectedXssKeywordTests.cs" />
     <Compile Include="StrictTransportSecurityMiddlewareSpecs.cs" />
     <Compile Include="XssProtectionHeaderMiddlewareSpecs.cs" />
   </ItemGroup>

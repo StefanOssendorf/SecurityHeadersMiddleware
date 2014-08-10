@@ -294,6 +294,11 @@ namespace SecurityHeadersMiddleware {
                 throw new InvalidOperationException("This list ist set to 'none'. No additional values are allowed. Don't set this liste to 'none' to add new values.");
             }
         }
+
+        /// <summary>
+        /// Creates the directive header value.
+        /// </summary>
+        /// <returns>The directive header value without directive-name.</returns>
         public string ToDirectiveValue() {
             if (mIsNone) {
                 return "'none'";

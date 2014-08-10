@@ -3,6 +3,9 @@ using System.Text;
 using SecurityHeadersMiddleware.Infrastructure;
 
 namespace SecurityHeadersMiddleware {
+    /// <summary>
+    /// Defines the content-security-policy header values.
+    /// </summary>
     public class ContentSecurityPolicyConfiguration {
         /// <summary>
         /// Gets the base-uri directive source-list.<br/>
@@ -84,15 +87,13 @@ namespace SecurityHeadersMiddleware {
         /// Gets the report-uri directive source-list.<br/>
         /// See http://www.w3.org/TR/CSP2/#directive-report-uri
         /// </summary>
-        // TODO: URI from RFC3986
-        //public CspSourceList ReportUri { get; private set; }
+        public CspUriReferenceList ReportUri { get; private set; }
 
         /// <summary>
         /// Gets the sandbox directive source-list.<br/>
         /// See http://www.w3.org/TR/CSP2/#directive-sandbox
         /// </summary>
-        // TODO: Sandbox-token (RFC7230)
-        //public CspSourceList Sandbox { get; private set; }
+        public CspSandboxTokenList Sandbox { get; private set; }
 
         /// <summary>
         /// Gets the script-src directive source-list.<br/>
@@ -108,6 +109,9 @@ namespace SecurityHeadersMiddleware {
         public CspSourceList StyleSrc { get; set; }
 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContentSecurityPolicyConfiguration"/> class.
+        /// </summary>
         public ContentSecurityPolicyConfiguration() {
             BaseUri = new CspSourceList();
             ChildSrc = new CspSourceList();
@@ -125,29 +129,35 @@ namespace SecurityHeadersMiddleware {
             PluginTypes = new CspMediaTypeList();
             Referrer = ReferrerKeyword.NotSet;
             ReflectedXss = ReflectedXssKeyword.NotSet;
+            ReportUri = new CspUriReferenceList();
+            Sandbox = new CspSandboxTokenList();
         }
 
+        /// <summary>
+        /// Creates the header values of all set directves.
+        /// </summary>
+        /// <returns>The content-security-policy header value.</returns>
         public string ToHeaderValue() {
-            var values = new List<string>(16);
-            values.Add(BuildDirectiveValue("base-uri", BaseUri));
-            values.Add(BuildDirectiveValue("child-src", ChildSrc));
-            values.Add(BuildDirectiveValue("connect-src", ConnectSrc));
-            values.Add(BuildDirectiveValue("default-src", DefaultSrc));
-            values.Add(BuildDirectiveValue("font-src", FontSrc));
-            values.Add(BuildDirectiveValue("form-action", FormAction));
-            values.Add(BuildDirectiveValue("frame-ancestors", FrameAncestors));
-            values.Add(BuildDirectiveValue("frame-src", FrameSrc));
-            values.Add(BuildDirectiveValue("img-src", ImgSrc));
-            values.Add(BuildDirectiveValue("media-src", MediaSrc));
-            values.Add(BuildDirectiveValue("object-src", ObjectSrc));
-            values.Add(BuildDirectiveValue("plugin-types", PluginTypes));
-            values.Add(BuildDirectiveValue("referrer", ReferrerDirectiveValueBuilder.Get(Referrer)));
-            values.Add(BuildDirectiveValue("reflected-xss", ReflectedXssDirectiveValueBuilder.Get(ReflectedXss))); //TODO: Tests
-            //values.Add(BuildDirectiveValue("report-uri", ReportUri));
-            //values.Add(BuildDirectiveValue("sandbox", Sandbox));
-            values.Add(BuildDirectiveValue("script-src", ScriptSrc));
-            values.Add(BuildDirectiveValue("style-src", StyleSrc));
-
+            var values = new List<string>(16) {
+                BuildDirectiveValue("base-uri", BaseUri), 
+                BuildDirectiveValue("child-src", ChildSrc), 
+                BuildDirectiveValue("connect-src", ConnectSrc), 
+                BuildDirectiveValue("default-src", DefaultSrc), 
+                BuildDirectiveValue("font-src", FontSrc), 
+                BuildDirectiveValue("form-action", FormAction), 
+                BuildDirectiveValue("frame-ancestors", FrameAncestors), 
+                BuildDirectiveValue("frame-src", FrameSrc), 
+                BuildDirectiveValue("img-src", ImgSrc), 
+                BuildDirectiveValue("media-src", MediaSrc), 
+                BuildDirectiveValue("object-src", ObjectSrc), 
+                BuildDirectiveValue("plugin-types", PluginTypes), 
+                BuildDirectiveValue("referrer", ReferrerDirectiveValueBuilder.Get(Referrer)), 
+                BuildDirectiveValue("reflected-xss", ReflectedXssDirectiveValueBuilder.Get(ReflectedXss)), 
+                BuildDirectiveValue("report-uri", ReportUri), 
+                BuildDirectiveValue("sandbox", Sandbox), 
+                BuildDirectiveValue("script-src", ScriptSrc), 
+                BuildDirectiveValue("style-src", StyleSrc)
+            };
             var sb = new StringBuilder();
             for (int i = 0; i < values.Count; i++) {
                 var value = values[i];

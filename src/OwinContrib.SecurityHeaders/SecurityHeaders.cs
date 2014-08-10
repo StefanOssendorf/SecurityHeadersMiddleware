@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 using SecurityHeadersMiddleware.Infrastructure;
 
 namespace SecurityHeadersMiddleware {
+    /// <summary>
+    /// OWIN extension methods.
+    /// </summary>
     public static class SecurityHeaders {
         #region AntiClickjacking
         /// <summary>

@@ -9,7 +9,7 @@ namespace SecurityHeadersMiddleware.Tests {
         }
 
         [Fact]
-        public void ReferrerKeywords_should_be_the_correct_headerValues() {
+        public void ReferrerKeywords_should_create_the_correct_headerValues() {
             GetBuilder(ReferrerKeyword.NoneWhenDowngrade).ToDirectiveValue().Should().Be("none-when-downgrade");
             GetBuilder(ReferrerKeyword.None).ToDirectiveValue().Should().Be("none");
             GetBuilder(ReferrerKeyword.Origin).ToDirectiveValue().Should().Be("origin");

@@ -5,15 +5,25 @@ using System.Text;
 using SecurityHeadersMiddleware.Infrastructure;
 
 namespace SecurityHeadersMiddleware {
+    /// <summary>
+    /// Represents a media-type-list according to the CSP specification (http://www.w3.org/TR/CSP2/#media-type-list).
+    /// </summary>
     public class CspMediaTypeList : IDirectiveValueBuilder {
         private readonly List<string> mMediaTypes;
         private const string TSpecial = "()<>@,;:\\\"/[]?= ";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CspMediaTypeList"/> class.
+        /// </summary>
         public CspMediaTypeList() {
             mMediaTypes = new List<string>();
         }
 
 
+        /// <summary>
+        /// Adds a media type to the media-type-list.
+        /// </summary>
+        /// <param name="mediaType">The media type.</param>
         public void AddMediaType(string mediaType) {
             mediaType.MustNotBeWhiteSpaceOrEmpty("mediaType");
 
@@ -56,6 +66,10 @@ namespace SecurityHeadersMiddleware {
             return value.IsAscii() && !value.IsCTL() && TSpecial.All(c => c != value);
         }
 
+        /// <summary>
+        /// Creates the directive header value.
+        /// </summary>
+        /// <returns>The directive header value without directive-name.</returns>
         public string ToDirectiveValue() {
             if (mMediaTypes.Count == 0) {
                 return "";

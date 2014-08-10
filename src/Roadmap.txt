@@ -10,7 +10,8 @@ Already implemented:
 - X-Frame-Options
 - Strict-Transport-Security
 - X-Content-Type-Options
+- Content-Security-Policy
 
 Next:
-- Content-Security-Policy
+
 - Content-Security-Policy-Report-Only

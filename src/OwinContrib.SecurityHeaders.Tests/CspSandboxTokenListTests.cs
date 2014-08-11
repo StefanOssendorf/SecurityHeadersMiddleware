@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Xunit;
@@ -15,7 +16,6 @@ namespace SecurityHeadersMiddleware.Tests {
         public void When_adding_a_valid_sandboxToken_it_should_create_a_headerValue() {
             var list = new CspSandboxTokenList();
             list.AddToken("allow-scripts");
-
             list.ToDirectiveValue().Should().Be("allow-scripts");
         }
 
@@ -24,7 +24,6 @@ namespace SecurityHeadersMiddleware.Tests {
             var list = new CspSandboxTokenList();
             list.AddToken("allow-scripts");
             list.AddToken("allow-scripts");
-
             list.ToDirectiveValue().Trim().Should().Be("allow-scripts");
         }
 
@@ -37,13 +36,10 @@ namespace SecurityHeadersMiddleware.Tests {
             list.AddKeyword(SandboxKeyword.AllowSameOrigin);
             list.AddKeyword(SandboxKeyword.AllowScripts);
             list.AddKeyword(SandboxKeyword.AllowTopNavigation);
-
-            var split = list.ToDirectiveValue().Split(new[] { " " }, StringSplitOptions.None).Select(item => item.Trim());
-
+            IEnumerable<string> split = list.ToDirectiveValue().Split(new[] {" "}, StringSplitOptions.None).Select(item => item.Trim());
             var expectedValues = new[] {
                 "allow-forms", "allow-pointer-lock", "allow-popups", "allow-same-origin", "allow-scripts", "allow-top-navigation"
             };
-
             split.Should().Contain(expectedValues);
         }
 

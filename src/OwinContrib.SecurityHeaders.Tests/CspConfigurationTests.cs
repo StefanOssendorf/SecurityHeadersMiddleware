@@ -9,7 +9,6 @@ namespace SecurityHeadersMiddleware.Tests {
         [Fact]
         public void When_generating_header_value_and_no_configurations_are_set_return_empty_string() {
             var config = new ContentSecurityPolicyConfiguration();
-
             config.ToHeaderValue().Should().BeEmpty();
         }
 
@@ -17,7 +16,6 @@ namespace SecurityHeadersMiddleware.Tests {
         public void When_set_scriptSrc_to_none_the_header_value_should_contain_the_directive_with_none() {
             var config = new ContentSecurityPolicyConfiguration();
             config.ScriptSrc.SetToNone();
-
             config.ToHeaderValue().Should().Be("script-src 'none'");
         }
 
@@ -26,10 +24,8 @@ namespace SecurityHeadersMiddleware.Tests {
             var config = new ContentSecurityPolicyConfiguration();
             config.ScriptSrc.AddScheme("https");
             config.ImgSrc.AddKeyword(SourceListKeyword.Self);
-
-            var value = config.ToHeaderValue();
-            var split = value.Split(new[] { ";" }, StringSplitOptions.None);
-
+            string value = config.ToHeaderValue();
+            string[] split = value.Split(new[] {";"}, StringSplitOptions.None);
             split.Length.Should().Be(2);
             split.Should().Contain(item => item.Trim().Equals("script-src https:"));
             split.Should().Contain(item => item.Trim().Equals("img-src 'self'"));
@@ -42,9 +38,7 @@ namespace SecurityHeadersMiddleware.Tests {
             config.ImgSrc.AddScheme("https");
             config.MediaSrc.AddKeyword(SourceListKeyword.UnsafeInline);
             config.BaseUri.AddScheme("https");
-
-            var split = config.ToHeaderValue().Split(new[] { ";" }, StringSplitOptions.None);
-
+            string[] split = config.ToHeaderValue().Split(new[] {";"}, StringSplitOptions.None);
             split.Length.Should().Be(4);
         }
 
@@ -69,14 +63,12 @@ namespace SecurityHeadersMiddleware.Tests {
             config.ReflectedXss = ReflectedXssKeyword.Allow;
             config.ReportUri.AddReportUri("https://www.example.com/report-uri");
             config.Sandbox.AddToken("allow-scripts");
-
             var expected = new List<string> {
-                "base-uri", "child-src", "connect-src", "default-src","font-src", "form-action", "frame-ancestors", "frame-src",
-                "img-src", "media-src", "object-src", "plugin-types", "referrer", "reflected-xss", "report-uri", "sandbox", 
+                "base-uri", "child-src", "connect-src", "default-src", "font-src", "form-action", "frame-ancestors", "frame-src",
+                "img-src", "media-src", "object-src", "plugin-types", "referrer", "reflected-xss", "report-uri", "sandbox",
                 "script-src", "style-src"
             };
-
-            var values = config.ToHeaderValue().Split(new[] { ";" }, StringSplitOptions.None).SelectMany(i => i.Split(new[] { " " }, StringSplitOptions.None)).ToList();
+            List<string> values = config.ToHeaderValue().Split(new[] {";"}, StringSplitOptions.None).SelectMany(i => i.Split(new[] {" "}, StringSplitOptions.None)).ToList();
             values.Should().Contain(expected);
         }
 

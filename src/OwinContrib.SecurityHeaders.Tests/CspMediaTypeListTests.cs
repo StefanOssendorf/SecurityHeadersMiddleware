@@ -3,7 +3,6 @@ using Xunit;
 
 namespace SecurityHeadersMiddleware.Tests {
     public class CspMediaTypeListTests {
-
         [Fact]
         public void When_trying_to_add_a_mediaType_without_slash_it_should_throw_a_formatException() {
             var csp = new CspMediaTypeList();
@@ -13,7 +12,7 @@ namespace SecurityHeadersMiddleware.Tests {
         [Fact]
         public void When_trying_to_add_a_mediaType_with_a_ctl_in_type_it_should_throw_a_formatException() {
             var csp = new CspMediaTypeList();
-            var mediaType = (char)10 + "acd/x-abcd";
+            string mediaType = (char)10 + "acd/x-abcd";
             Assert.Throws<FormatException>(() => csp.AddMediaType(mediaType));
         }
 
@@ -22,7 +21,6 @@ namespace SecurityHeadersMiddleware.Tests {
             var csp = new CspMediaTypeList();
             Assert.Throws<FormatException>(() => csp.AddMediaType("ac d/x-abcd"));
         }
-
 
         // Source of mediatypes: https://www.iana.org/assignments/media-types/media-types.xhtml
         [Fact]

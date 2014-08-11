@@ -15,7 +15,6 @@ namespace SecurityHeadersMiddleware.Tests {
             GetBuilder(ReferrerKeyword.Origin).ToDirectiveValue().Should().Be("origin");
             GetBuilder(ReferrerKeyword.OriginWhenCossOrigin).ToDirectiveValue().Should().Be("origin-when-cross-origin");
             GetBuilder(ReferrerKeyword.UnsafeUrl).ToDirectiveValue().Should().Be("unsafe-url");
-
         }
 
         private static IDirectiveValueBuilder GetBuilder(ReferrerKeyword word) {

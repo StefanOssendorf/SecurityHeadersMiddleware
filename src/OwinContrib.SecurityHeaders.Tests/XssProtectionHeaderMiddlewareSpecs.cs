@@ -7,11 +7,10 @@ using SecurityHeadersMiddleware.OwinAppBuilder;
 namespace SecurityHeadersMiddleware.Tests {
     [Subject(typeof(XssProtectionHeaderMiddleware))]
     public class When_protection_is_enabled : OwinEnvironmentSpecBase {
+        private It Should_have_header_in_response = () => Response.XssProtection().ShouldEqual("1; mode=block");
         private Establish context = () => Client = XssClientHelper.CreateClient(false);
 
         private Because of = () => Response = Client.GetAsync("http://www.example.org").Await();
-
-        private It Should_have_header_in_response = () => Response.XssProtection().ShouldEqual("1; mode=block");
     }
 
     [Subject(typeof(XssProtectionHeaderMiddleware))]

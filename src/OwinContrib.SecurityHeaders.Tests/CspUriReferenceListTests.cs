@@ -9,7 +9,6 @@ namespace SecurityHeadersMiddleware.Tests {
         [Fact]
         public void When_adding_an_invalid_uri_it_should_throw_a_formatException() {
             var refList = new CspUriReferenceList();
-
             Assert.Throws<FormatException>(() => refList.AddReportUri("http//example.org"));
         }
 
@@ -17,7 +16,6 @@ namespace SecurityHeadersMiddleware.Tests {
         public void When_adding_a_valid_uri_it_should_create_the_headerValue() {
             var list = new CspUriReferenceList();
             list.AddReportUri("http://www.example.com");
-
             list.ToDirectiveValue().Trim().Should().Be("http://www.example.com");
         }
 
@@ -26,7 +24,6 @@ namespace SecurityHeadersMiddleware.Tests {
             var list = new CspUriReferenceList();
             list.AddReportUri("http://www.example.com");
             list.AddReportUri("http://www.example.com");
-
             list.ToDirectiveValue().Trim().Should().Be("http://www.example.com");
         }
 
@@ -43,8 +40,7 @@ namespace SecurityHeadersMiddleware.Tests {
             list.AddReportUri("http://www.example.com/list");
             list.AddReportUri("http://www.example.com/list?id=10");
             list.AddReportUri("http://www.example.com/list?id=10#Fragment=12");
-
-            var split = list.ToDirectiveValue().Split(new[] {" "}, StringSplitOptions.RemoveEmptyEntries).Select(val => val.Trim()).ToArray();
+            string[] split = list.ToDirectiveValue().Split(new[] {" "}, StringSplitOptions.RemoveEmptyEntries).Select(val => val.Trim()).ToArray();
             split.Length.Should().Be(4);
             split.Should().Contain(compareList);
         }

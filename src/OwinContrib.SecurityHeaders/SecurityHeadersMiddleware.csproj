@@ -92,8 +92,10 @@
     <Compile Include="ContentSecurityPolicyMiddleware.cs" />
     <Compile Include="ContenTypeOptionsHeaderMiddleware.cs" />
     <Compile Include="CspSandboxTokenList.cs" />
+    <Compile Include="Infrastructure\Rfc7230Utility.cs" />
     <Compile Include="ReferrerDirectiveValueBuilder.cs" />
     <Compile Include="ReflectedXssKeyword.cs" />
+    <Compile Include="SandboxKeyword.cs" />
     <Compile Include="SourceListKeyword.cs" />
     <Compile Include="CspMediaTypeList.cs" />
     <Compile Include="CspSourceList.cs" />

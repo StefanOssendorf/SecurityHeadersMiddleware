@@ -153,8 +153,8 @@ namespace SecurityHeadersMiddleware {
                 BuildDirectiveValue("plugin-types", PluginTypes), 
                 BuildDirectiveValue("referrer", ReferrerDirectiveValueBuilder.Get(Referrer)), 
                 BuildDirectiveValue("reflected-xss", ReflectedXssDirectiveValueBuilder.Get(ReflectedXss)), 
-                BuildDirectiveValue("report-uri", ReportUri), 
-                BuildDirectiveValue("sandbox", Sandbox), 
+                BuildDirectiveValue("report-uri", ReportUri),
+                BuildSandboxDirectiveValue(),
                 BuildDirectiveValue("script-src", ScriptSrc), 
                 BuildDirectiveValue("style-src", StyleSrc)
             };
@@ -171,6 +171,12 @@ namespace SecurityHeadersMiddleware {
             }
 
             return sb.ToString();
+        }
+        private string BuildSandboxDirectiveValue() {
+            if (Sandbox.IsEmpty) {
+                return "sandbox";
+            }
+            return BuildDirectiveValue("sandbox", Sandbox);
         }
 
         private static string BuildDirectiveValue(string directiveName, IDirectiveValueBuilder sourceList) {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using FluentAssertions;
 using Xunit;
 
@@ -25,6 +26,32 @@ namespace SecurityHeadersMiddleware.Tests {
             list.AddToken("allow-scripts");
 
             list.ToDirectiveValue().Trim().Should().Be("allow-scripts");
+        }
+
+        [Fact]
+        public void Keywords_should_create_the_correct_header_values() {
+            var list = new CspSandboxTokenList();
+            list.AddKeyword(SandboxKeyword.AllowForms);
+            list.AddKeyword(SandboxKeyword.AllowPointerLock);
+            list.AddKeyword(SandboxKeyword.AllowPopups);
+            list.AddKeyword(SandboxKeyword.AllowSameOrigin);
+            list.AddKeyword(SandboxKeyword.AllowScripts);
+            list.AddKeyword(SandboxKeyword.AllowTopNavigation);
+
+            var split = list.ToDirectiveValue().Split(new[] { " " }, StringSplitOptions.None).Select(item => item.Trim());
+
+            var expectedValues = new[] {
+                "allow-forms", "allow-pointer-lock", "allow-popups", "allow-same-origin", "allow-scripts", "allow-top-navigation"
+            };
+
+            split.Should().Contain(expectedValues);
+        }
+
+        [Fact]
+        public void When_set_to_empty_it_should_return_an_empty_headerValue() {
+            var list = new CspSandboxTokenList();
+            list.SetToEmptyValue();
+            list.ToDirectiveValue().Should().BeEmpty();
         }
     }
 }

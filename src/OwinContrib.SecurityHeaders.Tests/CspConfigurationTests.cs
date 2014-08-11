@@ -48,7 +48,6 @@ namespace SecurityHeadersMiddleware.Tests {
             split.Length.Should().Be(4);
         }
 
-
         [Fact]
         public void All_source_types_should_be_in_the_header_value() {
             var config = new ContentSecurityPolicyConfiguration();
@@ -79,6 +78,13 @@ namespace SecurityHeadersMiddleware.Tests {
 
             var values = config.ToHeaderValue().Split(new[] { ";" }, StringSplitOptions.None).SelectMany(i => i.Split(new[] { " " }, StringSplitOptions.None)).ToList();
             values.Should().Contain(expected);
+        }
+
+        [Fact]
+        public void When_sandbox_value_is_set_to_empty_the_directive_should_be_created() {
+            var config = new ContentSecurityPolicyConfiguration();
+            config.Sandbox.SetToEmptyValue();
+            config.ToHeaderValue().Split(new[] {";"}, StringSplitOptions.None).Select(item => item.Trim()).Should().OnlyContain(item => item == "sandbox");
         }
     }
 }

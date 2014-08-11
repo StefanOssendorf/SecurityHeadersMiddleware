@@ -9,16 +9,27 @@ namespace SecurityHeadersMiddleware {
     /// Represents a sandbox-token-list according to the CSP specification (http://www.w3.org/TR/CSP2/#directive-sandbox).
     /// </summary>
     public class CspSandboxTokenList : IDirectiveValueBuilder {
+        internal bool IsEmpty { get; private set; }
         private readonly List<string> mTokens;
         /// <summary>
         /// Initializes a new instance of the <see cref="CspSandboxTokenList"/> class.
         /// </summary>
         public CspSandboxTokenList() {
             mTokens = new List<string>();
+            IsEmpty = false;
         }
 
         /// <summary>
-        /// Adds a token to the sandbox-toke-list.
+        /// Adds the keyword to the sandbox-token-list. <br/>
+        /// </summary>
+        /// <param name="keyword">The keyword.</param>
+        public void AddKeyword(SandboxKeyword keyword) {
+            var token = TokenValueOfKeyword(keyword);
+            AddToken(token);
+        }
+
+        /// <summary>
+        /// Adds a token to the sandbox-token-list.
         /// </summary>
         /// <param name="token">The token.</param>
         /// <exception cref="System.FormatException">
@@ -33,10 +44,24 @@ namespace SecurityHeadersMiddleware {
             }
 
             if (!Rfc7230Utility.IsToken(token)) {
-                throw new FormatException();
+                const string msg = "Token value '{0}' is invalid.{1}" +
+                                   "Valid tokens: allow-forms or abcedfg{1}" +
+                                   "All characters must be a-z, A-Z, 0-9 or !, #, $, %, &, \\, *, +, -, ., ^, _, `, |, ~ " +
+                                   "For more Information see: {2}";
+                throw new FormatException(msg.FormatWith(token, Environment.NewLine, "http://www.w3.org/TR/CSP2/#directive-sandbox"));
             }
 
             mTokens.Add(token);
+            IsEmpty = false;
+        }
+
+        /// <summary>
+        /// Sets the value to an empty token. <br/>
+        /// According to http://lists.w3.org/Archives/Public/public-webappsec/2014Aug/0019.html and http://developers.whatwg.org/the-iframe-element.html#attr-iframe-sandbox it's an valid exception.
+        /// </summary>
+        public void SetToEmptyValue() {
+            mTokens.Clear();
+            IsEmpty = true;
         }
 
         /// <summary>
@@ -44,6 +69,9 @@ namespace SecurityHeadersMiddleware {
         /// </summary>
         /// <returns>The directive header value without directive-name.</returns>
         public string ToDirectiveValue() {
+            if (IsEmpty) {
+                return "";
+            }
             var sb = new StringBuilder();
 
             foreach (var token in mTokens) {
@@ -51,6 +79,26 @@ namespace SecurityHeadersMiddleware {
             }
 
             return sb.ToString().Trim();
+        }
+
+
+        private static string TokenValueOfKeyword(SandboxKeyword keyword) {
+            switch (keyword) {
+                case SandboxKeyword.AllowForms:
+                    return "allow-forms";
+                case SandboxKeyword.AllowPointerLock:
+                    return "allow-pointer-lock";
+                case SandboxKeyword.AllowPopups:
+                    return "allow-popups";
+                case SandboxKeyword.AllowSameOrigin:
+                    return "allow-same-origin";
+                case SandboxKeyword.AllowScripts:
+                    return "allow-scripts";
+                case SandboxKeyword.AllowTopNavigation:
+                    return "allow-top-navigation";
+                default:
+                    throw new ArgumentOutOfRangeException("keyword");
+            }
         }
     }
 }

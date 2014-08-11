@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 
 namespace SecurityHeadersMiddleware {
     internal class ReferrerDirectiveValueBuilder : IDirectiveValueBuilder {
         private static readonly Dictionary<ReferrerKeyword, IDirectiveValueBuilder> Cache;
 
+        private readonly ReferrerKeyword mKeyword;
         static ReferrerDirectiveValueBuilder() {
             Cache = new Dictionary<ReferrerKeyword, IDirectiveValueBuilder> {
                 {
@@ -21,14 +20,9 @@ namespace SecurityHeadersMiddleware {
                     ReferrerKeyword.OriginWhenCossOrigin, new ReferrerDirectiveValueBuilder(ReferrerKeyword.OriginWhenCossOrigin)
                 }, {
                     ReferrerKeyword.UnsafeUrl, new ReferrerDirectiveValueBuilder(ReferrerKeyword.UnsafeUrl)
-                } };
+                }
+            };
         }
-
-        internal static IDirectiveValueBuilder Get(ReferrerKeyword keyword) {
-            return Cache[keyword];
-        }
-
-        private readonly ReferrerKeyword mKeyword;
         private ReferrerDirectiveValueBuilder(ReferrerKeyword keyword) {
             mKeyword = keyword;
         }
@@ -50,33 +44,30 @@ namespace SecurityHeadersMiddleware {
                     throw new InvalidEnumArgumentException();
             }
         }
+        internal static IDirectiveValueBuilder Get(ReferrerKeyword keyword) {
+            return Cache[keyword];
+        }
     }
 
     internal class ReflectedXssDirectiveValueBuilder : IDirectiveValueBuilder {
-        private readonly ReflectedXssKeyword mKeyword;
         private static readonly Dictionary<ReflectedXssKeyword, IDirectiveValueBuilder> Cache;
+        private readonly ReflectedXssKeyword mKeyword;
 
         static ReflectedXssDirectiveValueBuilder() {
             Cache = new Dictionary<ReflectedXssKeyword, IDirectiveValueBuilder> {
                 {
                     ReflectedXssKeyword.NotSet, new ReflectedXssDirectiveValueBuilder(ReflectedXssKeyword.NotSet)
-                },
-                {
+                }, {
                     ReflectedXssKeyword.Block, new ReflectedXssDirectiveValueBuilder(ReflectedXssKeyword.Block)
-                },
-                {
+                }, {
                     ReflectedXssKeyword.Allow, new ReflectedXssDirectiveValueBuilder(ReflectedXssKeyword.Allow)
-                },
-                {
+                }, {
                     ReflectedXssKeyword.Filter, new ReflectedXssDirectiveValueBuilder(ReflectedXssKeyword.Filter)
                 }
             };
         }
         private ReflectedXssDirectiveValueBuilder(ReflectedXssKeyword keyword) {
             mKeyword = keyword;
-        }
-        internal static IDirectiveValueBuilder Get(ReflectedXssKeyword word) {
-            return Cache[word];
         }
         public string ToDirectiveValue() {
             switch (mKeyword) {
@@ -85,6 +76,9 @@ namespace SecurityHeadersMiddleware {
                 default:
                     return mKeyword.ToString().ToLower();
             }
+        }
+        internal static IDirectiveValueBuilder Get(ReflectedXssKeyword word) {
+            return Cache[word];
         }
     }
 }

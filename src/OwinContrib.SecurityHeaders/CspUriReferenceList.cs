@@ -10,7 +10,8 @@ using SecurityHeadersMiddleware.Infrastructure;
 
 namespace SecurityHeadersMiddleware {
     /// <summary>
-    /// Represents an uri-reference-list according to the CSP specification http://www.w3.org/TR/CSP2/#directive-report-uri).
+    ///     Represents an uri-reference-list according to the CSP specification
+    ///     http://www.w3.org/TR/CSP2/#directive-report-uri).
     /// </summary>
     public class CspUriReferenceList : IDirectiveValueBuilder {
         #region Regex
@@ -63,24 +64,42 @@ namespace SecurityHeadersMiddleware {
         private readonly List<string> mUris;
 
         /// <summary>
-        /// Adds a uri to the uri-reference-list.
+        ///     Initializes a new instance of the <see cref="CspUriReferenceList" /> class.
+        /// </summary>
+        public CspUriReferenceList() {
+            mUris = new List<string>();
+        }
+
+        /// <summary>
+        ///     Creates the directive header value.
+        /// </summary>
+        /// <returns>The directive header value without directive-name.</returns>
+        public string ToDirectiveValue() {
+            var sb = new StringBuilder();
+            foreach (string uri in mUris) {
+                sb.AppendFormat(" {0} ", uri);
+            }
+            return sb.ToString();
+        }
+        /// <summary>
+        ///     Adds a uri to the uri-reference-list.
         /// </summary>
         /// <param name="uri">The uri.</param>
         public void AddReportUri(Uri uri) {
             AddReportUri(uri.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped));
         }
         /// <summary>
-        /// Adds a uri to the uri-reference-list.
+        ///     Adds a uri to the uri-reference-list.
         /// </summary>
         /// <param name="uri">The uri.</param>
         /// <exception cref="System.FormatException">
-        ///     <paramref name="uri"/> has to satisfy the URI definition.
-        ///     For more information see: http://www.w3.org/TR/CSP2/#uri-reference respectively http://tools.ietf.org/html/rfc3986#section-3.3
+        ///     <paramref name="uri" /> has to satisfy the URI definition.
+        ///     For more information see: http://www.w3.org/TR/CSP2/#uri-reference respectively
+        ///     http://tools.ietf.org/html/rfc3986#section-3.3
         /// </exception>
         public void AddReportUri(string uri) {
             uri.MustNotNull("uri");
             uri.MustNotBeWhiteSpaceOrEmpty("uri");
-
             if (!Rfc3986UriRegex.IsMatch(uri)) {
                 throw new FormatException();
             }
@@ -88,30 +107,7 @@ namespace SecurityHeadersMiddleware {
             if (mUris.Contains(uri)) {
                 return;
             }
-
             mUris.Add(uri);
-        }
-
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CspUriReferenceList"/> class.
-        /// </summary>
-        public CspUriReferenceList() {
-            mUris = new List<string>();
-        }
-
-        /// <summary>
-        /// Creates the directive header value.
-        /// </summary>
-        /// <returns>The directive header value without directive-name.</returns>
-        public string ToDirectiveValue() {
-            var sb = new StringBuilder();
-
-            foreach (var uri in mUris) {
-                sb.AppendFormat(" {0} ", uri);
-            }
-
-            return sb.ToString();
         }
     }
 }

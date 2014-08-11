@@ -2,7 +2,7 @@
 
 namespace SecurityHeadersMiddleware.Infrastructure {
     internal static class Rfc7230Utility {
-        private static readonly char[] TCharSpecials = { '!', '#', '$', '%', '&', '\'', '*', '+', '-', '.', '^', '_', '`', '|', '~' };
+        private static readonly char[] TCharSpecials = {'!', '#', '$', '%', '&', '\'', '*', '+', '-', '.', '^', '_', '`', '|', '~'};
 
         public static bool IsToken(string token) {
             if (token.IsNullOrWhiteSpace()) {

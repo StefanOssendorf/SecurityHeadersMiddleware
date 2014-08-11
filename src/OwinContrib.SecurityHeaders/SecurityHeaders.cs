@@ -4,21 +4,23 @@ using System.Threading.Tasks;
 using SecurityHeadersMiddleware.Infrastructure;
 
 namespace SecurityHeadersMiddleware {
+    using BuildFunc = Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>>;
+
     /// <summary>
-    /// OWIN extension methods.
+    ///     OWIN extension methods.
     /// </summary>
     public static class SecurityHeaders {
         #region AntiClickjacking
         /// <summary>
-        /// Adds the "X-Frame-Options" header with value DENY to the response.
+        ///     Adds the "X-Frame-Options" header with value DENY to the response.
         /// </summary>
         /// <param name="builder">The OWIN builder instance.</param>
         /// <returns>The OWIN builder instance.</returns>
-        public static Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> AntiClickjackingHeader(this Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>> builder) {
+        public static BuildFunc AntiClickjackingHeader(this BuildFunc builder) {
             return AntiClickjackingHeader(builder, XFrameOption.Deny);
         }
         /// <summary>
-        /// Adds the "X-Frame-Options" header with the given option to the response.
+        ///     Adds the "X-Frame-Options" header with the given option to the response.
         /// </summary>
         /// <param name="builder">The OWIN builder instance.</param>
         /// <param name="option">The X-Frame option.</param>
@@ -28,7 +30,8 @@ namespace SecurityHeadersMiddleware {
             return builder;
         }
         /// <summary>
-        /// Adds the "X-Frame-Options" with DENY when the request uri is not provided to the response. Otherwise the request uri with ALLOW-FROM &lt;request uri&gt;.
+        ///     Adds the "X-Frame-Options" with DENY when the request uri is not provided to the response. Otherwise the request
+        ///     uri with ALLOW-FROM &lt;request uri&gt;.
         /// </summary>
         /// <param name="builder">The OWIN builder instance.</param>
         /// <param name="origins">The allowed uris.</param>
@@ -40,7 +43,8 @@ namespace SecurityHeadersMiddleware {
             return builder;
         }
         /// <summary>
-        /// Adds the "X-Frame-Options" with DENY when the request uri is not provided to the response. Otherwise the request uri with ALLOW-FROM &lt;request uri&gt;.
+        ///     Adds the "X-Frame-Options" with DENY when the request uri is not provided to the response. Otherwise the request
+        ///     uri with ALLOW-FROM &lt;request uri&gt;.
         /// </summary>
         /// <param name="builder">The OWIN builder instance.</param>
         /// <param name="origins">The allowed uirs.</param>
@@ -55,7 +59,7 @@ namespace SecurityHeadersMiddleware {
 
         #region XssProtection
         /// <summary>
-        /// Adds the "X-Xss-Protection" header with value "1; mode=block" to the response.
+        ///     Adds the "X-Xss-Protection" header with value "1; mode=block" to the response.
         /// </summary>
         /// <param name="builder">The OWIN builder instance.</param>
         /// <returns>The OWIN builder instance.</returns>
@@ -63,7 +67,7 @@ namespace SecurityHeadersMiddleware {
             return XssProtectionHeader(builder, false);
         }
         /// <summary>
-        /// Adds the "X-Xss-Protection" header depending on <paramref name="disabled"/> to the response.
+        ///     Adds the "X-Xss-Protection" header depending on <paramref name="disabled" /> to the response.
         /// </summary>
         /// <param name="builder">The OWIN builder instance.</param>
         /// <param name="disabled">true to set the heade value to "0". false to set the header value to"1; mode=block".</param>
@@ -76,7 +80,7 @@ namespace SecurityHeadersMiddleware {
 
         #region Strict Transport Security
         /// <summary>
-        /// Adds the "Strict-Transport-Security" (STS) header to the response.
+        ///     Adds the "Strict-Transport-Security" (STS) header to the response.
         /// </summary>
         /// <param name="builder">The OWIN builder instance.</param>
         /// <returns>The OWIN builder instance.</returns>
@@ -84,7 +88,7 @@ namespace SecurityHeadersMiddleware {
             return StrictTransportSecurity(builder, new StrictTransportSecurityOptions());
         }
         /// <summary>
-        /// Adds the "Strict-Transport-Security" (STS) header with the given option to the response.
+        ///     Adds the "Strict-Transport-Security" (STS) header with the given option to the response.
         /// </summary>
         /// <param name="builder">The OWIN builder instance.</param>
         /// <param name="options">The Strict-Transport-Security options.</param>
@@ -97,7 +101,7 @@ namespace SecurityHeadersMiddleware {
 
         #region Content Type Options
         /// <summary>
-        /// Adds the "X-Content-Type-Options" header with value "nosniff" to the response.
+        ///     Adds the "X-Content-Type-Options" header with value "nosniff" to the response.
         /// </summary>
         /// <param name="builder">The OWIN builder instance.</param>
         /// <returns>The OWIN builder instance.</returns>
@@ -109,7 +113,7 @@ namespace SecurityHeadersMiddleware {
 
         #region Content Security Policy
         /// <summary>
-        /// Adds the "Content-Security-Policy" (CSP) header with the given configuration to the response.
+        ///     Adds the "Content-Security-Policy" (CSP) header with the given configuration to the response.
         /// </summary>
         /// <param name="builder">The OWIN builder instance.</param>
         /// <param name="configuration">The Content-Security-Policy configuration.</param>

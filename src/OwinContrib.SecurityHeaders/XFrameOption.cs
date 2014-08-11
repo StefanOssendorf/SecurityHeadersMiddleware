@@ -1,14 +1,14 @@
 ﻿namespace SecurityHeadersMiddleware {
     /// <summary>
-    /// The X-Frame-Options keywords.
+    ///     The X-Frame-Options keywords.
     /// </summary>
     public enum XFrameOption {
         /// <summary>
-        /// Headervalue deny.
+        ///     Headervalue deny.
         /// </summary>
         Deny = 1,
         /// <summary>
-        /// Headevalue sameorigin.
+        ///     Headevalue sameorigin.
         /// </summary>
         SameOrigin = 2
     }

@@ -13,10 +13,10 @@ namespace SecurityHeadersMiddleware {
             return
                 next =>
                     env => {
-                        var response = env.AsContext().Response;
+                        IOwinResponse response = env.AsContext().Response;
                         response
                             .OnSendingHeaders(resp => {
-                                var value = disabled ? "0" : "1; mode=block";
+                                string value = disabled ? "0" : "1; mode=block";
                                 ((IOwinResponse)resp).Headers[HeaderConstants.XssProtection] = value;
                             }, response);
                         return next(env);

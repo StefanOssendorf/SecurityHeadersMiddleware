@@ -9,7 +9,7 @@ namespace SecurityHeadersMiddleware {
         public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> ContentTypeOptionsHeader() {
             return next =>
                 env => {
-                    var response = env.AsContext().Response;
+                    IOwinResponse response = env.AsContext().Response;
                     response.OnSendingHeaders(ApplyHeader, response);
                     return next(env);
                 };

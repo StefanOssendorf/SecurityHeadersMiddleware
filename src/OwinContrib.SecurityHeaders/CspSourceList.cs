@@ -10,17 +10,16 @@ using SecurityHeadersMiddleware.Infrastructure;
 
 namespace SecurityHeadersMiddleware {
     /// <summary>
-    /// Represents a source-list according to the CSP specification (http://www.w3.org/TR/CSP2/#source-list).
+    ///     Represents a source-list according to the CSP specification (http://www.w3.org/TR/CSP2/#source-list).
     /// </summary>
     public class CspSourceList : IDirectiveValueBuilder {
-        private bool mIsNone;
-        private readonly List<string> mSchemes;
-        private readonly List<SourceListKeyword> mKeywords;
         private readonly List<string> mHosts;
-
+        private readonly List<SourceListKeyword> mKeywords;
+        private readonly List<string> mSchemes;
+        private bool mIsNone;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CspSourceList"/> class.
+        ///     Initializes a new instance of the <see cref="CspSourceList" /> class.
         /// </summary>
         public CspSourceList() {
             mSchemes = new List<string>();
@@ -28,9 +27,23 @@ namespace SecurityHeadersMiddleware {
             mHosts = new List<string>();
             mIsNone = false;
         }
+        /// <summary>
+        ///     Creates the directive header value.
+        /// </summary>
+        /// <returns>The directive header value without directive-name.</returns>
+        public string ToDirectiveValue() {
+            if (mIsNone) {
+                return "'none'";
+            }
+            var sb = new StringBuilder();
+            sb.AppendFormat(" {0} ", TrimAndEscape(BuildSchemeValues()));
+            sb.AppendFormat(" {0} ", TrimAndEscape(BuildHostValues()));
+            sb.AppendFormat(" {0} ", TrimAndEscape(BuildKeywordValues()));
+            return sb.ToString().Trim();
+        }
 
         /// <summary>
-        /// Adds a keyword to the source-list.
+        ///     Adds a keyword to the source-list.
         /// </summary>
         /// <param name="keyword">The keyword.</param>
         public void AddKeyword(SourceListKeyword keyword) {
@@ -40,23 +53,21 @@ namespace SecurityHeadersMiddleware {
             }
             mKeywords.Add(keyword);
         }
-        
+
         /// <summary>
-        /// Adds a scheme to the source-list.
+        ///     Adds a scheme to the source-list.
         /// </summary>
         /// <param name="scheme">The scheme.</param>
         /// <exception cref="System.FormatException">
-        ///     <paramref name="scheme"/> has to satisfy this regex: ^[a-z][a-z0-9+\-.]*:?$ <br/>
+        ///     <paramref name="scheme" /> has to satisfy this regex: ^[a-z][a-z0-9+\-.]*:?$ <br />
         ///     For more information see http://www.w3.org/TR/CSP2/#scheme-source
         /// </exception>
         public void AddScheme(string scheme) {
             ThrowIfNoneIsSet();
             scheme.MustNotNull("scheme");
             scheme = scheme.ToLower();
-
             const string schemeRegex = @"(^[a-z][a-z0-9+\-.]*)(:?)$";
-
-            var match = Regex.Match(scheme, schemeRegex, RegexOptions.IgnoreCase);
+            Match match = Regex.Match(scheme, schemeRegex, RegexOptions.IgnoreCase);
             if (!match.Success) {
                 const string msg = "Scheme value '{0}' is invalid.{1}" +
                                    "Valid schemes:{1}http: or http or ftp: or ftp{1}" +
@@ -64,38 +75,34 @@ namespace SecurityHeadersMiddleware {
                                    "For more Information see: {2}";
                 throw new FormatException(msg.FormatWith(scheme, Environment.NewLine, "http://www.w3.org/TR/CSP2/#scheme-source"));
             }
-            var schemeToAdd = "{0}:".FormatWith(match.Groups[1].Value.ToLower());
+            string schemeToAdd = "{0}:".FormatWith(match.Groups[1].Value.ToLower());
             if (mSchemes.Contains(schemeToAdd)) {
                 return;
             }
             mSchemes.Add(schemeToAdd);
         }
 
-
         /// <summary>
-        /// Adds a host to the source-list.
+        ///     Adds a host to the source-list.
         /// </summary>
         /// <param name="host">The host.</param>
         public void AddHost(Uri host) {
             AddHost(host.GetComponents(UriComponents.SchemeAndServer | UriComponents.Path, UriFormat.UriEscaped));
         }
         /// <summary>
-        /// Adds a host to the source-list.
+        ///     Adds a host to the source-list.
         /// </summary>
         /// <param name="host">The host.</param>
         public void AddHost(string host) {
             ThrowIfNoneIsSet();
             host.MustNotNull("host");
             host.MustNotBeWhiteSpaceOrEmpty("host");
-
             host = host.ToLower();
-            var parts = SplitIntoHostSourceParts(host);
+            HostSourceParts parts = SplitIntoHostSourceParts(host);
             VerifyParts(parts);
-
             if (mHosts.Contains(host)) {
                 return;
             }
-
             mHosts.Add(host);
         }
         private static void VerifyParts(HostSourceParts parts) {
@@ -116,7 +123,6 @@ namespace SecurityHeadersMiddleware {
                                "Valid schemes:{1}ftp:// or a-12.adcd://{1}" +
                                "First character must be a letter and has to end with ://{1}" +
                                "For more informatin see: {2} (scheme-part).";
-
             throw new FormatException(msg.FormatWith(scheme, Environment.NewLine, "http://www.w3.org/TR/CSP2/#host-source"));
         }
         private static void VerifyHost(string host) {
@@ -144,14 +150,12 @@ namespace SecurityHeadersMiddleware {
                                "Valid ports:{1}:* or :1234{1}" +
                                "First charater must be : (colon) followed by only a star or only digits.{1}" +
                                "For more information see: {2} (port-part).";
-
             throw new FormatException(msg.FormatWith(port, Environment.NewLine, "http://www.w3.org/TR/CSP2/#host-source"));
         }
         private static void VerifyPath(string path) {
             if (path.IsNullOrWhiteSpace()) {
                 return;
             }
-
             const string pathRegex = @" ^
                                         # RFC-3986 URI component:  path
                                     (?:                                                             # (
@@ -185,7 +189,8 @@ namespace SecurityHeadersMiddleware {
         }
 
         /// <summary>
-        /// Sets the source-list to 'none'.<br/>After this nothing can be added and will cause an <see cref="InvalidOperationException"/>.
+        ///     Sets the source-list to 'none'.<br />After this nothing can be added and will cause an
+        ///     <see cref="InvalidOperationException" />.
         /// </summary>
         public void SetToNone() {
             mIsNone = true;
@@ -196,25 +201,20 @@ namespace SecurityHeadersMiddleware {
 
         private static HostSourceParts SplitIntoHostSourceParts(string hostsource) {
             var parts = new HostSourceParts();
-
             string part = "";
             if (TryGetSchemePart(hostsource, out part)) {
                 parts.Scheme = part;
                 hostsource = hostsource.Substring(part.Length);
             }
-
             parts.Host = GetHostPart(hostsource);
             hostsource = hostsource.Substring(parts.Host.Length);
-
             if (TryGetPortPart(hostsource, out part)) {
                 parts.Port = part;
                 hostsource = hostsource.Substring(part.Length);
             }
-
             if (TryGetPathPart(hostsource, out part)) {
                 parts.Path = part;
             }
-
             return parts;
         }
 
@@ -223,8 +223,7 @@ namespace SecurityHeadersMiddleware {
             if (hostsource.IsNullOrWhiteSpace()) {
                 return false;
             }
-
-            var index = hostsource.IndexOf("://");
+            int index = hostsource.IndexOf("://");
             if (index > 0) {
                 scheme = hostsource.Substring(0, index + 3);
             }
@@ -234,18 +233,15 @@ namespace SecurityHeadersMiddleware {
             if (hostsource.IsNullOrWhiteSpace()) {
                 return null;
             }
-            var hostPart = hostsource;
-
-            var index = hostsource.IndexOf(":");
+            string hostPart = hostsource;
+            int index = hostsource.IndexOf(":");
             if (index > 0) {
                 return hostsource.Substring(0, index);
             }
-
             index = hostsource.IndexOf("/");
             if (index > 0) {
                 return hostsource.Substring(0, index);
             }
-
             return hostPart;
         }
         private static bool TryGetPortPart(string hostsource, out string port) {
@@ -256,7 +252,7 @@ namespace SecurityHeadersMiddleware {
             if (hostsource[0] != ':') {
                 return false;
             }
-            var index = hostsource.IndexOf("/");
+            int index = hostsource.IndexOf("/");
             port = index > 0 ? hostsource.Substring(0, index) : hostsource;
             return true;
         }
@@ -265,8 +261,7 @@ namespace SecurityHeadersMiddleware {
             if (hostsource.IsNullOrWhiteSpace()) {
                 return false;
             }
-            var index = hostsource.IndexOf("?");
-
+            int index = hostsource.IndexOf("?");
             if (index > 0) {
                 path = hostsource.Substring(0, index);
                 return true;
@@ -276,7 +271,6 @@ namespace SecurityHeadersMiddleware {
                 path = hostsource.Substring(0, index);
                 return true;
             }
-
             path = hostsource;
             return true;
         }
@@ -288,52 +282,33 @@ namespace SecurityHeadersMiddleware {
             //TODO: Maybe later...
         }
 
-
         private void ThrowIfNoneIsSet() {
             if (mIsNone) {
                 throw new InvalidOperationException("This list ist set to 'none'. No additional values are allowed. Don't set this liste to 'none' to add new values.");
             }
         }
 
-        /// <summary>
-        /// Creates the directive header value.
-        /// </summary>
-        /// <returns>The directive header value without directive-name.</returns>
-        public string ToDirectiveValue() {
-            if (mIsNone) {
-                return "'none'";
-            }
-
-            var sb = new StringBuilder();
-
-            sb.AppendFormat(" {0} ", TrimAndEscape(BuildSchemeValues()));
-            sb.AppendFormat(" {0} ", TrimAndEscape(BuildHostValues()));
-            sb.AppendFormat(" {0} ", TrimAndEscape(BuildKeywordValues()));
-
-            return sb.ToString().Trim();
-        }
         private string BuildSchemeValues() {
             var sb = new StringBuilder();
-            foreach (var scheme in mSchemes) {
+            foreach (string scheme in mSchemes) {
                 sb.AppendFormat("{0} ", scheme);
             }
             return sb.ToString();
         }
         private string BuildHostValues() {
             var sb = new StringBuilder();
-            foreach (var host in mHosts) {
+            foreach (string host in mHosts) {
                 sb.AppendFormat("{0} ", host.ToLower());
             }
             return sb.ToString();
         }
         private string BuildKeywordValues() {
             var sb = new StringBuilder();
-            foreach (var keyword in mKeywords) {
+            foreach (SourceListKeyword keyword in mKeywords) {
                 string value = keyword.ToString().ToLower();
                 if (value.StartsWith("unsafe")) {
                     value = value.Insert(6, "-");
                 }
-
                 sb.AppendFormat("'{0}' ", value);
             }
             return sb.ToString();
@@ -342,6 +317,5 @@ namespace SecurityHeadersMiddleware {
         private static string TrimAndEscape(string input) {
             return input.Trim().Replace(";", "%3B").Replace(",", "%2C");
         }
-
     }
 }

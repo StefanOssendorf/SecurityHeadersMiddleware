@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Owin;
 using SecurityHeadersMiddleware.Infrastructure;
 
 namespace SecurityHeadersMiddleware {
@@ -10,7 +11,7 @@ namespace SecurityHeadersMiddleware {
             return AntiClickjackingHeader((int)option, new Uri[0]);
         }
         public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> AntiClickjackingHeader(params string[] origins) {
-            var uriOrigins = origins.Where(o => !string.IsNullOrWhiteSpace(o)).Select(o => new Uri(o)).ToArray();
+            Uri[] uriOrigins = origins.Where(o => !string.IsNullOrWhiteSpace(o)).Select(o => new Uri(o)).ToArray();
             return AntiClickjackingHeader(uriOrigins);
         }
         public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> AntiClickjackingHeader(params Uri[] origins) {
@@ -20,8 +21,8 @@ namespace SecurityHeadersMiddleware {
         public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> AntiClickjackingHeader(int option, params Uri[] origins) {
             return next =>
                 env => {
-                    var context = env.AsContext();
-                    var response = context.Response;
+                    IOwinContext context = env.AsContext();
+                    IOwinResponse response = context.Response;
                     var options = new {
                         FrameOption = option,
                         Origins = origins,
@@ -48,7 +49,7 @@ namespace SecurityHeadersMiddleware {
             obj.Response.Headers[HeaderConstants.XFrameOptions] = value;
         }
         private static string DetermineValue(Uri[] origins, Uri requestUri) {
-            var uri = Array.Find(origins, u => Rfc6454Utility.HasSameOrigin(u, requestUri));
+            Uri uri = Array.Find(origins, u => Rfc6454Utility.HasSameOrigin(u, requestUri));
             return uri == null ? "DENY" : "ALLOW-FROM {0}".FormatWith(Rfc6454Utility.SerializeOrigin(uri));
         }
     }

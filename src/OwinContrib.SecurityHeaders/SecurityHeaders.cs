@@ -123,6 +123,18 @@ namespace SecurityHeadersMiddleware {
             builder(_ => ContentSecurityPolicyMiddleware.ContentSecurityPolicyHeader(configuration));
             return builder;
         }
+
+        /// <summary>
+        ///     Adds the "Content-Security-Policy-Report-Only" (CSP) header with the given configuration to the response.
+        /// </summary>
+        /// <param name="builder">The OWIN builder instance.</param>
+        /// <param name="configuration">The Content-Security-Policy configuration.</param>
+        /// <returns>The OWIN builder instance.</returns>
+        public static BuildFunc ContentSecurityPolicyReportOnly(this BuildFunc builder, ContentSecurityPolicyConfiguration configuration) {
+            configuration.MustNotNull("configuration");
+            builder(_ => ContentSecurityPolicyReportOnlyMiddleware.ContentSecurityPolicyHeader(configuration));
+            return builder;
+        }
         #endregion
     }
 }

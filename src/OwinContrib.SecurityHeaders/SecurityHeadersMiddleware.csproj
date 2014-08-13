@@ -90,6 +90,7 @@
     <Compile Include="AntiClickjackingMiddleware.cs" />
     <Compile Include="ContentSecurityPolicyConfiguration.cs" />
     <Compile Include="ContentSecurityPolicyMiddleware.cs" />
+    <Compile Include="ContentSecurityPolicyReportOnlyMiddleware.cs" />
     <Compile Include="ContenTypeOptionsHeaderMiddleware.cs" />
     <Compile Include="CspSandboxTokenList.cs" />
     <Compile Include="Infrastructure\Rfc7230Utility.cs" />

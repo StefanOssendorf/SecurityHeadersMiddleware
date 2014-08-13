@@ -23,5 +23,8 @@ namespace SecurityHeadersMiddleware.Tests {
         public static string Csp(this HttpResponseMessage source) {
             return source.Headers.GetValues(HeaderConstants.ContentSecurityPolicy).First();
         }
+        public static string Cspro(this HttpResponseMessage source) {
+            return source.Headers.GetValues(HeaderConstants.ContentSecurityPolicyReportOnly).First();
+        }
     }
 }

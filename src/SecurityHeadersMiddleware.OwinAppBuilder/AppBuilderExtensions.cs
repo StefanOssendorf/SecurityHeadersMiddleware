@@ -128,6 +128,18 @@ namespace SecurityHeadersMiddleware.OwinAppBuilder {
             builder.UseOwin().ContentSecurityPolicy(configuration);
             return builder;
         }
+
+        /// <summary>
+        ///     Adds the "Content-Security-Policy-Report-Only" header with the given configuration to the response.
+        /// </summary>
+        /// <param name="builder">The IAppBuilder instance.</param>
+        /// <param name="configuration">The Content-Security-Policy configuration.</param>
+        /// <returns>The IAppBuilder instance.</returns>
+        public static IAppBuilder ContentSecurityPolicyReportOnly(this IAppBuilder builder, ContentSecurityPolicyConfiguration configuration) {
+            builder.MustNotNull("builder");
+            builder.UseOwin().ContentSecurityPolicyReportOnly(configuration);
+            return builder;
+        }
         #endregion
 
         internal static BuildFunc UseOwin(this IAppBuilder builder) {

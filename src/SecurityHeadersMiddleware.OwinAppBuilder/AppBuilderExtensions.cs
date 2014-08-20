@@ -7,6 +7,9 @@ using SecurityHeadersMiddleware.Infrastructure;
 namespace SecurityHeadersMiddleware.OwinAppBuilder {
     using BuildFunc = Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>>;
 
+    /// <summary>
+    /// Provides <see cref="IAppBuilder"/> extension methods.
+    /// </summary>
     public static class AppBuilderExtensions {
         #region AntiClickjacking
         /// <summary>

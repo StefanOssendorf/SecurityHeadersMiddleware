@@ -11,7 +11,4 @@ Already implemented:
 - Strict-Transport-Security
 - X-Content-Type-Options
 - Content-Security-Policy
-
-Next:
-
 - Content-Security-Policy-Report-Only

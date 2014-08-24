@@ -1,4 +1,6 @@
-﻿namespace SecurityHeadersMiddleware {
+﻿using System;
+
+namespace SecurityHeadersMiddleware {
     /// <summary>
     ///     Specifies the allowed keywords according to the CSP.<br />
     ///     See: http://www.w3.org/TR/CSP2/#directive-referrer
@@ -11,6 +13,7 @@
         /// <summary>
         ///     Keyword: none
         /// </summary>
+        [Obsolete("No warning, just an info! Will be obsolete with the next CSP version. It will be replaced by 'no-referrer'.")]
         None,
         /// <summary>
         ///     Keyword: none-when-downgrade

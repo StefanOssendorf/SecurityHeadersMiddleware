@@ -4,6 +4,7 @@ Middlewares for
 - X-Frame-Options
 - Strict-Transport-Security
 - X-Content-Type-Options
+- Content-Security-Policy
 
 Already implemented:
 - X-Xss-Protection

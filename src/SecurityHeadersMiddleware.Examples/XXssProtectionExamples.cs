@@ -17,8 +17,8 @@ namespace SecurityHeadersMiddleware.Examples {
             appbuilder.XssProtectionHeader();
 
             // Add X-Xss-Protection: 0
-            buildFunc.XssProtectionHeader(true);
-            appbuilder.XssProtectionHeader(true);
+            buildFunc.XssProtectionHeader(disabled: true);
+            appbuilder.XssProtectionHeader(disabled: true);
         } 
     }
 }

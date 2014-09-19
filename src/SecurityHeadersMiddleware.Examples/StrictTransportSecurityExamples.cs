@@ -12,6 +12,8 @@ namespace SecurityHeadersMiddleware.Examples {
             IAppBuilder appbuilder = null;
             BuildFunc buildFunc = null;
 
+            // Remark: 31536000 = 1 year in seconds
+
             // Add Strict-Transport-Security: max-age=31536000;includeSubDomains
             buildFunc.StrictTransportSecurity();
             appbuilder.StrictTransportSecurity();
@@ -21,7 +23,7 @@ namespace SecurityHeadersMiddleware.Examples {
                 IncludeSubDomains = true,
                 MaxAge = 31536000,
                 RedirectToSecureTransport = true,
-                // RedirectUriBuilder = uri => "";
+                RedirectUriBuilder = uri => "", // Only do this, when you want to replace the default change from http to https.
                 RedirectReasonPhrase = statusCode => "ResonPhrase"
             };
             buildFunc.StrictTransportSecurity(config);

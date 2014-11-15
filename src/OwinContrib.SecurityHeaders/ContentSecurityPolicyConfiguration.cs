@@ -60,6 +60,8 @@ namespace SecurityHeadersMiddleware {
         ///     See http://www.w3.org/TR/CSP2/#directive-form-action
         /// </summary>
         public CspSourceList FormAction { get; private set; }
+        
+        //TODO: FrameAncesotrs own source-list +.+
         /// <summary>
         ///     Gets the frame-ancestors directive source-list.<br />
         ///     See http://www.w3.org/TR/CSP2/#directive-frame-ancestors <br />

@@ -23,7 +23,7 @@ namespace SecurityHeadersMiddleware.Examples {
                 IncludeSubDomains = true,
                 MaxAge = 31536000,
                 RedirectToSecureTransport = true,
-                RedirectUriBuilder = uri => "", // Only do this, when you want to replace the default change from http to https.
+                RedirectUriBuilder = uri => "", // Only do this, when you want to replace the default behavior (from http to https).
                 RedirectReasonPhrase = statusCode => "ResonPhrase"
             };
             buildFunc.StrictTransportSecurity(config);

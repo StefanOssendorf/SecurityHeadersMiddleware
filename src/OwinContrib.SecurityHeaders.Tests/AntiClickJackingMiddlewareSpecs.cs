@@ -65,9 +65,9 @@ namespace SecurityHeadersMiddleware.Tests {
         public static HttpClient CreateClient(params string[] origins) {
             return CreateClient(b => b.UseOwin().AntiClickjackingHeader(origins));
         }
-        public static HttpClient CreateClient(params Uri[] origins) {
-            return CreateClient(b => b.UseOwin().AntiClickjackingHeader(origins));
-        }
+        //public static HttpClient CreateClient(params Uri[] origins) {
+        //    return CreateClient(b => b.UseOwin().AntiClickjackingHeader(origins));
+        //}
         private static HttpClient CreateClient(Action<IAppBuilder> registerAntiClickjackingMiddleware) {
             return TestServer.Create(builder => {
                 registerAntiClickjackingMiddleware(builder);

@@ -86,25 +86,25 @@ namespace SecurityHeadersMiddleware.Tests {
         [Fact]
         public void When_adding_a_valid_full_host_source_it_should_not_throw_a_formatException() {
             var list = new CspSourceList();
-            Assert.DoesNotThrow(() => list.AddHost("http://*.example.com:80/path/"));
+            list.AddHost("http://*.example.com:80/path/");
         }
 
         [Fact]
         public void When_adding_a_valid_host_source_without_schemePart_it_should_not_throw_a_formatException() {
             var list = new CspSourceList();
-            Assert.DoesNotThrow(() => list.AddHost("*.example.com:80/path/"));
+            list.AddHost("*.example.com:80/path/");
         }
 
         [Fact]
         public void When_adding_a_valid_host_source_with_only_path_part_it_should_not_throw_a_formatException() {
             var list = new CspSourceList();
-            Assert.DoesNotThrow(() => list.AddHost("*.example.com/path/"));
+            list.AddHost("*.example.com/path/");
         }
 
         [Fact]
         public void When_adding_a_valid_host_source_with_only_host_part_it_should_not_throw_a_formatException() {
             var list = new CspSourceList();
-            Assert.DoesNotThrow(() => list.AddHost("*.example.com"));
+            list.AddHost("*.example.com");
         }
 
         [Fact]
@@ -157,7 +157,7 @@ namespace SecurityHeadersMiddleware.Tests {
         [Fact]
         public void When_adding_a_valid_uri_as_host_it_should_not_throw_a_exception() {
             var list = new CspSourceList();
-            Assert.DoesNotThrow(() => list.AddHost(new Uri("https://www.example.com/abcd/")));
+            list.AddHost(new Uri("https://www.example.com/abcd/"));
         }
 
         [Fact]

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Owin;
 using SecurityHeadersMiddleware.Infrastructure;
+using SecurityHeadersMiddleware.LibOwin;
 
 namespace SecurityHeadersMiddleware {
     internal static class AntiClickjackingMiddleware {
@@ -23,7 +23,7 @@ namespace SecurityHeadersMiddleware {
                 env => {
                     IOwinContext context = env.AsContext();
                     IOwinResponse response = context.Response;
-                    var options = new {
+                    var options = new HeaderOptions {
                         FrameOption = option,
                         Origins = origins,
                         Response = response,
@@ -33,7 +33,7 @@ namespace SecurityHeadersMiddleware {
                     return next(env);
                 };
         }
-        private static void ApplyHeader(dynamic obj) {
+        private static void ApplyHeader(HeaderOptions obj) {
             string value = "";
             switch ((int)obj.FrameOption) {
                 case 1:
@@ -51,6 +51,13 @@ namespace SecurityHeadersMiddleware {
         private static string DetermineValue(Uri[] origins, Uri requestUri) {
             Uri uri = Array.Find(origins, u => Rfc6454Utility.HasSameOrigin(u, requestUri));
             return uri == null ? "DENY" : "ALLOW-FROM {0}".FormatWith(Rfc6454Utility.SerializeOrigin(uri));
+        }
+
+        private class HeaderOptions {
+            public int FrameOption { get; set; }
+            public Uri[] Origins { get; set; }
+            public IOwinResponse Response { get; set; }
+            public Uri RequestUri { get; set; }
         }
     }
 }

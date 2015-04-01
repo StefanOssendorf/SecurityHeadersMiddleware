@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Owin;
 using SecurityHeadersMiddleware.Infrastructure;
+using SecurityHeadersMiddleware.LibOwin;
 
 namespace SecurityHeadersMiddleware {
     internal static class ContentSecurityPolicyReportOnlyMiddleware {

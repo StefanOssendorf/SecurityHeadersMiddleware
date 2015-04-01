@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Owin;
+using SecurityHeadersMiddleware.LibOwin;
 
 namespace SecurityHeadersMiddleware {
     internal static class OwinEnvironmentExtension {

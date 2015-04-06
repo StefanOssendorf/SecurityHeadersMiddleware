@@ -59,13 +59,11 @@ namespace SecurityHeadersMiddleware.Tests {
             config.ScriptSrc.AddKeyword(SourceListKeyword.Self);
             config.StyleSrc.AddKeyword(SourceListKeyword.Self);
             config.PluginTypes.AddMediaType("application/xml");
-            config.Referrer = ReferrerKeyword.None;
-            config.ReflectedXss = ReflectedXssKeyword.Allow;
             config.ReportUri.AddReportUri("https://www.example.com/report-uri");
             config.Sandbox.AddToken("allow-scripts");
             var expected = new List<string> {
                 "base-uri", "child-src", "connect-src", "default-src", "font-src", "form-action", "frame-ancestors", "frame-src",
-                "img-src", "media-src", "object-src", "plugin-types", "referrer", "reflected-xss", "report-uri", "sandbox",
+                "img-src", "media-src", "object-src", "plugin-types", "report-uri", "sandbox",
                 "script-src", "style-src"
             };
             List<string> values = config.ToHeaderValue().Split(new[] {";"}, StringSplitOptions.None).SelectMany(i => i.Split(new[] {" "}, StringSplitOptions.None)).ToList();

@@ -2,7 +2,7 @@
 using Xunit;
 
 namespace SecurityHeadersMiddleware.Tests {
-    public class ReferrerKeywordTests {
+    internal class ReferrerKeywordTests {
         [Fact]
         public void When_set_Referrer_to_NotSet_it_should_not_create_any_headerValue() {
             GetBuilder(ReferrerKeyword.NotSet).ToDirectiveValue().Should().BeEmpty();

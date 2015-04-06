@@ -3,7 +3,7 @@
     ///     Specifies the allowed keywords according to the CSP.<br />
     ///     See: http://www.w3.org/TR/CSP2/#directive-reflected-xss
     /// </summary>
-    public enum ReflectedXssKeyword {
+    internal enum ReflectedXssKeyword {
         /// <summary>
         ///     Default value for indicating the directive value is not set and omitted.
         /// </summary>

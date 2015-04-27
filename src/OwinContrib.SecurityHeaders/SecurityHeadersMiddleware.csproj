@@ -71,8 +71,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -83,6 +81,21 @@
     </Compile>
     <Compile Include="AntiClickjackingMiddleware.cs" />
     <Compile Include="App_Packages\LibOwin.1.0\LibOwin.cs" />
+    <Compile Include="CspSourceList.HashSource.cs">
+      <DependentUpon>CspSourceList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CspSourceList.KeywordSource.cs">
+      <DependentUpon>CspSourceList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CspSourceList.NonceSource.cs">
+      <DependentUpon>CspSourceList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CspSourceList.SchemeSource.cs">
+      <DependentUpon>CspSourceList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CspSourceList.HostSource.cs">
+      <DependentUpon>CspSourceList.cs</DependentUpon>
+    </Compile>
     <Compile Include="ContentSecurityPolicyConfiguration.cs" />
     <Compile Include="ContentSecurityPolicyMiddleware.cs" />
     <Compile Include="ContentSecurityPolicyReportOnlyMiddleware.cs" />

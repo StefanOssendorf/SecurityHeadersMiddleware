@@ -69,7 +69,7 @@ namespace SecurityHeadersMiddleware {
         ///     See http://www.w3.org/TR/CSP2/#directive-frame-ancestors <br />
         ///     Info: According to the spec this directive replaces the X-Frame-Options header.
         /// </summary>
-        public CspSourceList FrameAncestors { get; private set; }
+        public CspAncestorSourceList FrameAncestors { get; private set; }
         /// <summary>
         ///     Gets the frame-src directive source-list.<br />
         ///     See http://www.w3.org/TR/CSP2/#directive-frame-src

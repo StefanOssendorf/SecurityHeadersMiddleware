@@ -1,0 +1,2 @@
+Referrer directive removed
+Reflected-xss directive removed

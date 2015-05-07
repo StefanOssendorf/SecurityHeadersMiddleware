@@ -101,6 +101,7 @@ namespace SecurityHeadersMiddleware {
             uri.MustNotNull("uri");
             uri.MustNotBeWhiteSpaceOrEmpty("uri");
             if (!Rfc3986UriRegex.IsMatch(uri)) {
+                //TODO: Exceptionmessage
                 throw new FormatException();
             }
             uri = uri.ToLower();

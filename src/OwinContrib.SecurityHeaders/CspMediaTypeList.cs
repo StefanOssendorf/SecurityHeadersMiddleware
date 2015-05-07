@@ -74,7 +74,7 @@ namespace SecurityHeadersMiddleware {
         }
 
         private static bool IsToken(char value) {
-            return value.IsAscii() && !value.IsCTL() && TSpecial.All(c => c != value);
+            return value.IsAscii() && !value.IsCTL() && !TSpecial.Contains(value);
         }
     }
 }

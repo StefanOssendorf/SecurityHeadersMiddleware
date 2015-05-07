@@ -17,6 +17,7 @@ namespace SecurityHeadersMiddleware {
             IsEmpty = false;
         }
         internal bool IsEmpty { get; private set; }
+
         /// <summary>
         ///     Creates the directive header value.
         /// </summary>

@@ -27,8 +27,6 @@ namespace SecurityHeadersMiddleware {
             ScriptSrc = new CspSourceList();
             StyleSrc = new CspSourceList();
             PluginTypes = new CspMediaTypeList();
-            //Referrer = ReferrerKeyword.NotSet;
-            //ReflectedXss = ReflectedXssKeyword.NotSet;
             ReportUri = new CspUriReferenceList();
             Sandbox = new CspSandboxTokenList();
         }
@@ -62,18 +60,17 @@ namespace SecurityHeadersMiddleware {
         ///     See http://www.w3.org/TR/CSP2/#directive-form-action
         /// </summary>
         public CspSourceList FormAction { get; private set; }
-        
-        //TODO: FrameAncesotrs own source-list +.+
         /// <summary>
         ///     Gets the frame-ancestors directive source-list.<br />
         ///     See http://www.w3.org/TR/CSP2/#directive-frame-ancestors <br />
         ///     Info: According to the spec this directive replaces the X-Frame-Options header.
         /// </summary>
-        public CspAncestorSourceList FrameAncestors { get; private set; }
+        public CspAncestorSourceList FrameAncestors { get; private set; } //TODO: Validate against Csp2 CR
         /// <summary>
         ///     Gets the frame-src directive source-list.<br />
         ///     See http://www.w3.org/TR/CSP2/#directive-frame-src
         /// </summary>
+        [Obsolete("\"The frame-src directive is deprecated. Authors who wish to govern nested browsing contexts SHOULD use the child-src directive instead.\" See http://www.w3.org/TR/CSP/#directive-frame-src")]
         public CspSourceList FrameSrc { get; private set; }
         /// <summary>
         ///     Gets the img-src directive source-list.<br />
@@ -96,19 +93,6 @@ namespace SecurityHeadersMiddleware {
         ///     See http://www.w3.org/TR/CSP2/#directive-plugin-types
         /// </summary>
         public CspMediaTypeList PluginTypes { get; private set; }
-
-        ///// <summary>
-        /////     Gets the referrer directive source-list.<br />
-        /////     See http://www.w3.org/TR/CSP11/#directive-referrer
-        ///// </summary>
-        //public ReferrerKeyword Referrer { get; set; }
-
-        ///// <summary>
-        /////     Gets the reflected-xss directive source-list.<br />
-        /////     See http://www.w3.org/TR/CSP2/#directive-reflected-xss <br />
-        /////     Info: "(...) subsume the functionality provided by the proprietary X-XSS-Protection HTTP header (...)"
-        ///// </summary>
-        //public ReflectedXssKeyword ReflectedXss { get; set; }
 
         /// <summary>
         ///     Gets the report-uri directive source-list.<br />
@@ -153,8 +137,6 @@ namespace SecurityHeadersMiddleware {
                 BuildDirectiveValue("media-src", MediaSrc),
                 BuildDirectiveValue("object-src", ObjectSrc),
                 BuildDirectiveValue("plugin-types", PluginTypes),
-                //BuildDirectiveValue("referrer", ReferrerDirectiveValueBuilder.Get(Referrer)),
-                //BuildDirectiveValue("reflected-xss", ReflectedXssDirectiveValueBuilder.Get(ReflectedXss)),
                 BuildDirectiveValue("report-uri", ReportUri),
                 BuildSandboxDirectiveValue(),
                 BuildDirectiveValue("script-src", ScriptSrc),

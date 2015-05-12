@@ -81,6 +81,7 @@
     </Compile>
     <Compile Include="AntiClickjackingMiddleware.cs" />
     <Compile Include="App_Packages\LibOwin.1.0\LibOwin.cs" />
+    <Compile Include="CspAncestorSourceList.cs" />
     <Compile Include="CspSourceList.HashSource.cs">
       <DependentUpon>CspSourceList.cs</DependentUpon>
     </Compile>

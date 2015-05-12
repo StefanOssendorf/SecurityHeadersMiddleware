@@ -53,7 +53,7 @@ namespace SecurityHeadersMiddleware {
 
         private void ThrowIfNoneIsSet() {
             if (mIsNone) {
-                throw new InvalidOperationException("This list ist set to 'none'. No additional values are allowed. Don't set this liste to 'none' to add new values.");
+                throw new InvalidOperationException("This list ist set to 'none'. No additional values are allowed. Don't set this liste to 'none' when you need to add values.");
             }
         }
 

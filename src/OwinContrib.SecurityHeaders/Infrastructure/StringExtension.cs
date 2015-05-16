@@ -7,5 +7,16 @@
         public static bool IsNullOrWhiteSpace(this string source) {
             return string.IsNullOrWhiteSpace(source);
         }
+
+        public static string PercentEncode(this string source) {
+            var value = source;
+            if (source.Contains(";")) {
+                value = source.Replace(";", "%3B");
+            }
+            if (source.Contains(",")) {
+                value = source.Replace(",", "%2C");
+            }
+            return value;
+        }
     }
 }

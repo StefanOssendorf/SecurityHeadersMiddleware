@@ -21,7 +21,7 @@ namespace SecurityHeadersMiddleware {
         public CspSourceList() {
             mSchemes = new List<string>();
             mKeywords = new List<SourceListKeyword>();
-            mHosts = new List<string>();
+            mHosts = new List<HostSource>();
             mIsNone = false;
         }
 

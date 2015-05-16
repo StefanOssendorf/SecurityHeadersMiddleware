@@ -102,6 +102,7 @@
     <Compile Include="ContentSecurityPolicyReportOnlyMiddleware.cs" />
     <Compile Include="ContenTypeOptionsHeaderMiddleware.cs" />
     <Compile Include="CspSandboxTokenList.cs" />
+    <Compile Include="HostSource.cs" />
     <Compile Include="Infrastructure\Rfc7230Utility.cs" />
     <Compile Include="IOwinResponseExtension.cs" />
     <Compile Include="SandboxKeyword.cs" />

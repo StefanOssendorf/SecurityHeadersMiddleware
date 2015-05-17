@@ -58,7 +58,7 @@ namespace SecurityHeadersMiddleware {
         }
 
         private static string TrimAndEscape(string input) {
-            return input.Trim().Replace(";", "%3B").Replace(",", "%2C");
+            return input.Trim().PercentEncode();
         }
     }
 }

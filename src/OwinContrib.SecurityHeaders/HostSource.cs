@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using SecurityHeadersMiddleware.Infrastructure;
 
 namespace SecurityHeadersMiddleware {
-    class HostSource {
+    internal class HostSource {
         private readonly string mValue;
 
         public HostSource(string host) {

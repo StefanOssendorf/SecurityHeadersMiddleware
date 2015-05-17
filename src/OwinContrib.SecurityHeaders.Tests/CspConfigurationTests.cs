@@ -51,7 +51,7 @@ namespace SecurityHeadersMiddleware.Tests {
             config.DefaultSrc.AddKeyword(SourceListKeyword.Self);
             config.FontSrc.AddKeyword(SourceListKeyword.Self);
             config.FormAction.AddKeyword(SourceListKeyword.Self);
-            //config.FrameAncestors.AddKeyword(SourceListKeyword.Self);
+            config.FrameAncestors.SetToNone();
             config.FrameSrc.AddKeyword(SourceListKeyword.Self);
             config.ImgSrc.AddKeyword(SourceListKeyword.Self);
             config.MediaSrc.AddKeyword(SourceListKeyword.Self);

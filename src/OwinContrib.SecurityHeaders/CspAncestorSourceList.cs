@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
 using SecurityHeadersMiddleware.Infrastructure;
 
@@ -8,11 +9,11 @@ namespace SecurityHeadersMiddleware {
     public class CspAncestorSourceList : IDirectiveValueBuilder {
         private bool mIsNone;
         private readonly List<string> mSchemes;
-        private readonly List<string> mHosts;
+        private readonly List<HostSource> mHosts;
 
         public CspAncestorSourceList() {
             mSchemes = new List<string>();
-            mHosts = new List<string>();
+            mHosts = new List<HostSource>();
             mIsNone = false;
         }
 
@@ -66,20 +67,12 @@ namespace SecurityHeadersMiddleware {
             host.MustNotNull("host");
             host.MustNotBeWhiteSpaceOrEmpty("host");
             host = host.ToLower();
-            HostSourceParts parts = SplitIntoHostSourceParts(host);
-            VerifyParts(parts);
-            if(mHosts.Contains(host)) {
+            var source = new HostSource(host);
+            
+            if(mHosts.Contains(source)) {
                 return;
             }
-            mHosts.Add(host);
-        }
-
-        private void VerifyParts(HostSourceParts parts) {
-            throw new NotImplementedException();
-        }
-
-        private HostSourceParts SplitIntoHostSourceParts(string host) {
-            throw new NotImplementedException();
+            mHosts.Add(source);
         }
 
         /// <summary>
@@ -100,7 +93,21 @@ namespace SecurityHeadersMiddleware {
             if (mIsNone) {
                 return "'none'";
             }
-            throw new NotImplementedException();
+            var sb = new StringBuilder();
+            sb.AppendFormat(" {0} ", BuildHostValues());
+            sb.AppendFormat(" {0} ", BuildSchemeValues());
+            return sb.ToString().Trim().PercentEncode();
+        }
+
+        private string BuildSchemeValues() {
+            var sb = new StringBuilder();
+            foreach(string scheme in mSchemes) {
+                sb.AppendFormat("{0} ", scheme);
+            }
+            return sb.ToString().Trim();
+        }
+        private string BuildHostValues() {
+            return string.Join(" ", mHosts).Trim();
         }
     }
 }

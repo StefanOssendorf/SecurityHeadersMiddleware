@@ -5,12 +5,17 @@ using System.Text.RegularExpressions;
 using SecurityHeadersMiddleware.Infrastructure;
 
 namespace SecurityHeadersMiddleware {
-    //TODO: Implement
+    /// <summary>
+    /// Represents a ancestor-source-list according to the CSP specification (http://www.w3.org/TR/CSP2/#ancestor_source_list).
+    /// </summary>
     public class CspAncestorSourceList : IDirectiveValueBuilder {
         private bool mIsNone;
         private readonly List<string> mSchemes;
         private readonly List<HostSource> mHosts;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CspAncestorSourceList" /> class.
+        /// </summary>
         public CspAncestorSourceList() {
             mSchemes = new List<string>();
             mHosts = new List<HostSource>();
@@ -18,11 +23,11 @@ namespace SecurityHeadersMiddleware {
         }
 
         /// <summary>
-        ///     Adds a scheme to the source-list.
+        ///     Adds a scheme to the ancestor-source-list.
         /// </summary>
         /// <param name="scheme">The scheme.</param>
         /// <exception cref="System.FormatException">
-        ///     <paramref name="scheme" /> has to satisfy this regex: ^[a-z][a-z0-9+\-.]*:?$ <br />
+        ///     <paramref name="scheme" /> has to satisfy this regex: (^[a-z][a-z0-9+\-.]*)(:?)$ <br />
         ///     For more information see http://www.w3.org/TR/CSP2/#scheme-source
         /// </exception>
         public void AddScheme(string scheme) {
@@ -45,21 +50,16 @@ namespace SecurityHeadersMiddleware {
             mSchemes.Add(schemeToAdd);
         }
 
-        private void ThrowIfNoneIsSet() {
-            if (mIsNone) {
-                throw new InvalidOperationException("This list ist set to 'none'. No additional values are allowed. Don't set this liste to 'none' when you need to add values.");
-            }
-        }
-
         /// <summary>
-        ///     Adds a host to the source-list.
+        ///     Adds a host to the ancestor-source-list.
         /// </summary>
         /// <param name="host">The host.</param>
         public void AddHost(Uri host) {
             AddHost(host.GetComponents(UriComponents.SchemeAndServer | UriComponents.Path, UriFormat.UriEscaped));
         }
+        
         /// <summary>
-        ///     Adds a host to the source-list.
+        ///     Adds a host to the ancestor-source-list.
         /// </summary>
         /// <param name="host">The host.</param>
         public void AddHost(string host) {
@@ -76,7 +76,7 @@ namespace SecurityHeadersMiddleware {
         }
 
         /// <summary>
-        ///     Sets the ancestor source-list to 'none'.<br />After this nothing can be added and will cause an
+        ///     Sets the ancestor-source-list to 'none'.<br />After this nothing can be added and will cause an
         ///     <see cref="InvalidOperationException" />.
         /// </summary>
         public void SetToNone() {
@@ -100,14 +100,16 @@ namespace SecurityHeadersMiddleware {
         }
 
         private string BuildSchemeValues() {
-            var sb = new StringBuilder();
-            foreach(string scheme in mSchemes) {
-                sb.AppendFormat("{0} ", scheme);
-            }
-            return sb.ToString().Trim();
+            return string.Join(" ", mSchemes).Trim();
         }
         private string BuildHostValues() {
             return string.Join(" ", mHosts).Trim();
+        }
+
+        private void ThrowIfNoneIsSet() {
+            if(mIsNone) {
+                throw new InvalidOperationException("This list ist set to 'none'. No additional values are allowed. Don't set this liste to 'none' when you need to add values.");
+            }
         }
     }
 }

@@ -84,30 +84,6 @@ namespace SecurityHeadersMiddleware.Tests {
         }
 
         [Fact]
-        public void When_adding_a_valid_full_host_source_it_should_not_throw_a_formatException() {
-            var list = new CspSourceList();
-            list.AddHost("http://*.example.com:80/path/");
-        }
-
-        [Fact]
-        public void When_adding_a_valid_host_source_without_schemePart_it_should_not_throw_a_formatException() {
-            var list = new CspSourceList();
-            list.AddHost("*.example.com:80/path/");
-        }
-
-        [Fact]
-        public void When_adding_a_valid_host_source_with_only_path_part_it_should_not_throw_a_formatException() {
-            var list = new CspSourceList();
-            list.AddHost("*.example.com/path/");
-        }
-
-        [Fact]
-        public void When_adding_a_valid_host_source_with_only_host_part_it_should_not_throw_a_formatException() {
-            var list = new CspSourceList();
-            list.AddHost("*.example.com");
-        }
-
-        [Fact]
         public void When_adding_one_scheme_multiple_times_it_should_only_be_once_in_the_header_value() {
             var list = new CspSourceList();
             list.AddScheme("http:");
@@ -116,33 +92,15 @@ namespace SecurityHeadersMiddleware.Tests {
         }
 
         [Fact]
-        public void When_adding_an_invalid_host_part_it_should_throw_a_formatException() {
+        public void When_adding_a_valid_host_source_it_should_succeed() {
             var list = new CspSourceList();
-            Assert.Throws<FormatException>(() => list.AddHost("ftp://*.example./abcd/"));
+            list.AddHost("http://*.example.com:80/path/");
         }
 
         [Fact]
-        public void When_adding_an_invalid_port_part_it_should_throw_a_formatException() {
+        public void When_adding_an_invalid_host_source_it_should_fail() {
             var list = new CspSourceList();
-            Assert.Throws<FormatException>(() => list.AddHost("*.example.com:1as"));
-        }
-
-        [Fact]
-        public void When_adding_an_invalid_path_it_should_throw_a_formatException() {
-            var list = new CspSourceList();
-            Assert.Throws<FormatException>(() => list.AddHost("*.example.com/%1"));
-        }
-
-        [Fact]
-        public void When_adding_one_host_it_should_create_the_correct_header_value() {
-            var list = new CspSourceList();
-            list.AddHost("http://*.example.com:*/path/file.js");
-            list.ToDirectiveValue().Trim().ShouldEqual("http://*.example.com:*/path/file.js");
-        }
-        [Fact]
-        public void When_adding_an_empty_host_it_should_throw_a_argumentException() {
-            var list = new CspSourceList();
-            Assert.Throws<ArgumentException>(() => list.AddHost(""));
+            Assert.Throws<FormatException>(() => list.AddHost("holy crap this will fail!"));
         }
 
         [Fact]
@@ -153,6 +111,14 @@ namespace SecurityHeadersMiddleware.Tests {
             list.AddHost("https://www.example.com/");
             list.ToDirectiveValue().Trim().ShouldEqual("https:  https://www.example.com/  'self'");
         }
+
+        [Fact]
+        public void When_adding_one_host_it_should_create_the_correct_header_value() {
+            var list = new CspSourceList();
+            list.AddHost("http://*.example.com:*/path/file.js");
+            list.ToDirectiveValue().Trim().ShouldEqual("http://*.example.com:*/path/file.js");
+        }
+
 
         [Fact]
         public void When_adding_a_valid_uri_as_host_it_should_not_throw_a_exception() {

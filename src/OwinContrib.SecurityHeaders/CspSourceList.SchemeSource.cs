@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 using SecurityHeadersMiddleware.Infrastructure;
 
@@ -37,11 +36,7 @@ namespace SecurityHeadersMiddleware {
         }
 
         private string BuildSchemeValues() {
-            var sb = new StringBuilder();
-            foreach(string scheme in mSchemes) {
-                sb.AppendFormat("{0} ", scheme);
-            }
-            return sb.ToString();
+            return string.Join(" ", mSchemes);
         }
     }
 }

@@ -7,6 +7,9 @@ namespace SecurityHeadersMiddleware {
         private readonly string mValue;
 
         public HostSource(string host) {
+            if (host.IsNullOrWhiteSpace()) {
+                throw new ArgumentException("The host parameter must be not empty and not null.");
+            }
             ValidateHost(host);
             mValue = host.Trim().ToLower();
         }

@@ -101,6 +101,7 @@
     <Compile Include="CspSourceListTests.cs" />
     <Compile Include="CspUriReferenceListTests.cs" />
     <Compile Include="HeaderHelper.cs" />
+    <Compile Include="HostSourceTests.cs" />
     <Compile Include="OwinEnvironmentSpecBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StrictTransportSecurityMiddlewareSpecs.cs" />

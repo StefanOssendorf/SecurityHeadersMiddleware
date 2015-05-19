@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using SecurityHeadersMiddleware.Infrastructure;
 
@@ -64,7 +65,7 @@ namespace SecurityHeadersMiddleware {
         ///     See http://www.w3.org/TR/CSP2/#directive-frame-ancestors <br />
         ///     Info: According to the spec this directive replaces the X-Frame-Options header.
         /// </summary>
-        public CspAncestorSourceList FrameAncestors { get; private set; } //TODO: Validate against Csp2 CR
+        public CspAncestorSourceList FrameAncestors { get; private set; }
         /// <summary>
         ///     Gets the frame-src directive source-list.<br />
         ///     See http://www.w3.org/TR/CSP2/#directive-frame-src
@@ -141,18 +142,7 @@ namespace SecurityHeadersMiddleware {
                 BuildDirectiveValue("script-src", ScriptSrc),
                 BuildDirectiveValue("style-src", StyleSrc)
             };
-            var sb = new StringBuilder();
-            for (int i = 0; i < values.Count; i++) {
-                string value = values[i];
-                if (value.IsNullOrWhiteSpace()) {
-                    continue;
-                }
-                if (sb.Length > 0) {
-                    sb.Append("; ");
-                }
-                sb.Append(value);
-            }
-            return sb.ToString();
+            return string.Join("; ", values.Where(s => !s.IsNullOrWhiteSpace()));
         }
         private string BuildSandboxDirectiveValue() {
             if (Sandbox.IsEmpty) {

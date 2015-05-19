@@ -8,14 +8,17 @@ namespace SecurityHeadersMiddleware {
         ///     Keyword: 'self'
         /// </summary>
         Self,
+
         /// <summary>
         ///     Keyword: 'unsafe-inline'
         /// </summary>
         UnsafeInline,
+
         /// <summary>
         ///     Keyword: 'unsafe-eval'
         /// </summary>
         UnsafeEval,
+
         /// <summary>
         ///     Keyword: 'unsafe-redirect'
         /// </summary>

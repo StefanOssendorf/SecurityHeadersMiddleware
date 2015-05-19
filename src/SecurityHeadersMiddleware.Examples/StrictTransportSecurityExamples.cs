@@ -19,7 +19,7 @@ namespace SecurityHeadersMiddleware.Examples {
             appbuilder.StrictTransportSecurity();
 
             // Add Strict-Transport-Security with the configured settings
-            var config = new StrictTransportSecurityOptions() {
+            var config = new StrictTransportSecurityOptions {
                 IncludeSubDomains = true,
                 MaxAge = 31536000,
                 RedirectToSecureTransport = true,

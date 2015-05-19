@@ -24,8 +24,8 @@ namespace SecurityHeadersMiddleware.Tests {
             var config = new ContentSecurityPolicyConfiguration();
             config.ScriptSrc.AddScheme("https");
             config.ImgSrc.AddKeyword(SourceListKeyword.Self);
-            string value = config.ToHeaderValue();
-            string[] split = value.Split(new[] {";"}, StringSplitOptions.None);
+            var value = config.ToHeaderValue();
+            var split = value.Split(new[] {";"}, StringSplitOptions.None);
             split.Length.Should().Be(2);
             split.Should().Contain(item => item.Trim().Equals("script-src https:"));
             split.Should().Contain(item => item.Trim().Equals("img-src 'self'"));
@@ -38,7 +38,7 @@ namespace SecurityHeadersMiddleware.Tests {
             config.ImgSrc.AddScheme("https");
             config.MediaSrc.AddKeyword(SourceListKeyword.UnsafeInline);
             config.BaseUri.AddScheme("https");
-            string[] split = config.ToHeaderValue().Split(new[] {";"}, StringSplitOptions.None);
+            var split = config.ToHeaderValue().Split(new[] {";"}, StringSplitOptions.None);
             split.Length.Should().Be(4);
         }
 
@@ -66,7 +66,7 @@ namespace SecurityHeadersMiddleware.Tests {
                 "img-src", "media-src", "object-src", "plugin-types", "report-uri", "sandbox",
                 "script-src", "style-src"
             };
-            List<string> values = config.ToHeaderValue().Split(new[] {";"}, StringSplitOptions.None).SelectMany(i => i.Split(new[] {" "}, StringSplitOptions.None)).ToList();
+            var values = config.ToHeaderValue().Split(new[] {";"}, StringSplitOptions.None).SelectMany(i => i.Split(new[] {" "}, StringSplitOptions.None)).ToList();
             values.Should().Contain(expected);
         }
 

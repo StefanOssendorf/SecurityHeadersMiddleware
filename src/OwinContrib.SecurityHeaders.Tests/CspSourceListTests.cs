@@ -119,7 +119,6 @@ namespace SecurityHeadersMiddleware.Tests {
             list.ToDirectiveValue().Trim().ShouldEqual("http://*.example.com:*/path/file.js");
         }
 
-
         [Fact]
         public void When_adding_a_valid_uri_as_host_it_should_not_throw_a_exception() {
             var list = new CspSourceList();

@@ -15,6 +15,7 @@ namespace SecurityHeadersMiddleware {
     /// </summary>
     public class CspUriReferenceList : IDirectiveValueBuilder {
         #region Regex
+
         private static readonly Regex Rfc3986UriRegex = new Regex(@" ^
     # RFC-3986 URI component:  URI
     [A-Za-z][A-Za-z0-9+\-.]* :                                      # scheme "":""
@@ -59,6 +60,7 @@ namespace SecurityHeadersMiddleware {
     (?:\? (?:[A-Za-z0-9\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})* )?   # [ ""?"" query ]
     (?:\# (?:[A-Za-z0-9\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})* )?   # [ ""#"" fragment ]
     $ ", RegexOptions.IgnorePatternWhitespace);
+
         #endregion
 
         private readonly List<string> mUris;
@@ -76,11 +78,12 @@ namespace SecurityHeadersMiddleware {
         /// <returns>The directive header value without directive-name.</returns>
         public string ToDirectiveValue() {
             var sb = new StringBuilder();
-            foreach (string uri in mUris) {
+            foreach (var uri in mUris) {
                 sb.AppendFormat(" {0} ", uri);
             }
             return sb.ToString();
         }
+
         /// <summary>
         ///     Adds a uri to the uri-reference-list.
         /// </summary>
@@ -88,6 +91,7 @@ namespace SecurityHeadersMiddleware {
         public void AddReportUri(Uri uri) {
             AddReportUri(uri.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped));
         }
+
         /// <summary>
         ///     Adds a uri to the uri-reference-list.
         /// </summary>

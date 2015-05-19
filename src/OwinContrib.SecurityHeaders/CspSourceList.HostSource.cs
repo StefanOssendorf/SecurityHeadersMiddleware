@@ -13,6 +13,7 @@ namespace SecurityHeadersMiddleware {
         public void AddHost(Uri host) {
             AddHost(host.GetComponents(UriComponents.SchemeAndServer | UriComponents.Path, UriFormat.UriEscaped));
         }
+
         /// <summary>
         ///     Adds a host to the source-list.
         /// </summary>
@@ -21,9 +22,9 @@ namespace SecurityHeadersMiddleware {
             ThrowIfNoneIsSet();
             host.MustNotNull("host");
             host.MustNotBeWhiteSpaceOrEmpty("host");
-            
+
             var hostSource = new HostSource(host);
-            if(mHosts.Contains(hostSource)) {
+            if (mHosts.Contains(hostSource)) {
                 return;
             }
             mHosts.Add(hostSource);

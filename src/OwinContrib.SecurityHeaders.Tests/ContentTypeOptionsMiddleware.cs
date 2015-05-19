@@ -6,12 +6,10 @@ using Owin;
 using SecurityHeadersMiddleware.OwinAppBuilder;
 
 namespace SecurityHeadersMiddleware.Tests {
-    [Subject(typeof(ContenTypeOptionsHeaderMiddleware))]
+    [Subject(typeof (ContenTypeOptionsHeaderMiddleware))]
     public class When_using_contentTypeOptionsHeaderMiddleware : OwinEnvironmentSpecBase {
         private Establish context = () => Client = CtoClientHelper.Create();
-
         private Because of = () => Response = Client.GetAsync("http://wwww.example.org").Await();
-
         private It should_contain_contentTypeOptions_header = () => Response.XContentTypeOptions().ShouldNotBeNull();
         private It should_containt_nosniff_as_header_value = () => Response.XContentTypeOptions().ShouldEqual("nosniff");
     }

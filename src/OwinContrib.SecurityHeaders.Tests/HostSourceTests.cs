@@ -1,5 +1,4 @@
 ﻿using System;
-using Machine.Specifications;
 using Xunit;
 
 namespace SecurityHeadersMiddleware.Tests {
@@ -43,6 +42,5 @@ namespace SecurityHeadersMiddleware.Tests {
         public void When_creating_an_empty_host_it_should_throw_a_argumentException() {
             Assert.Throws<ArgumentException>(() => new HostSource(""));
         }
-         
     }
 }

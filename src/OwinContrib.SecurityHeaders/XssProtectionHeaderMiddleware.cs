@@ -9,15 +9,16 @@ namespace SecurityHeadersMiddleware {
         public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> XssProtectionHeader() {
             return XssProtectionHeader(false);
         }
+
         public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> XssProtectionHeader(bool disabled) {
             return
                 next =>
                     env => {
-                        IOwinResponse response = env.AsContext().Response;
+                        var response = env.AsContext().Response;
                         response
                             .OnSendingHeaders(resp => {
-                                string value = disabled ? "0" : "1; mode=block";
-                                ((IOwinResponse)resp).Headers[HeaderConstants.XssProtection] = value;
+                                var value = disabled ? "0" : "1; mode=block";
+                                ((IOwinResponse) resp).Headers[HeaderConstants.XssProtection] = value;
                             }, response);
                         return next(env);
                     };

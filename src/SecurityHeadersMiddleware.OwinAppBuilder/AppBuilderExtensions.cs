@@ -8,10 +8,30 @@ namespace SecurityHeadersMiddleware.OwinAppBuilder {
     using BuildFunc = Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>>;
 
     /// <summary>
-    /// Provides <see cref="IAppBuilder"/> extension methods.
+    ///     Provides <see cref="IAppBuilder" /> extension methods.
     /// </summary>
     public static class AppBuilderExtensions {
+        #region Content Type Options
+
+        /// <summary>
+        ///     Adds the "X-Content-Type-Options" header with value "nosniff" to the response.
+        /// </summary>
+        /// <param name="builder">The IAppBuilder instance.</param>
+        /// <returns>The IAppBuilder instance.</returns>
+        public static IAppBuilder ContentTypeOptions(this IAppBuilder builder) {
+            builder.MustNotNull("builder");
+            builder.UseOwin().ContentTypeOptions();
+            return builder;
+        }
+
+        #endregion
+
+        internal static BuildFunc UseOwin(this IAppBuilder builder) {
+            return middleware => builder.Use(middleware(builder.Properties));
+        }
+
         #region AntiClickjacking
+
         /// <summary>
         ///     Adds the "X-Frame-Options" header with value DENY to the response.
         /// </summary>
@@ -20,6 +40,7 @@ namespace SecurityHeadersMiddleware.OwinAppBuilder {
         public static IAppBuilder AntiClickjackingHeader(this IAppBuilder builder) {
             return AntiClickjackingHeader(builder, XFrameOption.Deny);
         }
+
         /// <summary>
         ///     Adds the "X-Frame-Options" header with the given option to the response.
         /// </summary>
@@ -31,6 +52,7 @@ namespace SecurityHeadersMiddleware.OwinAppBuilder {
             builder.UseOwin().AntiClickjackingHeader(option);
             return builder;
         }
+
         /// <summary>
         ///     Adds the "X-Frame-Options" with DENY when the request uri is not provided to the response. Otherwise the request
         ///     uri with ALLOW-FROM &lt;request uri&gt;.
@@ -45,6 +67,7 @@ namespace SecurityHeadersMiddleware.OwinAppBuilder {
             builder.UseOwin().AntiClickjackingHeader(origins);
             return builder;
         }
+
         /// <summary>
         ///     Adds the "X-Frame-Options" with DENY when the request uri is not provided to the response. Otherwise the request
         ///     uri with ALLOW-FROM &lt;request uri&gt;.
@@ -59,9 +82,11 @@ namespace SecurityHeadersMiddleware.OwinAppBuilder {
             builder.UseOwin().AntiClickjackingHeader(origins);
             return builder;
         }
+
         #endregion
 
         #region XssProtection
+
         /// <summary>
         ///     Adds the "X-Xss-Protection" header with value "1; mode=block" to the response.
         /// </summary>
@@ -70,6 +95,7 @@ namespace SecurityHeadersMiddleware.OwinAppBuilder {
         public static IAppBuilder XssProtectionHeader(this IAppBuilder builder) {
             return XssProtectionHeader(builder, false);
         }
+
         /// <summary>
         ///     Adds the "X-Xss-Protection" header depending on <paramref name="disabled" /> to the response.
         /// </summary>
@@ -81,9 +107,11 @@ namespace SecurityHeadersMiddleware.OwinAppBuilder {
             builder.UseOwin().XssProtectionHeader(disabled);
             return builder;
         }
+
         #endregion
 
         #region Strict Transport Security
+
         /// <summary>
         ///     Adds the "Strict-Transport-Security" (STS) header to the response.
         /// </summary>
@@ -92,6 +120,7 @@ namespace SecurityHeadersMiddleware.OwinAppBuilder {
         public static IAppBuilder StrictTransportSecurity(this IAppBuilder builder) {
             return StrictTransportSecurity(builder, new StrictTransportSecurityOptions());
         }
+
         /// <summary>
         ///     Adds the "Strict-Transport-Security" (STS) header with the given option to the response.
         /// </summary>
@@ -104,22 +133,11 @@ namespace SecurityHeadersMiddleware.OwinAppBuilder {
             builder.UseOwin().StrictTransportSecurity(options);
             return builder;
         }
-        #endregion
 
-        #region Content Type Options
-        /// <summary>
-        ///     Adds the "X-Content-Type-Options" header with value "nosniff" to the response.
-        /// </summary>
-        /// <param name="builder">The IAppBuilder instance.</param>
-        /// <returns>The IAppBuilder instance.</returns>
-        public static IAppBuilder ContentTypeOptions(this IAppBuilder builder) {
-            builder.MustNotNull("builder");
-            builder.UseOwin().ContentTypeOptions();
-            return builder;
-        }
         #endregion
 
         #region Content Security Policy
+
         /// <summary>
         ///     Adds the "Content-Security-Policy" header with the given configuration to the response.
         /// </summary>
@@ -143,10 +161,7 @@ namespace SecurityHeadersMiddleware.OwinAppBuilder {
             builder.UseOwin().ContentSecurityPolicyReportOnly(configuration);
             return builder;
         }
-        #endregion
 
-        internal static BuildFunc UseOwin(this IAppBuilder builder) {
-            return middleware => builder.Use(middleware(builder.Properties));
-        }
+        #endregion
     }
 }

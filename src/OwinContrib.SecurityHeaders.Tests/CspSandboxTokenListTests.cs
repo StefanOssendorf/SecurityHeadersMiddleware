@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Xunit;
@@ -36,7 +35,7 @@ namespace SecurityHeadersMiddleware.Tests {
             list.AddKeyword(SandboxKeyword.AllowSameOrigin);
             list.AddKeyword(SandboxKeyword.AllowScripts);
             list.AddKeyword(SandboxKeyword.AllowTopNavigation);
-            IEnumerable<string> split = list.ToDirectiveValue().Split(new[] {" "}, StringSplitOptions.None).Select(item => item.Trim());
+            var split = list.ToDirectiveValue().Split(new[] {" "}, StringSplitOptions.None).Select(item => item.Trim());
             var expectedValues = new[] {
                 "allow-forms", "allow-pointer-lock", "allow-popups", "allow-same-origin", "allow-scripts", "allow-top-navigation"
             };

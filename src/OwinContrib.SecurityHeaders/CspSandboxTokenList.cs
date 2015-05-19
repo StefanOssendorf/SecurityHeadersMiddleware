@@ -9,6 +9,7 @@ namespace SecurityHeadersMiddleware {
     /// </summary>
     public class CspSandboxTokenList : IDirectiveValueBuilder {
         private readonly List<string> mTokens;
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="CspSandboxTokenList" /> class.
         /// </summary>
@@ -16,6 +17,7 @@ namespace SecurityHeadersMiddleware {
             mTokens = new List<string>();
             IsEmpty = false;
         }
+
         internal bool IsEmpty { get; private set; }
 
         /// <summary>
@@ -27,7 +29,7 @@ namespace SecurityHeadersMiddleware {
                 return "";
             }
             var sb = new StringBuilder();
-            foreach (string token in mTokens) {
+            foreach (var token in mTokens) {
                 sb.AppendFormat(" {0} ", token);
             }
             return sb.ToString().Trim();
@@ -38,7 +40,7 @@ namespace SecurityHeadersMiddleware {
         /// </summary>
         /// <param name="keyword">The keyword.</param>
         public void AddKeyword(SandboxKeyword keyword) {
-            string token = TokenValueOfKeyword(keyword);
+            var token = TokenValueOfKeyword(keyword);
             AddToken(token);
         }
 

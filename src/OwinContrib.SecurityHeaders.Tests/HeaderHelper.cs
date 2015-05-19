@@ -9,9 +9,11 @@ namespace SecurityHeadersMiddleware.Tests {
         public static string XFrameOptionsHeader(this HttpResponseMessage source) {
             return source.Headers.GetValues(HeaderConstants.XFrameOptions).First();
         }
+
         public static IEnumerable<string> StsHeader(this HttpResponseMessage source) {
             return source.Headers.GetValues(HeaderConstants.StrictTransportSecurity).Single().Split(new[] {';'}, StringSplitOptions.RemoveEmptyEntries).Select(value => value.Trim());
         }
+
         public static string XContentTypeOptions(this HttpResponseMessage source) {
             return source.Headers.GetValues(HeaderConstants.XContentTypeOptions).Single();
         }
@@ -23,6 +25,7 @@ namespace SecurityHeadersMiddleware.Tests {
         public static string Csp(this HttpResponseMessage source) {
             return source.Headers.GetValues(HeaderConstants.ContentSecurityPolicy).First();
         }
+
         public static string Cspro(this HttpResponseMessage source) {
             return source.Headers.GetValues(HeaderConstants.ContentSecurityPolicyReportOnly).First();
         }

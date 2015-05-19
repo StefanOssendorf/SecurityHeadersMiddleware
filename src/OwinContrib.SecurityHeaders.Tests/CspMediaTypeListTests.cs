@@ -12,7 +12,7 @@ namespace SecurityHeadersMiddleware.Tests {
         [Fact]
         public void When_trying_to_add_a_mediaType_with_a_ctl_in_type_it_should_throw_a_formatException() {
             var csp = new CspMediaTypeList();
-            string mediaType = (char)10 + "acd/x-abcd";
+            var mediaType = (char) 10 + "acd/x-abcd";
             Assert.Throws<FormatException>(() => csp.AddMediaType(mediaType));
         }
 

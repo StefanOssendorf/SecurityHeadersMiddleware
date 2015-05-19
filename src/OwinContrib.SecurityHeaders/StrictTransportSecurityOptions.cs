@@ -8,6 +8,7 @@ namespace SecurityHeadersMiddleware {
         private const uint DefaultMaxAge = 31536000; // 12 Month
         private Func<int, string> mRedirectReasonPhrase;
         private Func<Uri, string> mRedirectUriBuilder;
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="StrictTransportSecurityOptions" /> class.
         /// </summary>
@@ -23,6 +24,7 @@ namespace SecurityHeadersMiddleware {
         ///     The maximum age.
         /// </value>
         public uint MaxAge { get; set; }
+
         /// <summary>
         ///     Gets or sets a value indicating whether [include sub domains].
         /// </summary>
@@ -30,6 +32,7 @@ namespace SecurityHeadersMiddleware {
         ///     <c>true</c> if [include sub domains]; otherwise, <c>false</c>.
         /// </value>
         public bool IncludeSubDomains { get; set; }
+
         /// <summary>
         ///     Gets or sets a value indicating whether redirect to secure transport or not..
         /// </summary>
@@ -59,6 +62,7 @@ namespace SecurityHeadersMiddleware {
         private static string DefaultResonPhrase(int statusCode) {
             return "";
         }
+
         private static string DefaultRedirectUriBuilder(Uri uri) {
             var builder = new UriBuilder(uri) {
                 Scheme = Uri.UriSchemeHttps,

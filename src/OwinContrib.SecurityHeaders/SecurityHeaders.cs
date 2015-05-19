@@ -10,7 +10,22 @@ namespace SecurityHeadersMiddleware {
     ///     OWIN extension methods.
     /// </summary>
     public static class SecurityHeaders {
+        #region Content Type Options
+
+        /// <summary>
+        ///     Adds the "X-Content-Type-Options" header with value "nosniff" to the response.
+        /// </summary>
+        /// <param name="builder">The OWIN builder instance.</param>
+        /// <returns>The OWIN builder instance.</returns>
+        public static BuildFunc ContentTypeOptions(this BuildFunc builder) {
+            builder(_ => ContenTypeOptionsHeaderMiddleware.ContentTypeOptionsHeader());
+            return builder;
+        }
+
+        #endregion
+
         #region AntiClickjacking
+
         /// <summary>
         ///     Adds the "X-Frame-Options" header with value DENY to the response.
         /// </summary>
@@ -19,6 +34,7 @@ namespace SecurityHeadersMiddleware {
         public static BuildFunc AntiClickjackingHeader(this BuildFunc builder) {
             return AntiClickjackingHeader(builder, XFrameOption.Deny);
         }
+
         /// <summary>
         ///     Adds the "X-Frame-Options" header with the given option to the response.
         /// </summary>
@@ -29,6 +45,7 @@ namespace SecurityHeadersMiddleware {
             builder(_ => AntiClickjackingMiddleware.AntiClickjackingHeader(option));
             return builder;
         }
+
         /// <summary>
         ///     Adds the "X-Frame-Options" with DENY when the request uri is not provided to the response. Otherwise the request
         ///     uri with ALLOW-FROM &lt;request uri&gt;.
@@ -42,6 +59,7 @@ namespace SecurityHeadersMiddleware {
             builder(_ => AntiClickjackingMiddleware.AntiClickjackingHeader(origins));
             return builder;
         }
+
         /// <summary>
         ///     Adds the "X-Frame-Options" with DENY when the request uri is not provided to the response. Otherwise the request
         ///     uri with ALLOW-FROM &lt;request uri&gt;.
@@ -55,9 +73,11 @@ namespace SecurityHeadersMiddleware {
             builder(_ => AntiClickjackingMiddleware.AntiClickjackingHeader(origins));
             return builder;
         }
+
         #endregion
 
         #region XssProtection
+
         /// <summary>
         ///     Adds the "X-Xss-Protection" header with value "1; mode=block" to the response.
         /// </summary>
@@ -66,6 +86,7 @@ namespace SecurityHeadersMiddleware {
         public static BuildFunc XssProtectionHeader(this BuildFunc builder) {
             return XssProtectionHeader(builder, false);
         }
+
         /// <summary>
         ///     Adds the "X-Xss-Protection" header depending on <paramref name="disabled" /> to the response.
         /// </summary>
@@ -76,9 +97,11 @@ namespace SecurityHeadersMiddleware {
             builder(_ => XssProtectionHeaderMiddleware.XssProtectionHeader(disabled));
             return builder;
         }
+
         #endregion
 
         #region Strict Transport Security
+
         /// <summary>
         ///     Adds the "Strict-Transport-Security" (STS) header to the response.
         /// </summary>
@@ -87,6 +110,7 @@ namespace SecurityHeadersMiddleware {
         public static BuildFunc StrictTransportSecurity(this BuildFunc builder) {
             return StrictTransportSecurity(builder, new StrictTransportSecurityOptions());
         }
+
         /// <summary>
         ///     Adds the "Strict-Transport-Security" (STS) header with the given option to the response.
         /// </summary>
@@ -97,21 +121,11 @@ namespace SecurityHeadersMiddleware {
             builder(_ => StrictTransportSecurityHeaderMiddleware.StrictTransportSecurityHeader(options));
             return builder;
         }
-        #endregion
 
-        #region Content Type Options
-        /// <summary>
-        ///     Adds the "X-Content-Type-Options" header with value "nosniff" to the response.
-        /// </summary>
-        /// <param name="builder">The OWIN builder instance.</param>
-        /// <returns>The OWIN builder instance.</returns>
-        public static BuildFunc ContentTypeOptions(this BuildFunc builder) {
-            builder(_ => ContenTypeOptionsHeaderMiddleware.ContentTypeOptionsHeader());
-            return builder;
-        }
         #endregion
 
         #region Content Security Policy
+
         /// <summary>
         ///     Adds the "Content-Security-Policy" (CSP) header with the given configuration to the response.
         /// </summary>
@@ -135,6 +149,7 @@ namespace SecurityHeadersMiddleware {
             builder(_ => ContentSecurityPolicyReportOnlyMiddleware.ContentSecurityPolicyHeader(configuration));
             return builder;
         }
+
         #endregion
     }
 }

@@ -7,6 +7,7 @@
         ///     Headervalue deny.
         /// </summary>
         Deny = 1,
+
         /// <summary>
         ///     Headevalue sameorigin.
         /// </summary>

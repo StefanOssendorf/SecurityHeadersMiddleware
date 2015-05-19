@@ -13,10 +13,10 @@ namespace SecurityHeadersMiddleware.Tests {
             var config = new ContentSecurityPolicyConfiguration();
             config.ScriptSrc.AddScheme("https:");
             config.ImgSrc.AddKeyword(SourceListKeyword.Self);
-            HttpClient client = CsproClientHelper.Create(config);
-            HttpResponseMessage response = await client.GetAsync("https://wwww.example.com");
+            var client = CsproClientHelper.Create(config);
+            var response = await client.GetAsync("https://wwww.example.com");
             response.Cspro().Should().NotBeNullOrWhiteSpace();
-        } 
+        }
     }
 
     internal static class CsproClientHelper {

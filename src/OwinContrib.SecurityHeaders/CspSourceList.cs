@@ -5,18 +5,17 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.RegularExpressions;
 using SecurityHeadersMiddleware.Infrastructure;
 
 namespace SecurityHeadersMiddleware {
     /// <summary>
-    /// Represents a source-list according to the CSP specification (http://www.w3.org/TR/CSP2/#source-list).
+    ///     Represents a source-list according to the CSP specification (http://www.w3.org/TR/CSP2/#source-list).
     /// </summary>
     public partial class CspSourceList : IDirectiveValueBuilder {
         private bool mIsNone;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CspSourceList" /> class.
+        ///     Initializes a new instance of the <see cref="CspSourceList" /> class.
         /// </summary>
         public CspSourceList() {
             mSchemes = new List<string>();
@@ -30,7 +29,7 @@ namespace SecurityHeadersMiddleware {
         /// </summary>
         /// <returns>The directive header value without directive-name.</returns>
         public string ToDirectiveValue() {
-            if(mIsNone) {
+            if (mIsNone) {
                 return "'none'";
             }
             var sb = new StringBuilder();
@@ -52,7 +51,7 @@ namespace SecurityHeadersMiddleware {
         }
 
         private void ThrowIfNoneIsSet() {
-            if(mIsNone) {
+            if (mIsNone) {
                 throw new InvalidOperationException("This list ist set to 'none'. No additional values are allowed. Don't set this liste to 'none' when you need to add values.");
             }
         }

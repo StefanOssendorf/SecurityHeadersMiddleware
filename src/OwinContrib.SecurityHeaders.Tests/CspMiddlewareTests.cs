@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -16,8 +15,8 @@ namespace SecurityHeadersMiddleware.Tests {
             var config = new ContentSecurityPolicyConfiguration();
             config.ScriptSrc.AddScheme("https:");
             config.ImgSrc.AddKeyword(SourceListKeyword.Self);
-            HttpClient client = CspClientHelper.Create(config);
-            HttpResponseMessage response = await client.GetAsync("https://wwww.example.com");
+            var client = CspClientHelper.Create(config);
+            var response = await client.GetAsync("https://wwww.example.com");
             response.Csp().Should().NotBeNullOrWhiteSpace();
         }
 
@@ -26,10 +25,10 @@ namespace SecurityHeadersMiddleware.Tests {
             var config = new ContentSecurityPolicyConfiguration();
             config.ScriptSrc.AddScheme("https:");
             config.ImgSrc.AddKeyword(SourceListKeyword.Self);
-            HttpClient client = CspClientHelper.Create(config);
-            HttpResponseMessage response = await client.GetAsync("https://wwww.example.com");
-            string headerValue = response.Csp();
-            List<string> values = headerValue.Split(new[] {";"}, StringSplitOptions.None).Select(i => i.Trim()).ToList();
+            var client = CspClientHelper.Create(config);
+            var response = await client.GetAsync("https://wwww.example.com");
+            var headerValue = response.Csp();
+            var values = headerValue.Split(new[] {";"}, StringSplitOptions.None).Select(i => i.Trim()).ToList();
             values.Count.Should().Be(2);
             values.Should().Contain(i => i.Equals("img-src 'self'"));
             values.Should().Contain(i => i.Equals("script-src https:"));

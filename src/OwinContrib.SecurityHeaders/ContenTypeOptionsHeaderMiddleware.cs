@@ -9,13 +9,14 @@ namespace SecurityHeadersMiddleware {
         public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> ContentTypeOptionsHeader() {
             return next =>
                 env => {
-                    IOwinResponse response = env.AsContext().Response;
+                    var response = env.AsContext().Response;
                     response.OnSendingHeaders(ApplyHeader, response);
                     return next(env);
                 };
         }
+
         private static void ApplyHeader(object obj) {
-            var response = (IOwinResponse)obj;
+            var response = (IOwinResponse) obj;
             response.Headers[HeaderConstants.XContentTypeOptions] = "nosniff";
         }
     }

@@ -20,18 +20,18 @@ namespace SecurityHeadersMiddleware {
 
         private static HostSourceParts SplitIntoHostSourceParts(string hostsource) {
             var parts = new HostSourceParts();
-            string part = "";
-            if(TryGetSchemePart(hostsource, out part)) {
+            var part = "";
+            if (TryGetSchemePart(hostsource, out part)) {
                 parts.Scheme = part;
                 hostsource = hostsource.Substring(part.Length);
             }
             parts.Host = GetHostPart(hostsource);
             hostsource = hostsource.Substring(parts.Host.Length);
-            if(TryGetPortPart(hostsource, out part)) {
+            if (TryGetPortPart(hostsource, out part)) {
                 parts.Port = part;
                 hostsource = hostsource.Substring(part.Length);
             }
-            if(TryGetPathPart(hostsource, out part)) {
+            if (TryGetPathPart(hostsource, out part)) {
                 parts.Path = part;
             }
             return parts;
@@ -39,27 +39,27 @@ namespace SecurityHeadersMiddleware {
 
         private static bool TryGetSchemePart(string hostsource, out string scheme) {
             scheme = null;
-            if(hostsource.IsNullOrWhiteSpace()) {
+            if (hostsource.IsNullOrWhiteSpace()) {
                 return false;
             }
-            int index = hostsource.IndexOf("://");
-            if(index > 0) {
+            var index = hostsource.IndexOf("://");
+            if (index > 0) {
                 scheme = hostsource.Substring(0, index + 3);
             }
             return index > 0;
         }
 
         private static string GetHostPart(string hostsource) {
-            if(hostsource.IsNullOrWhiteSpace()) {
+            if (hostsource.IsNullOrWhiteSpace()) {
                 return null;
             }
-            string hostPart = hostsource;
-            int index = hostsource.IndexOf(":");
-            if(index > 0) {
+            var hostPart = hostsource;
+            var index = hostsource.IndexOf(":");
+            if (index > 0) {
                 return hostsource.Substring(0, index);
             }
             index = hostsource.IndexOf("/");
-            if(index > 0) {
+            if (index > 0) {
                 return hostsource.Substring(0, index);
             }
             return hostPart;
@@ -67,29 +67,29 @@ namespace SecurityHeadersMiddleware {
 
         private static bool TryGetPortPart(string hostsource, out string port) {
             port = null;
-            if(hostsource.IsNullOrWhiteSpace()) {
+            if (hostsource.IsNullOrWhiteSpace()) {
                 return false;
             }
-            if(hostsource[0] != ':') {
+            if (hostsource[0] != ':') {
                 return false;
             }
-            int index = hostsource.IndexOf("/");
+            var index = hostsource.IndexOf("/");
             port = index > 0 ? hostsource.Substring(0, index) : hostsource;
             return true;
         }
 
         private static bool TryGetPathPart(string hostsource, out string path) {
             path = null;
-            if(hostsource.IsNullOrWhiteSpace()) {
+            if (hostsource.IsNullOrWhiteSpace()) {
                 return false;
             }
-            int index = hostsource.IndexOf("?");
-            if(index > 0) {
+            var index = hostsource.IndexOf("?");
+            if (index > 0) {
                 path = hostsource.Substring(0, index);
                 return true;
             }
             index = hostsource.IndexOf("#");
-            if(index > 0) {
+            if (index > 0) {
                 path = hostsource.Substring(0, index);
                 return true;
             }
@@ -105,11 +105,11 @@ namespace SecurityHeadersMiddleware {
         }
 
         private static void VerifyScheme(string scheme) {
-            if(scheme.IsNullOrWhiteSpace()) {
+            if (scheme.IsNullOrWhiteSpace()) {
                 return;
             }
             const string schemeRegex = @"^[a-z][a-z0-9+\-.]*://$";
-            if(RegexVerify(scheme, schemeRegex)) {
+            if (RegexVerify(scheme, schemeRegex)) {
                 return;
             }
             const string msg = "The extracted scheme '{0}' does not satisfy the required format.{1}" +
@@ -118,12 +118,13 @@ namespace SecurityHeadersMiddleware {
                                "For more informatin see: {2} (scheme-part).";
             throw new FormatException(msg.FormatWith(scheme, Environment.NewLine, "http://www.w3.org/TR/CSP2/#host-source"));
         }
+
         private static void VerifyHost(string host) {
-            if(host.IsNullOrWhiteSpace()) {
+            if (host.IsNullOrWhiteSpace()) {
                 throw new FormatException("At least the host-part is required.{1}For more information see: {2} (host-part)".FormatWith("http://www.w3.org/TR/CSP2/#host-source"));
             }
             const string hostRegex = @"^(\*(?!.)|(\*.)?[a-z0-9\-]+(?!\*)(\.[a-z0-9\-]+)*)$";
-            if(RegexVerify(host, hostRegex)) {
+            if (RegexVerify(host, hostRegex)) {
                 return;
             }
             const string msg = "The extracted host '{0}' does not satisfy the required format.{1}" +
@@ -131,12 +132,13 @@ namespace SecurityHeadersMiddleware {
                                "For more information see: {2} (host-part).";
             throw new FormatException(msg.FormatWith(host, Environment.NewLine, "http://www.w3.org/TR/CSP2/#host-source"));
         }
+
         private static void VerifyPort(string port) {
-            if(port.IsNullOrWhiteSpace()) {
+            if (port.IsNullOrWhiteSpace()) {
                 return;
             }
             const string portRegex = @"^:([0-9]+|\*)$";
-            if(RegexVerify(port, portRegex)) {
+            if (RegexVerify(port, portRegex)) {
                 return;
             }
             const string msg = "The extracted port '{0}' does not satisfy the required format.{1}" +
@@ -145,8 +147,9 @@ namespace SecurityHeadersMiddleware {
                                "For more information see: {2} (port-part).";
             throw new FormatException(msg.FormatWith(port, Environment.NewLine, "http://www.w3.org/TR/CSP2/#host-source"));
         }
+
         private static void VerifyPath(string path) {
-            if(path.IsNullOrWhiteSpace()) {
+            if (path.IsNullOrWhiteSpace()) {
                 return;
             }
             const string pathRegex = @" ^
@@ -164,7 +167,7 @@ namespace SecurityHeadersMiddleware {
                                     |                                                               # / path-empty
                                     )                                                               # )
                                     $ ";
-            if(RegexVerify(path, pathRegex, RegexOptions.IgnorePatternWhitespace)) {
+            if (RegexVerify(path, pathRegex, RegexOptions.IgnorePatternWhitespace)) {
                 return;
             }
             const string msg = "The extracted path '{0}' does not satisfy the required format.{1}" +
@@ -181,7 +184,6 @@ namespace SecurityHeadersMiddleware {
             return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | options);
         }
 
-
         public bool Equals(HostSource obj) {
             if (obj == null) {
                 return false;
@@ -189,6 +191,7 @@ namespace SecurityHeadersMiddleware {
 
             return mValue.Equals(obj.mValue, StringComparison.InvariantCultureIgnoreCase);
         }
+
         public override bool Equals(object obj) {
             return Equals(obj as HostSource);
         }

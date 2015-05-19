@@ -18,6 +18,7 @@ namespace SecurityHeadersMiddleware {
         public CspMediaTypeList() {
             mMediaTypes = new List<string>();
         }
+
         /// <summary>
         ///     Creates the directive header value.
         /// </summary>
@@ -27,7 +28,7 @@ namespace SecurityHeadersMiddleware {
                 return "";
             }
             var sb = new StringBuilder();
-            foreach (string mediaType in mMediaTypes) {
+            foreach (var mediaType in mMediaTypes) {
                 sb.AppendFormat(" {0} ", mediaType);
             }
             return sb.ToString();
@@ -42,8 +43,9 @@ namespace SecurityHeadersMiddleware {
             VerifyMediaType(mediaType);
             mMediaTypes.Add(mediaType);
         }
+
         private static void VerifyMediaType(string mediaType) {
-            string[] split = mediaType.Split(new[] {"/"}, StringSplitOptions.None);
+            var split = mediaType.Split(new[] {"/"}, StringSplitOptions.None);
             if (split.Length != 2 || split[0].Length == 0 || split[1].Length == 0) {
                 const string msg = "Mediatype value '{0}' does not satisfy the required format.{1}" +
                                    "Valid mediatypes: text/plain or text/html{1}" +
@@ -53,6 +55,7 @@ namespace SecurityHeadersMiddleware {
             VerifyType(split[0].ToLower(), mediaType);
             VeritySubType(split[1].ToLower(), mediaType);
         }
+
         private static void VerifyType(string type, string mediaType) {
             if (type.All(IsToken)) {
                 return;

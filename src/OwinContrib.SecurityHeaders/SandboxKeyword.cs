@@ -10,22 +10,27 @@
         ///     Keyword: allow-forms
         /// </summary>
         AllowForms,
+
         /// <summary>
         ///     Keyword: allow-pointer-lock
         /// </summary>
         AllowPointerLock,
+
         /// <summary>
         ///     Keyword: allow-popups
         /// </summary>
         AllowPopups,
+
         /// <summary>
         ///     Keyword: allow-same-origin
         /// </summary>
         AllowSameOrigin,
+
         /// <summary>
         ///     Keyword: allow-scripts
         /// </summary>
         AllowScripts,
+
         /// <summary>
         ///     Keyword: allow-top-navigation
         /// </summary>

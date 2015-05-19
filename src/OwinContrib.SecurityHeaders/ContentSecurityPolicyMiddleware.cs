@@ -9,7 +9,7 @@ namespace SecurityHeadersMiddleware {
         public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> ContentSecurityPolicyHeader(ContentSecurityPolicyConfiguration configuration) {
             return next =>
                 env => {
-                    IOwinContext context = env.AsContext();
+                    var context = env.AsContext();
                     var state = new State {
                         Configuration = configuration,
                         Response = context.Response
@@ -18,6 +18,7 @@ namespace SecurityHeadersMiddleware {
                     return next(env);
                 };
         }
+
         private static void ApplyHeader(State obj) {
             var response = obj.Response;
             var cspConfig = obj.Configuration;

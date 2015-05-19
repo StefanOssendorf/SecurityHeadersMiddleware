@@ -40,7 +40,7 @@ namespace SecurityHeadersMiddleware.Tests {
             list.AddReportUri("http://www.example.com/list");
             list.AddReportUri("http://www.example.com/list?id=10");
             list.AddReportUri("http://www.example.com/list?id=10#Fragment=12");
-            string[] split = list.ToDirectiveValue().Split(new[] {" "}, StringSplitOptions.RemoveEmptyEntries).Select(val => val.Trim()).ToArray();
+            var split = list.ToDirectiveValue().Split(new[] {" "}, StringSplitOptions.RemoveEmptyEntries).Select(val => val.Trim()).ToArray();
             split.Length.Should().Be(4);
             split.Should().Contain(compareList);
         }

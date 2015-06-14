@@ -5,3 +5,4 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyDescription("")]
 [assembly: InternalsVisibleTo("SecurityHeadersMiddleware.OwinAppBuilder")]
 [assembly: InternalsVisibleTo("SecurityHeadersMiddleware.Tests")]
+[assembly: InternalsVisibleTo("SecurityHeadersMiddleware.PerformanceTests")]

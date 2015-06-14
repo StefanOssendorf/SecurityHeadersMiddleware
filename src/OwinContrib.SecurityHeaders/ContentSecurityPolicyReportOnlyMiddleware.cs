@@ -10,8 +10,8 @@ namespace SecurityHeadersMiddleware {
             return next =>
                 env => {
                     var context = env.AsContext();
-                    var state = new State {
-                        Configuration = configuration,
+                    var state = new State<ContentSecurityPolicyConfiguration> {
+                        Settings = configuration,
                         Response = context.Response
                     };
                     context.Response.OnSendingHeaders(ApplyHeader, state);
@@ -19,9 +19,9 @@ namespace SecurityHeadersMiddleware {
                 };
         }
 
-        private static void ApplyHeader(State obj) {
+        private static void ApplyHeader(State<ContentSecurityPolicyConfiguration> obj) {
             var response = obj.Response;
-            var cspConfig = obj.Configuration;
+            var cspConfig = obj.Settings;
 
             if (ContainsCspHeader(response.Headers)) {
                 // "A server MUST NOT send more than one HTTP header field named Content-Security-Policy-Report-Only with a given resource representation."
@@ -34,11 +34,6 @@ namespace SecurityHeadersMiddleware {
 
         private static bool ContainsCspHeader(IHeaderDictionary headers) {
             return headers.ContainsKey(HeaderConstants.ContentSecurityPolicy);
-        }
-
-        private class State {
-            public ContentSecurityPolicyConfiguration Configuration { get; set; }
-            public IOwinResponse Response { get; set; }
         }
     }
 }

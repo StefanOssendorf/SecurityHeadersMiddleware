@@ -20,8 +20,8 @@ namespace SecurityHeadersMiddleware {
                     // Quotation: "An HSTS Host MUST NOT include the STS header field in HTTP responses conveyed over non-secure transport."
                     if (request.IsSecure) {
                         var response = context.Response;
-                        var state = new {
-                            Options = options,
+                        var state = new State<StrictTransportSecurityOptions> {
+                            Settings = options,
                             Response = response
                         };
                         response.OnSendingHeaders(ApplyHeader, state);
@@ -37,8 +37,8 @@ namespace SecurityHeadersMiddleware {
             response.Headers[HeaderConstants.Location] = options.RedirectUriBuilder(context.Request.Uri);
         }
 
-        private static void ApplyHeader(dynamic obj) {
-            var options = (StrictTransportSecurityOptions) obj.Options;
+        private static void ApplyHeader(State<StrictTransportSecurityOptions> obj) {
+            var options = obj.Settings;
             var response = (OwinResponse) obj.Response;
             response.Headers[HeaderConstants.StrictTransportSecurity] = ConstructHeaderValue(options);
         }

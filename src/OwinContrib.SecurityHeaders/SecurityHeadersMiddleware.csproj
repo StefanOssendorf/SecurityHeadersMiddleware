@@ -103,6 +103,7 @@
     <Compile Include="ContenTypeOptionsHeaderMiddleware.cs" />
     <Compile Include="CspSandboxTokenList.cs" />
     <Compile Include="HostSource.cs" />
+    <Compile Include="Infrastructure\State.cs" />
     <Compile Include="Infrastructure\Rfc7230Utility.cs" />
     <Compile Include="SandboxKeyword.cs" />
     <Compile Include="SourceListKeyword.cs" />

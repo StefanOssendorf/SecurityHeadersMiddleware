@@ -32,37 +32,43 @@ namespace SecurityHeadersMiddleware {
 
         /// <summary>
         ///     Gets the base-uri directive source-list.<br />
-        ///     See http://www.w3.org/TR/CSP2/#directive-base-uri
+        ///     See http://www.w3.org/TR/CSP2/#directive-base-uri <br />
+        ///     Info: Hash and Nonce not implemented yet.
         /// </summary>
         public CspSourceList BaseUri { get; private set; }
 
         /// <summary>
         ///     Gets the child-src directive source-list.<br />
-        ///     See http://www.w3.org/TR/CSP2/#directive-child-src
+        ///     See http://www.w3.org/TR/CSP2/#directive-child-src <br />
+        ///     Info: Hash and Nonce not implemented yet.
         /// </summary>
         public CspSourceList ChildSrc { get; private set; }
 
         /// <summary>
         ///     Gets the connect-src directive source-list.<br />
-        ///     See http://www.w3.org/TR/CSP2/#directive-connect-src
+        ///     See http://www.w3.org/TR/CSP2/#directive-connect-src <br />
+        ///     Info: Hash and Nonce not implemented yet.
         /// </summary>
         public CspSourceList ConnectSrc { get; private set; }
 
         /// <summary>
         ///     Gets the default-src directive source-list.<br />
-        ///     See http://www.w3.org/TR/CSP2/#directive-default-src
+        ///     See http://www.w3.org/TR/CSP2/#directive-default-src <br />
+        ///     Info: Hash and Nonce not implemented yet.
         /// </summary>
         public CspSourceList DefaultSrc { get; private set; }
 
         /// <summary>
         ///     Gets the font-src directive source-list.<br />
-        ///     See http://www.w3.org/TR/CSP2/#directive-font-src
+        ///     See http://www.w3.org/TR/CSP2/#directive-font-src <br />
+        ///     Info: Hash and Nonce not implemented yet.
         /// </summary>
         public CspSourceList FontSrc { get; private set; }
 
         /// <summary>
         ///     Gets the form-action directive source-list.<br />
-        ///     See http://www.w3.org/TR/CSP2/#directive-form-action
+        ///     See http://www.w3.org/TR/CSP2/#directive-form-action <br />
+        ///     Info: Hash and Nonce not implemented yet.
         /// </summary>
         public CspSourceList FormAction { get; private set; }
 
@@ -75,26 +81,30 @@ namespace SecurityHeadersMiddleware {
 
         /// <summary>
         ///     Gets the frame-src directive source-list.<br />
-        ///     See http://www.w3.org/TR/CSP2/#directive-frame-src
+        ///     See http://www.w3.org/TR/CSP2/#directive-frame-src <br />
+        ///     Info: Hash and Nonce not implemented yet.
         /// </summary>
         [Obsolete("\"The frame-src directive is deprecated. Authors who wish to govern nested browsing contexts SHOULD use the child-src directive instead.\" See http://www.w3.org/TR/CSP/#directive-frame-src")]
         public CspSourceList FrameSrc { get; private set; }
 
         /// <summary>
         ///     Gets the img-src directive source-list.<br />
-        ///     See http://www.w3.org/TR/CSP2/#directive-img-src
+        ///     See http://www.w3.org/TR/CSP2/#directive-img-src <br />
+        ///     Info: Hash and Nonce not implemented yet.
         /// </summary>
         public CspSourceList ImgSrc { get; private set; }
 
         /// <summary>
         ///     Gets the media-src directive source-list.<br />
-        ///     See http://www.w3.org/TR/CSP2/#directive-media-src
+        ///     See http://www.w3.org/TR/CSP2/#directive-media-src <br />
+        ///     Info: Hash and Nonce not implemented yet.
         /// </summary>
         public CspSourceList MediaSrc { get; private set; }
 
         /// <summary>
         ///     Gets the object-src directive source-list.<br />
-        ///     See http://www.w3.org/TR/CSP2/#directive-object-src
+        ///     See http://www.w3.org/TR/CSP2/#directive-object-src <br />
+        ///     Info: Hash and Nonce not implemented yet.
         /// </summary>
         public CspSourceList ObjectSrc { get; private set; }
 
@@ -134,7 +144,7 @@ namespace SecurityHeadersMiddleware {
         ///     Creates the header values of all set directves.
         /// </summary>
         /// <returns>The content-security-policy header value.</returns>
-        public string ToHeaderValue() {
+        internal string ToHeaderValue() {
             var values = new List<string>(16) {
                 BuildDirectiveValue("base-uri", BaseUri),
                 BuildDirectiveValue("child-src", ChildSrc),

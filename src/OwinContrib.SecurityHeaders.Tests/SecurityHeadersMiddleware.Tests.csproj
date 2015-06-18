@@ -92,6 +92,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AntiClickJackingMiddlewareSpecs.cs" />
+    <Compile Include="CspAncestorSourceListTests.cs" />
     <Compile Include="CspConfigurationTests.cs" />
     <Compile Include="CspMediaTypeListTests.cs" />
     <Compile Include="CspMiddlewareTests.cs" />

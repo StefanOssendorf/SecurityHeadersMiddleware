@@ -15,6 +15,7 @@ namespace SecurityHeadersMiddleware {
         public StrictTransportSecurityOptions() {
             MaxAge = DefaultMaxAge;
             IncludeSubDomains = true;
+            RedirectUriBuilder = DefaultRedirectUriBuilder;
         }
 
         /// <summary>
@@ -55,8 +56,8 @@ namespace SecurityHeadersMiddleware {
         ///     Default builder changes the url to https scheme.
         /// </summary>
         public Func<Uri, string> RedirectUriBuilder {
-            get { return mRedirectUriBuilder ?? DefaultRedirectUriBuilder; }
-            set { mRedirectUriBuilder = value; }
+            get { return mRedirectUriBuilder; }
+            set { mRedirectUriBuilder = value ?? DefaultRedirectUriBuilder; }
         }
 
         private static string DefaultResonPhrase(int statusCode) {

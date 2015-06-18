@@ -2,6 +2,7 @@
 using Xunit;
 
 namespace SecurityHeadersMiddleware.Tests {
+    
     public class HostSourceTests {
         [Fact]
         public void When_creating_a_valid_full_host_source_it_should_not_throw_a_formatException() {
@@ -41,6 +42,16 @@ namespace SecurityHeadersMiddleware.Tests {
         [Fact]
         public void When_creating_an_empty_host_it_should_throw_a_argumentException() {
             Assert.Throws<ArgumentException>(() => new HostSource(""));
+        }
+
+        [Fact]
+        public void When_creating_a_valid_host_source_with_queryString() {
+            new HostSource("http://www.exmpale.com/abcd/?a=1");
+        }
+
+        [Fact]
+        public void When_creating_a_valid_host_source_with_fragment() {
+            new HostSource("http://www.example.com/abcd/#clearly");
         }
     }
 }

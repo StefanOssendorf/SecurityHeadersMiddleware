@@ -6,10 +6,6 @@ using SecurityHeadersMiddleware.LibOwin;
 
 namespace SecurityHeadersMiddleware {
     internal static class XssProtectionHeaderMiddleware {
-        public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> XssProtectionHeader() {
-            return XssProtectionHeader(false);
-        }
-
         public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> XssProtectionHeader(bool disabled) {
             return
                 next =>

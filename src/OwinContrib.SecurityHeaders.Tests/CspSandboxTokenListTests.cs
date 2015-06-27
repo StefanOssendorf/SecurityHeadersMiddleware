@@ -48,5 +48,11 @@ namespace SecurityHeadersMiddleware.Tests {
             list.SetToEmptyValue();
             list.ToDirectiveValue().Should().BeEmpty();
         }
+
+        [Fact]
+        public void When_add_an_invalid_keyword_it_should_throw_an_argumentOutOfRangeException() {
+            var list = new CspSandboxTokenList();
+            Assert.Throws<ArgumentOutOfRangeException>(() => list.AddKeyword((SandboxKeyword) (-1)));
+        }
     }
 }

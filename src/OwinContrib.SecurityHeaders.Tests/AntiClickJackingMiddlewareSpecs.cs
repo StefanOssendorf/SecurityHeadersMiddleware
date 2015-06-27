@@ -31,7 +31,7 @@ namespace SecurityHeadersMiddleware.Tests {
 
     [Subject(typeof (AntiClickjackingMiddleware))]
     public class When_using_use_with_example_com_origin : AntiClickjackingSpecBase {
-        private Establish context = () => Client = ClientHelper.CreateClient("http://example.com");
+        private Establish context = () => Client = ClientHelper.CreateClient(new Uri("http://example.com"));
         private It should_set_xFrameOptions_header_to_allowFrom_example_com_origin = () => Response.XFrameOptionsHeader().ShouldEqual("ALLOW-FROM http://example.com");
     }
 
@@ -69,9 +69,10 @@ namespace SecurityHeadersMiddleware.Tests {
             return CreateClient(b => b.UseOwin().AntiClickjackingHeader(origins));
         }
 
-        //public static HttpClient CreateClient(params Uri[] origins) {
-        //    return CreateClient(b => b.UseOwin().AntiClickjackingHeader(origins));
-        //}
+        public static HttpClient CreateClient(params Uri[] origins) {
+            return CreateClient(b => b.UseOwin().AntiClickjackingHeader(origins));
+        }
+
         private static HttpClient CreateClient(Action<IAppBuilder> registerAntiClickjackingMiddleware) {
             return TestServer.Create(builder => {
                 registerAntiClickjackingMiddleware(builder);

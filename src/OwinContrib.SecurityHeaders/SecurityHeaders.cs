@@ -79,21 +79,12 @@ namespace SecurityHeadersMiddleware {
         #region XssProtection
 
         /// <summary>
-        ///     Adds the "X-Xss-Protection" header with value "1; mode=block" to the response.
+        ///     Adds the "X-Xss-Protection" header to the response.
         /// </summary>
         /// <param name="builder">The OWIN builder instance.</param>
+        /// <param name="disabled">true to set the heade value to "0". false (Default) to set the header value to"1; mode=block".</param>
         /// <returns>The OWIN builder instance.</returns>
-        public static BuildFunc XssProtectionHeader(this BuildFunc builder) {
-            return XssProtectionHeader(builder, false);
-        }
-
-        /// <summary>
-        ///     Adds the "X-Xss-Protection" header depending on <paramref name="disabled" /> to the response.
-        /// </summary>
-        /// <param name="builder">The OWIN builder instance.</param>
-        /// <param name="disabled">true to set the heade value to "0". false to set the header value to"1; mode=block".</param>
-        /// <returns>The OWIN builder instance.</returns>
-        public static BuildFunc XssProtectionHeader(this BuildFunc builder, bool disabled) {
+        public static BuildFunc XssProtectionHeader(this BuildFunc builder, bool disabled = false) {
             builder(_ => XssProtectionHeaderMiddleware.XssProtectionHeader(disabled));
             return builder;
         }
@@ -106,18 +97,10 @@ namespace SecurityHeadersMiddleware {
         ///     Adds the "Strict-Transport-Security" (STS) header to the response.
         /// </summary>
         /// <param name="builder">The OWIN builder instance.</param>
-        /// <returns>The OWIN builder instance.</returns>
-        public static BuildFunc StrictTransportSecurity(this BuildFunc builder) {
-            return StrictTransportSecurity(builder, new StrictTransportSecurityOptions());
-        }
-
-        /// <summary>
-        ///     Adds the "Strict-Transport-Security" (STS) header with the given option to the response.
-        /// </summary>
-        /// <param name="builder">The OWIN builder instance.</param>
         /// <param name="options">The Strict-Transport-Security options.</param>
         /// <returns>The OWIN builder instance.</returns>
-        public static BuildFunc StrictTransportSecurity(this BuildFunc builder, StrictTransportSecurityOptions options) {
+        public static BuildFunc StrictTransportSecurity(this BuildFunc builder, StrictTransportSecurityOptions options = null) {
+            options = options ?? new StrictTransportSecurityOptions();
             builder(_ => StrictTransportSecurityHeaderMiddleware.StrictTransportSecurityHeader(options));
             return builder;
         }

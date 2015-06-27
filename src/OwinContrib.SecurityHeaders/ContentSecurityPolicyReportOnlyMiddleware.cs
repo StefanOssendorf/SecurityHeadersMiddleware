@@ -33,7 +33,7 @@ namespace SecurityHeadersMiddleware {
         }
 
         private static bool ContainsCspHeader(IHeaderDictionary headers) {
-            return headers.ContainsKey(HeaderConstants.ContentSecurityPolicy);
+            return headers.ContainsKey(HeaderConstants.ContentSecurityPolicyReportOnly);
         }
     }
 }

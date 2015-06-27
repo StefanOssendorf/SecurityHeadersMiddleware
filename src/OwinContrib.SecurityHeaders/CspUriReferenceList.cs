@@ -89,30 +89,29 @@ namespace SecurityHeadersMiddleware {
         /// </summary>
         /// <param name="uri">The uri.</param>
         public void AddReportUri(Uri uri) {
-            AddReportUri(uri.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped));
+            uri.MustNotNull("uri");
+
+            var uriString = uri.ToString();
+            //TODO Contains necessary?
+            if (mUris.Contains(uriString)) {
+                return;
+            }
+            mUris.Add(uriString);
         }
 
         /// <summary>
         ///     Adds a uri to the uri-reference-list.
         /// </summary>
         /// <param name="uri">The uri.</param>
-        /// <exception cref="System.FormatException">
+        /// <exception cref="UriFormatException">
         ///     <paramref name="uri" /> has to satisfy the URI definition.
         ///     For more information see: http://www.w3.org/TR/CSP2/#uri-reference respectively
-        ///     http://tools.ietf.org/html/rfc3986#section-3.3
+        ///     http://tools.ietf.org/html/rfc3986#section-4.1
         /// </exception>
         public void AddReportUri(string uri) {
             uri.MustNotNull("uri");
             uri.MustNotBeWhiteSpaceOrEmpty("uri");
-            if (!Rfc3986UriRegex.IsMatch(uri)) {
-                //TODO: Exceptionmessage
-                throw new FormatException();
-            }
-            uri = uri.ToLower();
-            if (mUris.Contains(uri)) {
-                return;
-            }
-            mUris.Add(uri);
+            AddReportUri(new Uri(uri));
         }
     }
 }

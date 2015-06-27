@@ -20,7 +20,7 @@ namespace SecurityHeadersMiddleware {
         public CspSourceList() {
             mSchemes = new List<string>();
             mKeywords = new List<SourceListKeyword>();
-            mHosts = new List<HostSource>();
+            mHosts = new HostSourceCollection();
             mIsNone = false;
         }
 

@@ -2,14 +2,16 @@ using System;
 using System.Text.RegularExpressions;
 using SecurityHeadersMiddleware.Infrastructure;
 
+
 namespace SecurityHeadersMiddleware {
     internal class HostSource {
         private readonly string mValue;
 
         public HostSource(string host) {
             if (host.IsNullOrWhiteSpace()) {
-                throw new ArgumentException("The host parameter must be not empty and not null.");
+                throw new ArgumentException("The host parameter must be not empty, not null and not only whitespaces.");
             }
+            host = host.ToLower();
             ValidateHost(host);
             mValue = host.Trim().ToLower();
         }
@@ -39,9 +41,6 @@ namespace SecurityHeadersMiddleware {
 
         private static bool TryGetSchemePart(string hostsource, out string scheme) {
             scheme = null;
-            if (hostsource.IsNullOrWhiteSpace()) {
-                return false;
-            }
             var index = hostsource.IndexOf("://");
             if (index > 0) {
                 scheme = hostsource.Substring(0, index + 3);
@@ -50,9 +49,6 @@ namespace SecurityHeadersMiddleware {
         }
 
         private static string GetHostPart(string hostsource) {
-            if (hostsource.IsNullOrWhiteSpace()) {
-                return null;
-            }
             var hostPart = hostsource;
             var index = hostsource.IndexOf(":");
             if (index > 0) {
@@ -120,9 +116,6 @@ namespace SecurityHeadersMiddleware {
         }
 
         private static void VerifyHost(string host) {
-            if (host.IsNullOrWhiteSpace()) {
-                throw new FormatException("At least the host-part is required.{1}For more information see: {2} (host-part)".FormatWith("http://www.w3.org/TR/CSP2/#host-source"));
-            }
             const string hostRegex = @"^(\*(?!.)|(\*.)?[a-z0-9\-]+(?!\*)(\.[a-z0-9\-]+)*)$";
             if (RegexVerify(host, hostRegex)) {
                 return;
@@ -134,7 +127,7 @@ namespace SecurityHeadersMiddleware {
         }
 
         private static void VerifyPort(string port) {
-            if (port.IsNullOrWhiteSpace()) {
+            if (port.HasOnlyWhitespaces()) {
                 return;
             }
             const string portRegex = @"^:([0-9]+|\*)$";
@@ -149,7 +142,7 @@ namespace SecurityHeadersMiddleware {
         }
 
         private static void VerifyPath(string path) {
-            if (path.IsNullOrWhiteSpace()) {
+            if (path.HasOnlyWhitespaces()) {
                 return;
             }
             const string pathRegex = @" ^
@@ -176,11 +169,7 @@ namespace SecurityHeadersMiddleware {
             throw new FormatException(msg.FormatWith(path, Environment.NewLine, "http://www.w3.org/TR/CSP2/#host-source"));
         }
 
-        private static bool RegexVerify(string input, string pattern) {
-            return RegexVerify(input, pattern, RegexOptions.None);
-        }
-
-        private static bool RegexVerify(string input, string pattern, RegexOptions options) {
+        private static bool RegexVerify(string input, string pattern, RegexOptions options = RegexOptions.None) {
             return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | options);
         }
 

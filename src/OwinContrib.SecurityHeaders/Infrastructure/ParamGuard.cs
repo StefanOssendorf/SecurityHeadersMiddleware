@@ -19,5 +19,12 @@ namespace SecurityHeadersMiddleware.Infrastructure {
                 throw new ArgumentException("{0} have to be not null, not empty or only contains white-space characters.".FormatWith(paramName));
             }
         }
+
+        public static void MustBeDefined(this Enum source, string paramName) {
+            var enumType = source.GetType();
+            if (!Enum.IsDefined(enumType, source)) {
+                throw new ArgumentOutOfRangeException("{0} is not a defined value on {1} (Parameter: {2})".FormatWith(source, enumType.ToString(), paramName));
+            }
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace SecurityHeadersMiddleware {
     ///     (http://www.w3.org/TR/CSP2/#ancestor_source_list).
     /// </summary>
     public class CspAncestorSourceList : IDirectiveValueBuilder {
-        private readonly List<HostSource> mHosts;
+        private readonly HostSourceCollection mHosts;
         private readonly List<string> mSchemes;
         private bool mIsNone;
 
@@ -19,7 +19,7 @@ namespace SecurityHeadersMiddleware {
         /// </summary>
         public CspAncestorSourceList() {
             mSchemes = new List<string>();
-            mHosts = new List<HostSource>();
+            mHosts = new HostSourceCollection();
             mIsNone = false;
         }
 
@@ -81,12 +81,7 @@ namespace SecurityHeadersMiddleware {
             ThrowIfNoneIsSet();
             host.MustNotNull("host");
             host.MustNotBeWhiteSpaceOrEmpty("host");
-            host = host.ToLower();
             var source = new HostSource(host);
-
-            if (mHosts.Contains(source)) {
-                return;
-            }
             mHosts.Add(source);
         }
 

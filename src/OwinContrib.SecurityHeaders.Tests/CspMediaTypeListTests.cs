@@ -22,6 +22,12 @@ namespace SecurityHeadersMiddleware.Tests {
             Assert.Throws<FormatException>(() => csp.AddMediaType("ac d/x-abcd"));
         }
 
+        [Fact]
+        public void When_trying_to_add_an_invalid_subType_it_should_throw_a_formatException() {
+            var csp = new CspMediaTypeList();
+            Assert.Throws<FormatException>(() => csp.AddMediaType("xml/x;sd"));
+        }
+
         // Source of mediatypes: https://www.iana.org/assignments/media-types/media-types.xhtml
         [Fact]
         public void When_adding_some_IANA_specified_mediaTypes_it_should_not_throw() {

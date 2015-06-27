@@ -2,7 +2,7 @@ namespace SecurityHeadersMiddleware {
     internal class HostSourceParts {
         public HostSourceParts() {
             Scheme = "";
-            Host = null;
+            Host = "";
             Port = "";
             Path = "";
         }

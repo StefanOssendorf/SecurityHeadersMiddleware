@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using SecurityHeadersMiddleware.Infrastructure;
 
 namespace SecurityHeadersMiddleware {
     partial class CspSourceList {
-        private readonly List<HostSource> mHosts;
+        private readonly HostSourceCollection mHosts;
 
         /// <summary>
         ///     Adds a host to the source-list.
@@ -22,11 +21,7 @@ namespace SecurityHeadersMiddleware {
             ThrowIfNoneIsSet();
             host.MustNotNull("host");
             host.MustNotBeWhiteSpaceOrEmpty("host");
-
             var hostSource = new HostSource(host);
-            if (mHosts.Contains(hostSource)) {
-                return;
-            }
             mHosts.Add(hostSource);
         }
 

@@ -3,11 +3,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Machine.Specifications;
 using Microsoft.Owin.Testing;
 using Owin;
 using SecurityHeadersMiddleware.Infrastructure;
 using SecurityHeadersMiddleware.OwinAppBuilder;
+using Xunit;
 
 namespace SecurityHeadersMiddleware.Tests {
     [Subject(typeof (StrictTransportSecurityHeaderMiddleware))]
@@ -39,8 +41,8 @@ namespace SecurityHeadersMiddleware.Tests {
         };
 
         private Because of = () => Response = Client.GetAsync("https://www.example.org").Await();
-        private It should_have_maxAge_with_0 = () => Response.StsHeader().ShouldContain(hv => hv.Equals("max-age=0", StringComparison.OrdinalIgnoreCase));
-        private It should_not_contain_includeSubDomains = () => Response.StsHeader().ShouldNotContain(hv => hv.Equals("includeSubDomains", StringComparison.OrdinalIgnoreCase));
+        private It should_have_maxAge_with_0 = () => Response.StsHeader().ShouldContain(hv => hv.EqualsIgnoreCase("max-age=0"));
+        private It should_not_contain_includeSubDomains = () => Response.StsHeader().ShouldNotContain(hv => hv.EqualsIgnoreCase("includeSubDomains"));
     }
 
     [Subject(typeof (StrictTransportSecurityHeaderMiddleware))]
@@ -59,6 +61,17 @@ namespace SecurityHeadersMiddleware.Tests {
         private It should_set_statusCode_to_301 = () => Response.StatusCode.ShouldEqual(HttpStatusCode.MovedPermanently);
     }
 
+    public class StrictTransportSecurityTests {
+        [Fact]
+        public async Task When_redirecting_to_https_the_default_should_return_no_reasonPhrase() {
+            var client = StsClientHelper.Create(new StrictTransportSecurityOptions {
+                RedirectToSecureTransport = true
+            });
+            var response = await client.GetAsync("http://www.example.org");
+            response.ReasonPhrase.Should().BeEmpty();
+        }
+    }
+
     internal class StsClientHelper {
         public static HttpClient Create() {
             return Create(new StrictTransportSecurityOptions());
@@ -73,6 +86,12 @@ namespace SecurityHeadersMiddleware.Tests {
                     return Task.FromResult(0);
                 });
             }).HttpClient;
+        }
+    }
+
+    internal static class StringExtensions {
+        public static bool EqualsIgnoreCase(this string source, string toCompare) {
+            return source.Equals(toCompare, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

@@ -1,2 +1,6 @@
 Referrer directive removed
 Reflected-xss directive removed
+AncestorSource added
+bug fixes
+internal improvements
+CSP2 conformance (except Hash & Nonce)

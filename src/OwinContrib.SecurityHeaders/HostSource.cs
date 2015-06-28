@@ -1,148 +1,152 @@
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using SecurityHeadersMiddleware.Infrastructure;
 
 
 namespace SecurityHeadersMiddleware {
     internal class HostSource {
-        private readonly string mValue;
+        private static readonly Dictionary<string, int> DefaultPorts = new Dictionary<string, int> {
+            {"http://", 80}, {"https://", 443}, {"ftp://", 21}
+        };
+
+        private string mScheme = "";
+        private string mHost = "";
+        private string mPort = "";
+        private string mPath = "";
+
+        private string Value {
+            get { return mScheme + mHost + mPort + mPath; }
+        }
 
         public HostSource(string host) {
             if (host.IsNullOrWhiteSpace()) {
                 throw new ArgumentException("The host parameter must be not empty, not null and not only whitespaces.");
             }
-            host = host.ToLower();
-            ValidateHost(host);
-            mValue = host.Trim().ToLower();
+            ParseHost(host);
         }
 
-        private static void ValidateHost(string host) {
-            VerifyParts(SplitIntoHostSourceParts(host));
+        private void ParseHost(string host) {
+            SplitIntoParts(host);
+            VerifyParts();
         }
 
-        private static HostSourceParts SplitIntoHostSourceParts(string hostsource) {
-            var parts = new HostSourceParts();
-            var part = "";
-            if (TryGetSchemePart(hostsource, out part)) {
-                parts.Scheme = part;
-                hostsource = hostsource.Substring(part.Length);
-            }
-            parts.Host = GetHostPart(hostsource);
-            hostsource = hostsource.Substring(parts.Host.Length);
-            if (TryGetPortPart(hostsource, out part)) {
-                parts.Port = part;
-                hostsource = hostsource.Substring(part.Length);
-            }
-            if (TryGetPathPart(hostsource, out part)) {
-                parts.Path = part;
-            }
-            return parts;
+        private void SplitIntoParts(string hostsource) {
+            ExtractScheme(ref hostsource);
+            ExtractHost(ref hostsource);
+            ExtractPort(ref hostsource);
+            ExtractPath(ref hostsource);
         }
 
-        private static bool TryGetSchemePart(string hostsource, out string scheme) {
-            scheme = null;
+        private void ExtractScheme(ref string hostsource) {
             var index = hostsource.IndexOf("://");
-            if (index > 0) {
-                scheme = hostsource.Substring(0, index + 3);
+            if (index == -1) {
+                return;
             }
-            return index > 0;
+            mScheme = hostsource.Substring(0, index + 3);
+            hostsource = hostsource.Substring(mScheme.Length);
         }
 
-        private static string GetHostPart(string hostsource) {
-            var hostPart = hostsource;
+        private void ExtractHost(ref string hostsource) {
             var index = hostsource.IndexOf(":");
-            if (index > 0) {
-                return hostsource.Substring(0, index);
+            if (index == -1) {
+                index = hostsource.IndexOf("/");
+                if (index == -1) {
+                    index = hostsource.Length;
+                }
             }
-            index = hostsource.IndexOf("/");
-            if (index > 0) {
-                return hostsource.Substring(0, index);
-            }
-            return hostPart;
+
+            mHost = hostsource.Substring(0, index);
+            hostsource = hostsource.Substring(mHost.Length);
         }
 
-        private static bool TryGetPortPart(string hostsource, out string port) {
-            port = null;
-            if (hostsource.IsNullOrWhiteSpace()) {
-                return false;
+        private void ExtractPort(ref string hostsource) {
+            if (hostsource.IsEmpty()) {
+                return;
             }
             if (hostsource[0] != ':') {
-                return false;
+                return;
             }
             var index = hostsource.IndexOf("/");
-            port = index > 0 ? hostsource.Substring(0, index) : hostsource;
-            return true;
+            if (index == -1) {
+                index = hostsource.Length;
+            }
+            mPort = hostsource.Substring(0, index);
+            hostsource = hostsource.Substring(mPort.Length);
+            int defaultPort;
+            if (DefaultPorts.TryGetValue(mScheme, out defaultPort)) {
+                // Omit default port for easier comparison
+                if (mPort == ":" + defaultPort) {
+                    mPort = "";
+                }
+            }
         }
 
-        private static bool TryGetPathPart(string hostsource, out string path) {
-            path = null;
-            if (hostsource.IsNullOrWhiteSpace()) {
-                return false;
+        private void ExtractPath(ref string hostsource) {
+            if (hostsource.IsEmpty()) {
+                return;
             }
             var index = hostsource.IndexOf("?");
-            if (index > 0) {
-                path = hostsource.Substring(0, index);
-                return true;
+            if (index == -1) {
+                index = hostsource.IndexOf("#");
+                if (index == -1) {
+                    index = hostsource.Length;
+                }
             }
-            index = hostsource.IndexOf("#");
-            if (index > 0) {
-                path = hostsource.Substring(0, index);
-                return true;
-            }
-            path = hostsource;
-            return true;
+            mPath = hostsource.Substring(0, index);
+            hostsource = "";
         }
 
-        private static void VerifyParts(HostSourceParts parts) {
-            VerifyHost(parts.Host);
-            VerifyScheme(parts.Scheme);
-            VerifyPort(parts.Port);
-            VerifyPath(parts.Path);
+        private void VerifyParts() {
+            VerifyHost();
+            VerifyScheme();
+            VerifyPort();
+            VerifyPath();
         }
 
-        private static void VerifyScheme(string scheme) {
-            if (scheme.IsNullOrWhiteSpace()) {
+        private void VerifyScheme() {
+            if (mScheme.IsEmpty()) {
                 return;
             }
             const string schemeRegex = @"^[a-z][a-z0-9+\-.]*://$";
-            if (RegexVerify(scheme, schemeRegex)) {
+            if (RegexVerify(mScheme, schemeRegex)) {
                 return;
             }
             const string msg = "The extracted scheme '{0}' does not satisfy the required format.{1}" +
                                "Valid schemes:{1}ftp:// or a-12.adcd://{1}" +
                                "First character must be a letter and has to end with ://{1}" +
                                "For more informatin see: {2} (scheme-part).";
-            throw new FormatException(msg.FormatWith(scheme, Environment.NewLine, "http://www.w3.org/TR/CSP2/#host-source"));
+            throw new FormatException(msg.FormatWith(mScheme, Environment.NewLine, "http://www.w3.org/TR/CSP2/#host-source"));
         }
 
-        private static void VerifyHost(string host) {
+        private void VerifyHost() {
             const string hostRegex = @"^(\*(?!.)|(\*.)?[a-z0-9\-]+(?!\*)(\.[a-z0-9\-]+)*)$";
-            if (RegexVerify(host, hostRegex)) {
+            if (RegexVerify(mHost, hostRegex)) {
                 return;
             }
             const string msg = "The extracted host '{0}' does not satisfy the required format.{1}" +
                                "Valid hosts:{1}* or *.example or example.-com{1}" +
                                "For more information see: {2} (host-part).";
-            throw new FormatException(msg.FormatWith(host, Environment.NewLine, "http://www.w3.org/TR/CSP2/#host-source"));
+            throw new FormatException(msg.FormatWith(mHost, Environment.NewLine, "http://www.w3.org/TR/CSP2/#host-source"));
         }
 
-        private static void VerifyPort(string port) {
-            if (port.HasOnlyWhitespaces()) {
+        private void VerifyPort() {
+            if (mPort.IsEmpty()) {
                 return;
             }
             const string portRegex = @"^:([0-9]+|\*)$";
-            if (RegexVerify(port, portRegex)) {
+            if (RegexVerify(mPort, portRegex)) {
                 return;
             }
             const string msg = "The extracted port '{0}' does not satisfy the required format.{1}" +
                                "Valid ports:{1}:* or :1234{1}" +
                                "First charater must be : (colon) followed by only a star or only digits.{1}" +
                                "For more information see: {2} (port-part).";
-            throw new FormatException(msg.FormatWith(port, Environment.NewLine, "http://www.w3.org/TR/CSP2/#host-source"));
+            throw new FormatException(msg.FormatWith(mPort, Environment.NewLine, "http://www.w3.org/TR/CSP2/#host-source"));
         }
 
-        private static void VerifyPath(string path) {
-            if (path.HasOnlyWhitespaces()) {
+        private void VerifyPath() {
+            if (mPath.IsEmpty()) {
                 return;
             }
             const string pathRegex = @" ^
@@ -160,13 +164,13 @@ namespace SecurityHeadersMiddleware {
                                     |                                                               # / path-empty
                                     )                                                               # )
                                     $ ";
-            if (RegexVerify(path, pathRegex, RegexOptions.IgnorePatternWhitespace)) {
+            if (RegexVerify(mPath, pathRegex, RegexOptions.IgnorePatternWhitespace)) {
                 return;
             }
             const string msg = "The extracted path '{0}' does not satisfy the required format.{1}" +
                                "Valid paths:{1}/ or /path or /path/file.js" +
                                "For more information see: {2} (path-part).";
-            throw new FormatException(msg.FormatWith(path, Environment.NewLine, "http://www.w3.org/TR/CSP2/#host-source"));
+            throw new FormatException(msg.FormatWith(mPath, Environment.NewLine, "http://www.w3.org/TR/CSP2/#host-source"));
         }
 
         private static bool RegexVerify(string input, string pattern, RegexOptions options = RegexOptions.None) {
@@ -178,7 +182,7 @@ namespace SecurityHeadersMiddleware {
                 return false;
             }
 
-            return mValue.Equals(obj.mValue, StringComparison.InvariantCultureIgnoreCase);
+            return Value.Equals(obj.Value, StringComparison.InvariantCultureIgnoreCase);
         }
 
         public override bool Equals(object obj) {
@@ -186,11 +190,11 @@ namespace SecurityHeadersMiddleware {
         }
 
         public override int GetHashCode() {
-            return mValue.GetHashCode();
+            return Value.GetHashCode();
         }
 
         public override string ToString() {
-            return mValue;
+            return Value;
         }
     }
 }

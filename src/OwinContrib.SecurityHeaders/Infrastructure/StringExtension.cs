@@ -10,8 +10,8 @@ namespace SecurityHeadersMiddleware.Infrastructure {
             return string.IsNullOrWhiteSpace(source);
         }
 
-        public static bool HasOnlyWhitespaces(this string source) {
-            return source.All(c => c == ' ');
+        public static bool IsEmpty(this string source) {
+            return source == string.Empty;
         }
 
         public static string PercentEncode(this string source) {

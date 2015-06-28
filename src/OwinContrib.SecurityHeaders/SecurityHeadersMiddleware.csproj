@@ -110,7 +110,6 @@
     <Compile Include="SourceListKeyword.cs" />
     <Compile Include="CspMediaTypeList.cs" />
     <Compile Include="CspSourceList.cs" />
-    <Compile Include="HostSourceParts.cs" />
     <Compile Include="IDirectiveValueBuilder.cs" />
     <Compile Include="Infrastructure\CharExtension.cs" />
     <Compile Include="Infrastructure\HeaderConstants.cs" />

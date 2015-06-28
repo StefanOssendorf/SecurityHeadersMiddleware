@@ -90,8 +90,8 @@ namespace SecurityHeadersMiddleware.Tests {
         [Fact]
         public void When_adding_an_http_host_with_and_without_default_values_they_should_be_treated_as_equal() {
             var sut = CreateSUT();
-            sut.AddHost("http://www.exmaple.org");
-            sut.AddHost("http://www.example.org:80");//TODO See https://tools.ietf.org/html/rfc3986#section-6.2.3 to fix
+            sut.AddHost("http://www.example.org");
+            sut.AddHost("http://www.example.org:80");
             sut.ToDirectiveValue().Trim().Should().Be("http://www.example.org");
         }
 

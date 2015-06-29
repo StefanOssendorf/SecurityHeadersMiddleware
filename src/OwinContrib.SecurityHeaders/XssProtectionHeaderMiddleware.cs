@@ -6,18 +6,31 @@ using SecurityHeadersMiddleware.LibOwin;
 
 namespace SecurityHeadersMiddleware {
     internal static class XssProtectionHeaderMiddleware {
-        public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> XssProtectionHeader(bool disabled) {
+        public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> XssProtectionHeader(XssProtectionOption option) {
             return
                 next =>
                     env => {
                         var response = env.AsContext().Response;
                         response
                             .OnSendingHeaders(resp => {
-                                var value = disabled ? "0" : "1; mode=block";
-                                ((IOwinResponse) resp).Headers[HeaderConstants.XssProtection] = value;
+                                
+                                ((IOwinResponse)resp).Headers[HeaderConstants.XssProtection] = GetHeaderValue(option);
                             }, response);
                         return next(env);
                     };
+        }
+
+        private static string GetHeaderValue(XssProtectionOption option) {
+            switch (option) {
+                case XssProtectionOption.EnabledWithModeBlock:
+                    return "1; mode=block";
+                case XssProtectionOption.Enabled:
+                    return "1";
+                case XssProtectionOption.Disabled:
+                    return "0";
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(option));
+            }
         }
     }
 }

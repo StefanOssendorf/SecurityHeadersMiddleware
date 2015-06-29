@@ -85,7 +85,17 @@ namespace SecurityHeadersMiddleware {
         /// <param name="disabled">true to set the heade value to "0". false (Default) to set the header value to"1; mode=block".</param>
         /// <returns>The OWIN builder instance.</returns>
         public static BuildFunc XssProtectionHeader(this BuildFunc builder, bool disabled = false) {
-            builder(_ => XssProtectionHeaderMiddleware.XssProtectionHeader(disabled));
+            return builder.XssProtectionHeader(disabled ? XssProtectionOption.Disabled : XssProtectionOption.EnabledWithModeBlock);
+        }
+
+        /// <summary>
+        /// Adds the "X-Xss-Protection" header to the response.
+        /// </summary>
+        /// <param name="builder">The OWIN builder instance.</param>
+        /// <param name="option">The Xss-Protection options.</param>
+        /// <returns>The OWIN builder instance.</returns>
+        public static BuildFunc XssProtectionHeader(this BuildFunc builder, XssProtectionOption option) {
+            builder(_ => XssProtectionHeaderMiddleware.XssProtectionHeader(option));
             return builder;
         }
 

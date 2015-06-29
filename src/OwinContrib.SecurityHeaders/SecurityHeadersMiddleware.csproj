@@ -124,6 +124,7 @@
     <Compile Include="CspUriReferenceList.cs" />
     <Compile Include="XFrameOption.cs" />
     <Compile Include="XssProtectionHeaderMiddleware.cs" />
+    <Compile Include="XssProtectionOption.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

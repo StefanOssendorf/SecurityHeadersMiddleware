@@ -1,19 +1,16 @@
 Security Headers Middleware
 ===========
 
-[![Build status](https://ci.appveyor.com/api/projects/status/6n9xkyyvox9uw2up)](https://ci.appveyor.com/project/StefanOssendorf/securityheadersmiddleware) [![NuGet Status](http://img.shields.io/nuget/v/SecurityHeadersMiddleware.svg?style=flat)](https://www.nuget.org/packages/SecurityHeadersMiddleware/)
+[![Build Status](https://ci.appveyor.com/api/projects/status/6n9xkyyvox9uw2up)](https://ci.appveyor.com/project/StefanOssendorf/securityheadersmiddleware) [![NuGet Status](http://img.shields.io/nuget/v/SecurityHeadersMiddleware.svg?style=flat)](https://www.nuget.org/packages/SecurityHeadersMiddleware/) [![NuGet Status](https://img.shields.io/nuget/v/SecurityHeadersMiddleware.AppBuilder.svg?style=flat)](https://www.nuget.org/packages/SecurityHeadersMiddleware.AppBuilder/)
 
 Middlewares to set useful security-related HTTP headers in your OWIN application. (From [OWASP list](https://www.owasp.org/index.php/List_of_useful_HTTP_headers "OWASP list"))
 
 **Already implemented**
 - Strict-Transport-Security incl. options
 - X-Frame-Options incl. supporting multiple origins
-- X-XSS-Protection inlc. disabling (but I don't know why).
+- X-XSS-Protection incl. disabling (but I don't know why).
 - X-Content-Type-Options
-- Content-Security-Policy
-
-**Outstanding**
-
+- Content-Security-Policy 2 (except Hash and Nonce)
 - Content-Security-Policy-Report-Only
 
 #### Using

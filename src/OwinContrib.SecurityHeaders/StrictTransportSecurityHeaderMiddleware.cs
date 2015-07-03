@@ -46,7 +46,8 @@ namespace SecurityHeadersMiddleware {
         private static string ConstructHeaderValue(StrictTransportSecurityOptions options) {
             var age = MaxAge(options.MaxAge);
             var subDomains = IncludeSubDomains(options.IncludeSubDomains);
-            return "{0}{1}".FormatWith(age, subDomains);
+            var preload = Preload(options.Preload);
+            return "{0}{1}{2}".FormatWith(age, subDomains, preload);
         }
 
         #region [ Helper ]
@@ -57,6 +58,10 @@ namespace SecurityHeadersMiddleware {
 
         private static string IncludeSubDomains(bool includeSubDomains) {
             return includeSubDomains ? "; includeSubDomains" : "";
+        }
+
+        private static string Preload(bool preload) {
+            return preload ? "; preload" : "";
         }
 
         private static bool RedirectToSecureTransport(StrictTransportSecurityOptions options, IOwinRequest request) {

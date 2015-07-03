@@ -19,10 +19,10 @@ namespace SecurityHeadersMiddleware {
         }
 
         /// <summary>
-        ///     Gets or sets the maximum age.
+        ///     Gets or sets the max-age header value (in seconds).
         /// </summary>
         /// <value>
-        ///     The maximum age.
+        ///     The max-age parameter value.
         /// </value>
         public uint MaxAge { get; set; }
 
@@ -35,7 +35,12 @@ namespace SecurityHeadersMiddleware {
         public bool IncludeSubDomains { get; set; }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether redirect to secure transport or not..
+        /// Gets or sets a value indicating whether to in include the preload parameter or not.
+        /// </summary>
+        public bool Preload { get; set; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether redirect to secure transport or not.
         /// </summary>
         /// <value>
         ///     <c>true</c> if [redirect to secure transport]; otherwise, <c>false</c>.

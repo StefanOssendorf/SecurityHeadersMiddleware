@@ -11,6 +11,10 @@ namespace SecurityHeadersMiddleware.OwinAppBuilder {
     ///     Provides <see cref="IAppBuilder" /> extension methods.
     /// </summary>
     public static class AppBuilderExtensions {
+        internal static BuildFunc UseOwin(this IAppBuilder builder) {
+            return middleware => builder.Use(middleware(builder.Properties));
+        }
+
         #region Content Type Options
 
         /// <summary>
@@ -25,10 +29,6 @@ namespace SecurityHeadersMiddleware.OwinAppBuilder {
         }
 
         #endregion
-
-        internal static BuildFunc UseOwin(this IAppBuilder builder) {
-            return middleware => builder.Use(middleware(builder.Properties));
-        }
 
         #region AntiClickjacking
 

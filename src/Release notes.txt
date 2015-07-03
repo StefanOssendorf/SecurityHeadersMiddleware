@@ -1,7 +1,14 @@
-Referrer directive removed
-Reflected-xss directive removed
-AncestorSource added
-FrameSrc deprecated
-bug fixes
-internal improvements
-CSP2 conformance (except Hash & Nonce)
+2.1
+- STS "preload" parameter added
+-- https://developer.mozilla.org/en-US/docs/Web/Security/HTTP_strict_transport_security
+-- https://tools.ietf.org/html/rfc6797#section-12.3
+
+
+2.0
+- CSP2 conformance (except Hash & Nonce)
+- Referrer directive removed
+- Reflected-xss directive removed
+- AncestorSource added
+- FrameSrc deprecated
+- bug fixes
+- internal improvements

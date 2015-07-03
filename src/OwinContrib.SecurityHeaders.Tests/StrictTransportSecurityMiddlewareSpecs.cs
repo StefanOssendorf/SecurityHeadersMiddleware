@@ -70,6 +70,16 @@ namespace SecurityHeadersMiddleware.Tests {
             var response = await client.GetAsync("http://www.example.org");
             response.ReasonPhrase.Should().BeEmpty();
         }
+
+        [Fact]
+        public async Task When_preload_is_set_it_should_be_included_in_the_response_header_value() {
+            var client = StsClientHelper.Create(new StrictTransportSecurityOptions {
+                Preload = true,
+                MaxAge = 50
+            });
+            var response = await client.GetAsync("https://wwww.example.org");
+            response.StsHeader().Should().Contain("preload");
+        }
     }
 
     internal class StsClientHelper {

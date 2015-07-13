@@ -144,5 +144,14 @@ namespace SecurityHeadersMiddleware {
         }
 
         #endregion
+
+        #region Public Key Pinning
+
+        public static BuildFunc PublicKeyPinning(this BuildFunc builder, PublicKeyPinningConfiguration configuration) {
+            builder(_ => PublicKeyPinningMiddleware.PulibKeyPinningHeader(configuration));
+            return builder;
+        }
+
+        #endregion
     }
 }

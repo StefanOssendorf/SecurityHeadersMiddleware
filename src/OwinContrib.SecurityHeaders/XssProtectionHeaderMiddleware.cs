@@ -6,6 +6,7 @@ using SecurityHeadersMiddleware.LibOwin;
 
 namespace SecurityHeadersMiddleware {
     internal static class XssProtectionHeaderMiddleware {
+        //TODO Introduce new setting option to specify the behavior
         public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> XssProtectionHeader(XssProtectionOption option) {
             return
                 next =>

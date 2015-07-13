@@ -6,6 +6,8 @@ using SecurityHeadersMiddleware.Infrastructure;
 using SecurityHeadersMiddleware.LibOwin;
 
 namespace SecurityHeadersMiddleware {
+    //TODO Introduce Settings to override possible header
+
     internal static class AntiClickjackingMiddleware {
         public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> AntiClickjackingHeader(XFrameOption option) {
             return AntiClickjackingHeader((int) option);
@@ -52,6 +54,7 @@ namespace SecurityHeadersMiddleware {
             obj.Response.Headers[HeaderConstants.XFrameOptions] = value;
         }
 
+        //TODO Fix see Github Issue
         private static string DetermineValue(Uri[] origins, Uri requestUri) {
             var uri = Array.Find(origins, u => Rfc6454Utility.HasSameOrigin(u, requestUri));
             return uri == null ? "DENY" : "ALLOW-FROM {0}".FormatWith(Rfc6454Utility.SerializeOrigin(uri));
@@ -63,5 +66,16 @@ namespace SecurityHeadersMiddleware {
             public IOwinResponse Response { get; set; }
             public Uri RequestUri { get; set; }
         }
+    }
+
+    public class AntiClickJackingSettings {
+        public HeaderHandling HeaderHandling { get; set; }
+    }
+
+    public enum HeaderHandling {
+        OverwriteIfHeaderAlreadySet = 0,
+        IgnoreIfHeaderAlreadySet,
+        AppendToHeaderIfHeaderAlreadySet,
+        AddAdditionalHeaderValueIfHeaderAlreadySet
     }
 }

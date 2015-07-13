@@ -1,6 +1,8 @@
 ﻿using System;
 
 namespace SecurityHeadersMiddleware {
+
+    //TODO Rename to HttpStrictTranscportSecuritySettings
     /// <summary>
     ///     Options for strict-transport-security (STS).
     /// </summary>

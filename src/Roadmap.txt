@@ -5,6 +5,7 @@ Middlewares for
 - Strict-Transport-Security
 - X-Content-Type-Options
 - Content-Security-Policy
+- Public-Key-Pinning
 
 Already implemented:
 - X-Xss-Protection

@@ -7,5 +7,6 @@
         public const string XContentTypeOptions = "X-Content-Type-Options";
         public const string ContentSecurityPolicy = "Content-Security-Policy";
         public const string ContentSecurityPolicyReportOnly = "Content-Security-Policy-Report-Only";
+        public const string PublicKeyPinning = "Public-Key-Pins";
     }
 }

@@ -106,6 +106,7 @@
     <Compile Include="HostSourceCollection.cs" />
     <Compile Include="Infrastructure\State.cs" />
     <Compile Include="Infrastructure\Rfc7230Utility.cs" />
+    <Compile Include="PublicKeyPinningMiddleware.cs" />
     <Compile Include="SandboxKeyword.cs" />
     <Compile Include="SourceListKeyword.cs" />
     <Compile Include="CspMediaTypeList.cs" />

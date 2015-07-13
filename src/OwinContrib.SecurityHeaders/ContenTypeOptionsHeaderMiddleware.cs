@@ -15,8 +15,8 @@ namespace SecurityHeadersMiddleware {
                 };
         }
 
-        private static void ApplyHeader(object obj) {
-            var response = (IOwinResponse) obj;
+        private static void ApplyHeader(IOwinResponse response) {
+            //TODO Introduce new setting option to specify the behavior
             response.Headers[HeaderConstants.XContentTypeOptions] = "nosniff";
         }
     }

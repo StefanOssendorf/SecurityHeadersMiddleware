@@ -22,7 +22,7 @@ namespace SecurityHeadersMiddleware {
         private static void ApplyHeader(State<ContentSecurityPolicyConfiguration> obj) {
             var response = obj.Response;
             var cspConfig = obj.Settings;
-
+            //TODO Introduce new setting option to specify the behavior
             if (ContainsCspHeader(obj.Response.Headers)) {
                 // A server MUST NOT send more than one HTTP header field named Content-Security-Policy with a given resource representation.
                 // Source: http://www.w3.org/TR/CSP2/#content-security-policy-header-field (Date: 06.04.2015)

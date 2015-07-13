@@ -29,5 +29,9 @@ namespace SecurityHeadersMiddleware.Tests {
         public static string Cspro(this HttpResponseMessage source) {
             return source.Headers.GetValues(HeaderConstants.ContentSecurityPolicyReportOnly).First();
         }
+
+        public static string PkpHeader(this HttpResponseMessage source) {
+            return source.Headers.GetValues(HeaderConstants.PublicKeyPinning).First();
+        }
     }
 }

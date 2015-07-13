@@ -163,5 +163,16 @@ namespace SecurityHeadersMiddleware.OwinAppBuilder {
         }
 
         #endregion
+
+        #region Public Key Pinning
+
+        public static IAppBuilder PublicKeyPinning(this IAppBuilder builder, PublicKeyPinningConfiguration configuration) {
+            builder.MustNotNull(nameof(builder));
+            configuration.MustNotNull(nameof(configuration));
+            builder.UseOwin().PublicKeyPinning(configuration);
+            return builder;
+        }
+
+        #endregion
     }
 }

@@ -2,7 +2,9 @@
 - STS "preload" parameter added
 -- https://developer.mozilla.org/en-US/docs/Web/Security/HTTP_strict_transport_security
 -- https://tools.ietf.org/html/rfc6797#section-12.3
-
+- Public Key Pinning Middleware
+-- https://developer.mozilla.org/en-US/docs/Web/Security/Public_Key_Pinning
+-- https://tools.ietf.org/html/rfc7469#section-2
 
 2.0
 - CSP2 conformance (except Hash & Nonce)

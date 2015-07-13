@@ -5,6 +5,8 @@ using SecurityHeadersMiddleware.Infrastructure;
 using SecurityHeadersMiddleware.LibOwin;
 
 namespace SecurityHeadersMiddleware {
+
+    //TODO Rename to HttpStrictTransportSecurity
     internal static class StrictTransportSecurityHeaderMiddleware {
         public static Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>> StrictTransportSecurityHeader(StrictTransportSecurityOptions options) {
             return next =>
@@ -36,7 +38,7 @@ namespace SecurityHeadersMiddleware {
             response.ReasonPhrase = options.RedirectReasonPhrase(301);
             response.Headers[HeaderConstants.Location] = options.RedirectUriBuilder(context.Request.Uri);
         }
-
+        //TODO Introduce new setting option to specify the behavior
         private static void ApplyHeader(State<StrictTransportSecurityOptions> obj) {
             var options = obj.Settings;
             var response = (OwinResponse) obj.Response;

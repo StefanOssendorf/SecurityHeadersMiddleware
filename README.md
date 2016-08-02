@@ -12,6 +12,10 @@ Middlewares to set useful security-related HTTP headers in your OWIN application
 - X-Content-Type-Options
 - Content-Security-Policy 2 (except Hash and Nonce)
 - Content-Security-Policy-Report-Only
+ 
+**Workaround for using in .Net Core (Thanks to @imperugo)**
+
+https://github.com/aspnet-contrib/AspNet.Hosting.Extensions
 
 #### Using
 See the tests as examples of usage:

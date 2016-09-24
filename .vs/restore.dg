@@ -1,2 +1,3 @@
-#:H:\Github\SecurityHeadersMiddleware\src\SecurityHeaders.AspNetCore\SecurityHeaders.AspNetCore.xproj
-H:\Github\SecurityHeadersMiddleware\src\SecurityHeaders.AspNetCore\SecurityHeaders.AspNetCore.xproj|H:\Github\SecurityHeadersMiddleware\src\SecurityHeaders\SecurityHeaders.xproj
+#:H:\Github\SecurityHeadersMiddleware\src\SecurityHeaders.Owin.AppBuilder\SecurityHeaders.Owin.AppBuilder.xproj
+H:\Github\SecurityHeadersMiddleware\src\SecurityHeaders.Owin.AppBuilder\SecurityHeaders.Owin.AppBuilder.xproj|H:\Github\SecurityHeadersMiddleware\src\SecurityHeaders.Owin\SecurityHeaders.Owin.xproj
+H:\Github\SecurityHeadersMiddleware\src\SecurityHeaders.Owin\SecurityHeaders.Owin.xproj|H:\Github\SecurityHeadersMiddleware\src\SecurityHeaders\SecurityHeaders.xproj

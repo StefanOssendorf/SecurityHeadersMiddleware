@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SecurityHeaders.Core {
+namespace SecurityHeaders {
     internal static class Guard {
         public static void MustNotNull(this object source, string paramName) {
             if(source == null) {
@@ -19,5 +19,19 @@ namespace SecurityHeaders.Core {
                 throw new ArgumentOutOfRangeException($"{source} is not a defined value on {enumType} (Parameter {paramName}");
             }
         }
+    }
+
+
+    // Temporary
+    internal static class Headers {
+        public const string XssProtection = "X-Xss-Protection";
+        public const string XFrameOptions = "X-Frame-Options";
+        public const string StrictTransportSecurity = "Strict-Transport-Security";
+        public const string Location = "Location";
+
+        public const string ContentSecurityPolicy = "Content-Security-Policy";
+        public const string ContentSecurityPolicyReportOnly = "Content-Security-Policy-Report-Only";
+        public const string PublicKeyPinning = "Public-Key-Pins";
+
     }
 }

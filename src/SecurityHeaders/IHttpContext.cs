@@ -1,4 +1,4 @@
-﻿namespace SecurityHeaders.Core {
+﻿namespace SecurityHeaders {
     internal interface IHttpContext {
         bool HeaderExist(string headerName);
         void OverrideHeader(string name, string value);

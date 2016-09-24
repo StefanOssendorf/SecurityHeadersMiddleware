@@ -632,17 +632,17 @@
           "lib/net45/_._": {}
         }
       },
-      "SecurityHeaders.Core/3.0.0": {
+      "SecurityHeaders/3.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.3",
         "dependencies": {
           "NETStandard.Library": "1.6.0"
         },
         "compile": {
-          "netstandard1.3/SecurityHeaders.Core.dll": {}
+          "netstandard1.3/SecurityHeaders.dll": {}
         },
         "runtime": {
-          "netstandard1.3/SecurityHeaders.Core.dll": {}
+          "netstandard1.3/SecurityHeaders.dll": {}
         }
       },
       "SecurityHeaders.Owin/3.0.0": {
@@ -650,7 +650,7 @@
         "framework": ".NETStandard,Version=v1.3",
         "dependencies": {
           "NETStandard.Library": "1.6.0",
-          "SecurityHeaders.Core": "3.0.0"
+          "SecurityHeaders": "3.0.0"
         },
         "compile": {
           "netstandard1.3/SecurityHeaders.Owin.dll": {}
@@ -3263,10 +3263,10 @@
         "ref/xamarinwatchos10/_._"
       ]
     },
-    "SecurityHeaders.Core/3.0.0": {
+    "SecurityHeaders/3.0.0": {
       "type": "project",
-      "path": "../SecurityHeaders.Core/project.json",
-      "msbuildProject": "../SecurityHeaders.Core/SecurityHeaders.Core.xproj"
+      "path": "../SecurityHeaders/project.json",
+      "msbuildProject": "../SecurityHeaders/SecurityHeaders.xproj"
     },
     "SecurityHeaders.Owin/3.0.0": {
       "type": "project",

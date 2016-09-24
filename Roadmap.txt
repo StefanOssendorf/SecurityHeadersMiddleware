@@ -1,15 +1,12 @@
 Inspired from: https://www.owasp.org/index.php/List_of_useful_HTTP_headers
+
 Middlewares for
 - X-Xss-Protection
 - X-Frame-Options
 - Strict-Transport-Security
 - X-Content-Type-Options
 - Content-Security-Policy
-
-Already implemented:
-- X-Xss-Protection
-- X-Frame-Options
-- Strict-Transport-Security
-- X-Content-Type-Options
-- Content-Security-Policy
 - Content-Security-Policy-Report-Only
+
+Already ported:
+- X-Content-Type-Options

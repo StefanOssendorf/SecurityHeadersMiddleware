@@ -5,6 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{E768EE25-8180-4CAA-88F4-B9C8A5E16E66}"
 	ProjectSection(SolutionItems) = preProject
+		license.txt = license.txt
 		Release notes.txt = Release notes.txt
 		Roadmap.txt = Roadmap.txt
 	EndProjectSection

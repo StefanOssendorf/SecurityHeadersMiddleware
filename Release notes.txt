@@ -1,3 +1,13 @@
+3.0
+Breaking Changed
+- new namespaces (changed from SecurityHeadersMiddleware to SecurityHeaders)
+- To migrate from OWIN middlewares use "using SecurityHeaders.Owin"
+-- Changed Extensionmethods names
+--- ContentTypeOptions
+---- New overload added to control application if the header is already present
+
+
+
 2.1
 - STS "preload" parameter added
 -- https://developer.mozilla.org/en-US/docs/Web/Security/HTTP_strict_transport_security

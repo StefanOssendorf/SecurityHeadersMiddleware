@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
@@ -16,3 +17,5 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("0e454c45-77bb-43a8-aa6e-8cbcde21dca6")]
+
+[assembly: InternalsVisibleTo("SecurityHeaders.Owin.Tests")]

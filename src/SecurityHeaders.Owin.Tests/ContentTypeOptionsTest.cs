@@ -38,7 +38,7 @@ namespace SecurityHeaders.Owin.Tests {
             return Create(ctos => {});
         }
 
-        public static HttpClient Create(Action<ContentTypeOptionsSettings> configureAction, Action<IOwinContext> modifyEndpoint = null) {
+        public static HttpClient Create(Action<ContentTypeOptionsSettings> configureAction, Action<Microsoft.Owin.IOwinContext> modifyEndpoint = null) {
             return TestServer.Create(builder => {
                 builder.UseOwin().ContentTypeOptions(configureAction);
                 builder

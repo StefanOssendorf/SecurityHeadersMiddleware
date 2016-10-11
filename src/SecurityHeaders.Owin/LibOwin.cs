@@ -3000,7 +3000,7 @@ namespace SecurityHeaders.Owin {
         ///
         /// </summary>
         /// <returns></returns>
-        IEnumerator System.Collections.IEnumerable.GetEnumerator() {
+        IEnumerator IEnumerable.GetEnumerator() {
             return GetEnumerator();
         }
     }
@@ -3048,7 +3048,7 @@ namespace SecurityHeaders.Owin {
         ///
         /// </summary>
         /// <returns></returns>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() {
+        IEnumerator IEnumerable.GetEnumerator() {
             return GetEnumerator();
         }
     }

@@ -10,11 +10,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 		Roadmap.txt = Roadmap.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityHeadersMiddleware", "OwinContrib.SecurityHeaders\SecurityHeadersMiddleware.csproj", "{53953109-6B63-4A49-BDA3-EB78E1506FA9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityHeadersMiddleware", "src\OwinContrib.SecurityHeaders\SecurityHeadersMiddleware.csproj", "{53953109-6B63-4A49-BDA3-EB78E1506FA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityHeadersMiddleware.Tests", "OwinContrib.SecurityHeaders.Tests\SecurityHeadersMiddleware.Tests.csproj", "{753D4EEA-13E5-429B-93AC-4A7E7A1FACD3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityHeadersMiddleware.Tests", "src\OwinContrib.SecurityHeaders.Tests\SecurityHeadersMiddleware.Tests.csproj", "{753D4EEA-13E5-429B-93AC-4A7E7A1FACD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityHeadersMiddleware.OwinAppBuilder", "SecurityHeadersMiddleware.OwinAppBuilder\SecurityHeadersMiddleware.OwinAppBuilder.csproj", "{D3381FFC-FFA0-478D-9708-199E2F9789F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityHeadersMiddleware.OwinAppBuilder", "src\SecurityHeadersMiddleware.OwinAppBuilder\SecurityHeadersMiddleware.OwinAppBuilder.csproj", "{D3381FFC-FFA0-478D-9708-199E2F9789F5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9795E771-F940-4C4F-AAD8-7638AA405C09}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,11 +22,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		src\SharedAssemblyInfo.cs = src\SharedAssemblyInfo.cs
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityHeadersMiddleware.Examples", "SecurityHeadersMiddleware.Examples\SecurityHeadersMiddleware.Examples.csproj", "{75703E81-F232-4F6B-ACCA-7D39F9B44ABF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityHeadersMiddleware.Examples", "src\SecurityHeadersMiddleware.Examples\SecurityHeadersMiddleware.Examples.csproj", "{75703E81-F232-4F6B-ACCA-7D39F9B44ABF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{707156A5-7AE4-461D-9764-48B4B7700F49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityHeadersMiddleware.PerformanceTests", "SecurityHeadersMiddleware.PerformanceTests\SecurityHeadersMiddleware.PerformanceTests.csproj", "{6948B148-499B-4D14-B4CA-D3268D6E2A95}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityHeadersMiddleware.PerformanceTests", "src\SecurityHeadersMiddleware.PerformanceTests\SecurityHeadersMiddleware.PerformanceTests.csproj", "{6948B148-499B-4D14-B4CA-D3268D6E2A95}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders", "src\SecurityHeaders\SecurityHeaders.xproj", "{A4C3A3C7-DED1-4DFA-8BC8-599AB2F0203B}"
 EndProject
@@ -34,13 +34,13 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders.Tests", "sr
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders.Owin", "src\SecurityHeaders.Owin\SecurityHeaders.Owin.xproj", "{0E454C45-77BB-43A8-AA6E-8CBCDE21DCA6}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders.Owin.Tests", "src\SecurityHeaders.Owin.Tests\SecurityHeaders.Owin.Tests.xproj", "{2F7B493A-6052-468E-BCEF-E2B114AFE32A}"
-EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders.AspNetCore.Tests", "src\SecurityHeaders.AspNetCore.Tests\SecurityHeaders.AspNetCore.Tests.xproj", "{A82661B7-987C-48A9-B329-70F531A92568}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders.AspNetCore", "src\SecurityHeaders.AspNetCore\SecurityHeaders.AspNetCore.xproj", "{FB15EE99-EFCD-4022-8418-02356B2C0716}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders.Owin.AppBuilder", "src\SecurityHeaders.Owin.AppBuilder\SecurityHeaders.Owin.AppBuilder.xproj", "{9224C7F0-0204-4AEF-985F-A00CA1AECA48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityHeaders.Owin.Tests", "src\SecurityHeaders.Owin.Tests\SecurityHeaders.Owin.Tests.csproj", "{3D9B02A8-A333-4587-A9DF-D1499C39C79B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,10 +80,6 @@ Global
 		{0E454C45-77BB-43A8-AA6E-8CBCDE21DCA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E454C45-77BB-43A8-AA6E-8CBCDE21DCA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E454C45-77BB-43A8-AA6E-8CBCDE21DCA6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2F7B493A-6052-468E-BCEF-E2B114AFE32A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2F7B493A-6052-468E-BCEF-E2B114AFE32A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2F7B493A-6052-468E-BCEF-E2B114AFE32A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2F7B493A-6052-468E-BCEF-E2B114AFE32A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A82661B7-987C-48A9-B329-70F531A92568}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A82661B7-987C-48A9-B329-70F531A92568}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A82661B7-987C-48A9-B329-70F531A92568}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -96,6 +92,10 @@ Global
 		{9224C7F0-0204-4AEF-985F-A00CA1AECA48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9224C7F0-0204-4AEF-985F-A00CA1AECA48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9224C7F0-0204-4AEF-985F-A00CA1AECA48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D9B02A8-A333-4587-A9DF-D1499C39C79B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D9B02A8-A333-4587-A9DF-D1499C39C79B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D9B02A8-A333-4587-A9DF-D1499C39C79B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D9B02A8-A333-4587-A9DF-D1499C39C79B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

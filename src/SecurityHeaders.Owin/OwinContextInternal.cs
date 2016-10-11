@@ -8,16 +8,12 @@ namespace SecurityHeaders.Owin {
             mContext = context;
         }
 
-        public bool HeaderExist(string headerName) {
-            throw new NotImplementedException();
-        }
+        public bool HeaderExist(string headerName) => mContext.Response.Headers.ContainsKey(headerName);
 
-        public void OverrideHeader(string name, string value) {
-            throw new NotImplementedException();
-        }
 
-        public void AppendToHeader(string name, string value) {
-            throw new NotImplementedException();
-        }
+        public void OverrideHeader(string name, string value) => mContext.Response.Headers.Set(name, value);
+
+
+        public void AppendToHeader(string name, string value) => mContext.Response.Headers.Append(name, value);
     }
 }

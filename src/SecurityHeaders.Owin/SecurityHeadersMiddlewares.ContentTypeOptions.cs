@@ -8,7 +8,7 @@ namespace SecurityHeaders.Owin {
     /// <summary>
     ///     OWIN extension methods.
     /// </summary>
-    public static partial class SecurityHeaders {
+    public static partial class SecurityHeadersMiddlewares {
 
         /// <summary>
         ///     Adds the "X-Content-Type-Options" header with value "nosniff" to the response. <br/>
@@ -37,14 +37,12 @@ namespace SecurityHeaders.Owin {
             configureSettings(settings);
 
             var middleware = new ContentTypeOptions(settings);
-            builder(_ =>
-                next =>
-                    env => {
-                        var ctx = env.AsOwinContext();
-                        ctx.Response.OnSendingHeaders(ctx2 => middleware.ApplyHeader(ctx2), ctx.AsInternalCtx());
-                        return next(env);
-                    }
-            );
+            builder(_ => next =>
+                env => {
+                    var ctx = env.AsOwinContext();
+                    ctx.Response.OnSendingHeaders(ctx2 => middleware.ApplyHeader(ctx2), ctx.AsInternalCtx());
+                    return next(env);
+                });
 
             return builder;
         }

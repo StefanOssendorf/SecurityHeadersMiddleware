@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Shouldly;
+﻿using Shouldly;
 using Xunit;
 
 namespace SecurityHeaders.Owin.Tests {

@@ -1,5 +1,3 @@
-using System;
-
 namespace SecurityHeaders.Owin {
     internal class OwinContextInternal : IHttpContext {
         private readonly OwinContext mContext;

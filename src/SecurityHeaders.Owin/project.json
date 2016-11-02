@@ -9,7 +9,7 @@
   },
 
   "frameworks": {
-    "netstandard1.3": {
+    "netstandard1.2": {
       "imports": [ "dnxcore50", "portable-net45+win8" ]
     }
   }

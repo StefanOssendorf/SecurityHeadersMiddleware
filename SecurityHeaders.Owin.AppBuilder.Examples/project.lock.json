@@ -703,6 +703,20 @@
         "runtime": {
           "netstandard1.2/SecurityHeaders.Owin.dll": {}
         }
+      },
+      "SecurityHeaders.Owin.AppBuilder/3.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "Owin": "1.0.0",
+          "SecurityHeaders.Owin": "3.0.0"
+        },
+        "compile": {
+          "net46/SecurityHeaders.Owin.AppBuilder.dll": {}
+        },
+        "runtime": {
+          "net46/SecurityHeaders.Owin.AppBuilder.dll": {}
+        }
       }
     }
   },
@@ -3396,19 +3410,23 @@
     },
     "SecurityHeaders/3.0.0": {
       "type": "project",
-      "path": "../SecurityHeaders/project.json",
-      "msbuildProject": "../SecurityHeaders/SecurityHeaders.xproj"
+      "path": "../src/SecurityHeaders/project.json",
+      "msbuildProject": "../src/SecurityHeaders/SecurityHeaders.xproj"
     },
     "SecurityHeaders.Owin/3.0.0": {
       "type": "project",
-      "path": "../SecurityHeaders.Owin/project.json",
-      "msbuildProject": "../SecurityHeaders.Owin/SecurityHeaders.Owin.xproj"
+      "path": "../src/SecurityHeaders.Owin/project.json",
+      "msbuildProject": "../src/SecurityHeaders.Owin/SecurityHeaders.Owin.xproj"
+    },
+    "SecurityHeaders.Owin.AppBuilder/3.0.0": {
+      "type": "project",
+      "path": "../src/SecurityHeaders.Owin.AppBuilder/project.json",
+      "msbuildProject": "../src/SecurityHeaders.Owin.AppBuilder/SecurityHeaders.Owin.AppBuilder.xproj"
     }
   },
   "projectFileDependencyGroups": {
     "": [
-      "Owin >= 1.0.0",
-      "SecurityHeaders.Owin >= 3.0.0-*"
+      "SecurityHeaders.Owin.AppBuilder >= 3.0.0-*"
     ],
     ".NETFramework,Version=v4.6": []
   },

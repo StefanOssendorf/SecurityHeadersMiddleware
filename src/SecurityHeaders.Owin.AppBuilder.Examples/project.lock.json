@@ -3410,18 +3410,18 @@
     },
     "SecurityHeaders/3.0.0": {
       "type": "project",
-      "path": "../src/SecurityHeaders/project.json",
-      "msbuildProject": "../src/SecurityHeaders/SecurityHeaders.xproj"
+      "path": "../SecurityHeaders/project.json",
+      "msbuildProject": "../SecurityHeaders/SecurityHeaders.xproj"
     },
     "SecurityHeaders.Owin/3.0.0": {
       "type": "project",
-      "path": "../src/SecurityHeaders.Owin/project.json",
-      "msbuildProject": "../src/SecurityHeaders.Owin/SecurityHeaders.Owin.xproj"
+      "path": "../SecurityHeaders.Owin/project.json",
+      "msbuildProject": "../SecurityHeaders.Owin/SecurityHeaders.Owin.xproj"
     },
     "SecurityHeaders.Owin.AppBuilder/3.0.0": {
       "type": "project",
-      "path": "../src/SecurityHeaders.Owin.AppBuilder/project.json",
-      "msbuildProject": "../src/SecurityHeaders.Owin.AppBuilder/SecurityHeaders.Owin.AppBuilder.xproj"
+      "path": "../SecurityHeaders.Owin.AppBuilder/project.json",
+      "msbuildProject": "../SecurityHeaders.Owin.AppBuilder/SecurityHeaders.Owin.AppBuilder.xproj"
     }
   },
   "projectFileDependencyGroups": {

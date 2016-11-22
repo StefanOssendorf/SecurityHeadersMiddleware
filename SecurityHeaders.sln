@@ -46,7 +46,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders.Owin.Exampl
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders.AspNetCore.Examples", "src\SecurityHeaders.AspNetCore.Examples\SecurityHeaders.AspNetCore.Examples.xproj", "{A6C35FED-4970-4A23-B64B-2627BE9B9ECB}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders.Owin.AppBuilder.Examples", "SecurityHeaders.Owin.AppBuilder.Examples\SecurityHeaders.Owin.AppBuilder.Examples.xproj", "{7BCFD866-C316-4047-8C14-42AA15A48943}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders.Owin.AppBuilder.Examples", "src\SecurityHeaders.Owin.AppBuilder.Examples\SecurityHeaders.Owin.AppBuilder.Examples.xproj", "{7BCFD866-C316-4047-8C14-42AA15A48943}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

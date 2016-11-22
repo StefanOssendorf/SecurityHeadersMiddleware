@@ -6,5 +6,8 @@
   },
   "frameworks": {
     "net46": {}
+  },
+  "buildOptions": {
+    "xmlDoc": true
   }
 }

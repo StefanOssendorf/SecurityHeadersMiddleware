@@ -10,12 +10,12 @@ namespace SecurityHeaders.Core.Tests {
             return HeaderExistFunc(headerName);
         }
 
-        public void OverrideHeader(string name, string value) {
-            OverrideHeaderValueAction(name, value);
+        public void OverrideHeader(string headerName, string value) {
+            OverrideHeaderValueAction(headerName, value);
         }
 
-        public void AppendToHeader(string name, string value) {
-            AppendHeaderValueAction(name, value);
+        public void AppendToHeader(string headerName, string value) {
+            AppendHeaderValueAction(headerName, value);
         }
     }
 }

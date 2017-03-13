@@ -9,9 +9,9 @@ namespace SecurityHeaders.Owin {
         public bool HeaderExist(string headerName) => mContext.Response.Headers.ContainsKey(headerName);
 
 
-        public void OverrideHeader(string name, string value) => mContext.Response.Headers.Set(name, value);
+        public void OverrideHeader(string headerName, string value) => mContext.Response.Headers.Set(headerName, value);
 
 
-        public void AppendToHeader(string name, string value) => mContext.Response.Headers.Append(name, value);
+        public void AppendToHeader(string headerName, string value) => mContext.Response.Headers.Append(headerName, value);
     }
 }

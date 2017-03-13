@@ -13,14 +13,14 @@ namespace SecurityHeaders.AspNetCore {
 
         public bool HeaderExist(string headerName) => Headers.ContainsKey(headerName);
 
-        public void AppendToHeader(string name, string value) => TypedHeaders.Append(name, value);
+        public void AppendToHeader(string headerName, string value) => TypedHeaders.Append(headerName, value);
 
-        public void OverrideHeader(string name, string value) {
-            if(Headers.ContainsKey(name)) {
-                Headers.Remove(name);
+        public void OverrideHeader(string headerName, string value) {
+            if(Headers.ContainsKey(headerName)) {
+                Headers.Remove(headerName);
             }
 
-            TypedHeaders.Set(name, value);
+            TypedHeaders.Set(headerName, value);
         }
     }
 }

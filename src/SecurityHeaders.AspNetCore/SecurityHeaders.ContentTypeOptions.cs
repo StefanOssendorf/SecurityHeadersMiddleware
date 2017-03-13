@@ -24,9 +24,9 @@ namespace SecurityHeaders.AspNetCore {
         /// <param name="configureSettings">The action to set the settings.</param>
         /// <returns>The IApplicationBuilder instance.</returns>
         public static IApplicationBuilder UseContentTypeOptions(this IApplicationBuilder builder, Action<ContentTypeOptionsSettings> configureSettings) {
-            builder.MustNotNull(nameof(builder));
-            configureSettings.MustNotNull(nameof(configureSettings));
-
+            Guard.NotNull(builder, nameof(builder));
+            Guard.NotNull(configureSettings, nameof(configureSettings));
+            
             var settings = new ContentTypeOptionsSettings();
             configureSettings(settings);
 

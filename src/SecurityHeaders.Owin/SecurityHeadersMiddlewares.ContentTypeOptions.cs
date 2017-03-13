@@ -30,9 +30,9 @@ namespace SecurityHeaders.Owin {
         /// <exception cref="ArgumentNullException">builder is null.</exception>
         /// <exception cref="ArgumentNullException">configureSettings is null.</exception>
         public static BuildFunc ContentTypeOptions(this BuildFunc builder, Action<ContentTypeOptionsSettings> configureSettings) {
-            builder.MustNotNull(nameof(builder));
-            configureSettings.MustNotNull(nameof(configureSettings));
-
+            Guard.NotNull(builder, nameof(builder));
+            Guard.NotNull(configureSettings, nameof(configureSettings));
+            
             var settings = new ContentTypeOptionsSettings();
             configureSettings(settings);
 

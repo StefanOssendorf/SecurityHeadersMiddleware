@@ -12,6 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\SecurityHeaders\Guard.cs" Link="Guard.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SecurityHeaders.Owin\SecurityHeaders.Owin.csproj" />
   </ItemGroup>
 

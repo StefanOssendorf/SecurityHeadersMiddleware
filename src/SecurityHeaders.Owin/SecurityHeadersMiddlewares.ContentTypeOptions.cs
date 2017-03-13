@@ -36,7 +36,7 @@ namespace SecurityHeaders.Owin {
             var settings = new ContentTypeOptionsSettings();
             configureSettings(settings);
 
-            var middleware = new ContentTypeOptions(settings);
+            var middleware = new ContentTypeOptionsMiddleware(settings);
             builder(_ => next =>
                 env => {
                     var ctx = env.AsOwinContext();

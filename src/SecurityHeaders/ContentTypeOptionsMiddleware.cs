@@ -4,7 +4,7 @@ namespace SecurityHeaders {
     /// <summary>
     /// The middleware to apply the content-type-options header.
     /// </summary>
-    public class ContentTypeOptions {
+    public class ContentTypeOptionsMiddleware {
         /// <summary>
         /// The http-header name of the content-type-options header.
         /// </summary>
@@ -18,10 +18,10 @@ namespace SecurityHeaders {
         private readonly ContentTypeOptionsSettings mSettings;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="ContentTypeOptions"/>.
+        /// Initializes a new instance of <see cref="ContentTypeOptionsMiddleware"/>.
         /// </summary>
         /// <param name="settings">The settings. Must not be <code>null</code>.</param>
-        public ContentTypeOptions(ContentTypeOptionsSettings settings) {
+        public ContentTypeOptionsMiddleware(ContentTypeOptionsSettings settings) {
             Guard.NotNull(settings, nameof(settings));
             mSettings = settings;
         }

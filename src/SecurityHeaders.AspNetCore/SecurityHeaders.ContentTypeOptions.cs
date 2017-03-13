@@ -30,7 +30,7 @@ namespace SecurityHeaders.AspNetCore {
             var settings = new ContentTypeOptionsSettings();
             configureSettings(settings);
 
-            var cto = new ContentTypeOptions(settings);
+            var cto = new ContentTypeOptionsMiddleware(settings);
             builder.Use(async (context, func) => {
                 context.Response.OnStarting(innerCtx => {
                     cto.ApplyHeader(innerCtx);

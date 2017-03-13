@@ -5,6 +5,8 @@
     <TargetFramework>net46</TargetFramework>
     <AssemblyName>SecurityHeaders.Owin.Tests</AssemblyName>
     <PackageId>SecurityHeaders.Owin.Tests</PackageId>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>

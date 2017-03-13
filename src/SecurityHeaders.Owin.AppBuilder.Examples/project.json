@@ -1,9 +1,0 @@
-﻿{
-  "version": "1.0.0-*",
-  "dependencies": {
-    "SecurityHeaders.Owin.AppBuilder": "3.0.0-*"
-  },
-  "frameworks": {
-    "net46": {}
-  }
-}

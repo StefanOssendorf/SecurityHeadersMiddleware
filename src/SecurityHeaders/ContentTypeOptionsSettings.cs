@@ -11,7 +11,7 @@
         public HeaderControl HeaderHandling {
             get { return mHeaderHandling; }
             set {
-                value.MustBeDefined(nameof(HeaderHandling));
+                Guard.MustBeDefined(value, nameof(value));
                 mHeaderHandling = value;
             }
         }

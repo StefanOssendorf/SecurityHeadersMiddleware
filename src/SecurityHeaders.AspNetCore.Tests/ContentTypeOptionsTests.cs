@@ -45,7 +45,7 @@ namespace SecurityHeaders.AspNetCore.Tests {
 
         [Fact]
         public async Task When_adding_header_with_do_not_override_and_header_already_exist_it_should_not_be_overridden() {
-            mModifyRun = ctx => ctx.Response.Headers.Add(ContentTypeOptions.XContentTypeOptions, "invalidvalue");
+            mModifyRun = ctx => ctx.Response.Headers.Add(ContentTypeOptionsMiddleware.XContentTypeOptionsHeaderName, "invalidvalue");
             mSetSettings = settings => settings.HeaderHandling = ContentTypeOptionsSettings.HeaderControl.IgnoreIfHeaderAlreadySet;
             Arrange();
             var result = await mClient.GetAsync("/");

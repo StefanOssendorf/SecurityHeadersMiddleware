@@ -35,8 +35,8 @@ namespace SecurityHeaders.Core.Tests {
             eitherOrCalled.ShouldBeTrue("Either Override or Append header should be called");
         }
 
-        private static ContentTypeOptions CreateCto(ContentTypeOptionsSettings.HeaderControl headerHandling) {
-            return new ContentTypeOptions(new ContentTypeOptionsSettings {
+        private static ContentTypeOptionsMiddleware CreateCto(ContentTypeOptionsSettings.HeaderControl headerHandling) {
+            return new ContentTypeOptionsMiddleware(new ContentTypeOptionsSettings {
                 HeaderHandling = headerHandling
             });
         }

@@ -45,7 +45,7 @@ namespace SecurityHeaders.Owin.Tests {
                         context.Response.StatusCode = 200;
                         context.Response.ReasonPhrase = "OK";
                         modifyEndpoint?.Invoke(context);
-                        return Task.FromResult(0);
+                        return Task.CompletedTask;
                     });
             }).HttpClient;
         }

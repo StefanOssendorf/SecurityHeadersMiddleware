@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{E768EE25-8180-4CAA-88F4-B9C8A5E16E66}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,31 +12,28 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9795E771-F940-4C4F-AAD8-7638AA405C09}"
 	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
 		src\SharedAssemblyInfo.cs = src\SharedAssemblyInfo.cs
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{707156A5-7AE4-461D-9764-48B4B7700F49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityHeaders", "src\SecurityHeaders\SecurityHeaders.csproj", "{A4C3A3C7-DED1-4DFA-8BC8-599AB2F0203B}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders", "src\SecurityHeaders\SecurityHeaders.xproj", "{A4C3A3C7-DED1-4DFA-8BC8-599AB2F0203B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityHeaders.Tests", "src\SecurityHeaders.Tests\SecurityHeaders.Tests.csproj", "{210C159C-C33C-46A5-A73E-84A8358B8612}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders.Tests", "src\SecurityHeaders.Tests\SecurityHeaders.Tests.xproj", "{210C159C-C33C-46A5-A73E-84A8358B8612}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityHeaders.Owin", "src\SecurityHeaders.Owin\SecurityHeaders.Owin.csproj", "{0E454C45-77BB-43A8-AA6E-8CBCDE21DCA6}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders.Owin", "src\SecurityHeaders.Owin\SecurityHeaders.Owin.xproj", "{0E454C45-77BB-43A8-AA6E-8CBCDE21DCA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityHeaders.AspNetCore.Tests", "src\SecurityHeaders.AspNetCore.Tests\SecurityHeaders.AspNetCore.Tests.csproj", "{A82661B7-987C-48A9-B329-70F531A92568}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders.AspNetCore.Tests", "src\SecurityHeaders.AspNetCore.Tests\SecurityHeaders.AspNetCore.Tests.xproj", "{A82661B7-987C-48A9-B329-70F531A92568}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityHeaders.AspNetCore", "src\SecurityHeaders.AspNetCore\SecurityHeaders.AspNetCore.csproj", "{FB15EE99-EFCD-4022-8418-02356B2C0716}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders.AspNetCore", "src\SecurityHeaders.AspNetCore\SecurityHeaders.AspNetCore.xproj", "{FB15EE99-EFCD-4022-8418-02356B2C0716}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityHeaders.Owin.AppBuilder", "src\SecurityHeaders.Owin.AppBuilder\SecurityHeaders.Owin.AppBuilder.csproj", "{9224C7F0-0204-4AEF-985F-A00CA1AECA48}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders.Owin.AppBuilder", "src\SecurityHeaders.Owin.AppBuilder\SecurityHeaders.Owin.AppBuilder.xproj", "{9224C7F0-0204-4AEF-985F-A00CA1AECA48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityHeaders.Owin.Examples", "src\SecurityHeaders.Owin.Examples\SecurityHeaders.Owin.Examples.csproj", "{32E9174C-3325-4518-9CCE-39440F7FBB9A}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders.Owin.Examples", "src\SecurityHeaders.Owin.Examples\SecurityHeaders.Owin.Examples.xproj", "{32E9174C-3325-4518-9CCE-39440F7FBB9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityHeaders.AspNetCore.Examples", "src\SecurityHeaders.AspNetCore.Examples\SecurityHeaders.AspNetCore.Examples.csproj", "{A6C35FED-4970-4A23-B64B-2627BE9B9ECB}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders.AspNetCore.Examples", "src\SecurityHeaders.AspNetCore.Examples\SecurityHeaders.AspNetCore.Examples.xproj", "{A6C35FED-4970-4A23-B64B-2627BE9B9ECB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityHeaders.Owin.AppBuilder.Examples", "src\SecurityHeaders.Owin.AppBuilder.Examples\SecurityHeaders.Owin.AppBuilder.Examples.csproj", "{7BCFD866-C316-4047-8C14-42AA15A48943}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders.Owin.AppBuilder.Examples", "src\SecurityHeaders.Owin.AppBuilder.Examples\SecurityHeaders.Owin.AppBuilder.Examples.xproj", "{7BCFD866-C316-4047-8C14-42AA15A48943}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SecurityHeaders.Owin.Tests", "src\SecurityHeaders.Owin.Tests\SecurityHeaders.Owin.Tests.xproj", "{96CF3BEE-3B6A-4E49-82EB-6C2889AE385D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityHeaders.Owin.Tests", "src\SecurityHeaders.Owin.Tests\SecurityHeaders.Owin.Tests.csproj", "{96CF3BEE-3B6A-4E49-82EB-6C2889AE385D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

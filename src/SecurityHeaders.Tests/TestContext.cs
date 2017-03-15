@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SecurityHeaders.Core.Tests {
+namespace SecurityHeaders.Tests {
     internal class TestContext : IHttpContext {
         public Func<string, bool> HeaderExistFunc { get; set; }
         public Action<string, string> OverrideHeaderValueAction { get; set; }

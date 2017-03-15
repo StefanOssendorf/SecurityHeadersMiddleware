@@ -8,6 +8,13 @@ namespace SecurityHeaders {
             }
         }
 
+        public static void NotNullOrWhiteSpace(string source, string paramName) {
+            NotNull(source, paramName);
+            if(string.IsNullOrWhiteSpace(source)) {
+                throw new ArgumentException("The string must not be null, empty or whitespace.", paramName);
+            }
+        }
+
         /// <summary>
         /// Throws InvalidEnumArgumentException
         /// </summary>

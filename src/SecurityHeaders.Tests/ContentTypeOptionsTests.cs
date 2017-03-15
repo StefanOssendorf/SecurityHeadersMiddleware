@@ -2,20 +2,23 @@
 using Shouldly;
 using Xunit;
 
-namespace SecurityHeaders.Core.Tests {
-    public class ContentTypeOptionsTests {
-        private static readonly Action<string, string> IoExceptionThrower = (a, b) => { throw new InvalidOperationException(); };
+namespace SecurityHeaders.Tests {
+    public static class Helper {
+        public static readonly Action<string, string> IoExceptionThrower = (a, b) => { throw new InvalidOperationException(); };
+    }
 
+    public class ContentTypeOptionsTests {
         [Fact]
         public void When_header_already_exist_it_should_not_be_added_or_overriden() {
             var cto = CreateCto(ContentTypeOptionsSettings.HeaderControl.IgnoreIfHeaderAlreadySet);
             var ctx = new TestContext {
                 HeaderExistFunc = _ => true,
-                OverrideHeaderValueAction = IoExceptionThrower,
-                AppendHeaderValueAction = IoExceptionThrower
+                OverrideHeaderValueAction = Helper.IoExceptionThrower,
+                AppendHeaderValueAction = Helper.IoExceptionThrower
             };
 
-            cto.ApplyHeader(ctx);
+            Action sut = () => cto.ApplyHeader(ctx);
+            sut.ShouldNotThrow();
         }
 
         [Theory]

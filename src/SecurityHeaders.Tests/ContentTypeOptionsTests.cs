@@ -3,9 +3,6 @@ using Shouldly;
 using Xunit;
 
 namespace SecurityHeaders.Tests {
-    public static class Helper {
-        public static readonly Action<string, string> IoExceptionThrower = (a, b) => { throw new InvalidOperationException(); };
-    }
 
     public class ContentTypeOptionsTests {
         [Fact]
@@ -21,21 +18,77 @@ namespace SecurityHeaders.Tests {
             sut.ShouldNotThrow();
         }
 
+        [Fact]
+        public void When_header_does_not_exist_it_should_be_added_when_it_should_be_overridden() {
+            var cto = CreateCto(ContentTypeOptionsSettings.HeaderControl.OverwriteIfHeaderAlreadySet);
+            bool overrideCalled = false;
+            var ctx = new TestContext {
+                HeaderExistFunc = _ => false,
+                OverrideHeaderValueAction = (a, b) => overrideCalled = true,
+                AppendHeaderValueAction = Helper.IoExceptionThrower
+            };
+
+            cto.ApplyHeader(ctx);
+            overrideCalled.ShouldBeTrue();
+        }
+
+        [Theory]
+        [InlineData(ContentTypeOptionsSettings.HeaderControl.IgnoreIfHeaderAlreadySet, false)]
+        [InlineData(ContentTypeOptionsSettings.HeaderControl.OverwriteIfHeaderAlreadySet, false)]
+        [InlineData(ContentTypeOptionsSettings.HeaderControl.IgnoreIfHeaderAlreadySet, true)]
+        [InlineData(ContentTypeOptionsSettings.HeaderControl.OverwriteIfHeaderAlreadySet, true)]
+        public void AppendHeaderValue_should_never_be_called(ContentTypeOptionsSettings.HeaderControl handling, bool headerExist) {
+            var cto = CreateCto(handling);
+            bool appendValueCalled = false;
+            var ctx = new TestContext {
+                HeaderExistFunc = _ => headerExist,
+                OverrideHeaderValueAction = (a, b) => { },
+                AppendHeaderValueAction = (a, b) => appendValueCalled = true
+            };
+
+            appendValueCalled.ShouldBeFalse();
+        }
+
         [Theory]
         [InlineData(ContentTypeOptionsSettings.HeaderControl.IgnoreIfHeaderAlreadySet)]
         [InlineData(ContentTypeOptionsSettings.HeaderControl.OverwriteIfHeaderAlreadySet)]
         public void When_header_does_not_exist_it_should_be_added(ContentTypeOptionsSettings.HeaderControl handling) {
             var cto = CreateCto(handling);
             bool overrideCalled = false;
-            bool appendCalled = false;
             var ctx = new TestContext {
                 HeaderExistFunc = _ => false,
-                OverrideHeaderValueAction = (a, b) => overrideCalled = true,
-                AppendHeaderValueAction = (a, b) => appendCalled = true
+                OverrideHeaderValueAction = (a, b) => overrideCalled = true
             };
             cto.ApplyHeader(ctx);
-            bool eitherOrCalled = overrideCalled ^ appendCalled;
-            eitherOrCalled.ShouldBeTrue("Either Override or Append header should be called");
+            overrideCalled.ShouldBeTrue("Either Override or Append header should be called");
+        }
+
+        [Fact]
+        public void When_adding_the_header_the_correct_headerName_should_be_given() {
+            var cto = CreateCto(ContentTypeOptionsSettings.HeaderControl.OverwriteIfHeaderAlreadySet);
+            string headerName = "";
+            var ctx = new TestContext {
+                HeaderExistFunc = _ => false,
+                OverrideHeaderValueAction = (a, b) => headerName = a
+            };
+
+            cto.ApplyHeader(ctx);
+
+            headerName.ShouldBe("X-Content-Type-Options");
+        }
+
+        [Fact]
+        public void When_adding_the_header_the_correct_headerValue_should_be_added() {
+            var cto = CreateCto(ContentTypeOptionsSettings.HeaderControl.OverwriteIfHeaderAlreadySet);
+            string headerValue = "";
+            var ctx = new TestContext {
+                HeaderExistFunc = _ => false,
+                OverrideHeaderValueAction = (a, b) => headerValue = b
+            };
+
+            cto.ApplyHeader(ctx);
+
+            headerValue.ShouldBe("nosniff");
         }
 
         private static ContentTypeOptionsMiddleware CreateCto(ContentTypeOptionsSettings.HeaderControl headerHandling) {

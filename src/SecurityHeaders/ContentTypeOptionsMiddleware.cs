@@ -33,29 +33,19 @@ namespace SecurityHeaders {
         public void ApplyHeader(IHttpContext context) {
             Guard.NotNull(context, nameof(context));
 
-            if(!SetHeader(context.HeaderExist)) {
+            if(HeaderShouldNotBeSet(context.HeaderExist)) {
                 return;
             }
 
-            Action<string, string> actionToModifyHeader;
-            switch(mSettings.HeaderHandling) {
-                case ContentTypeOptionsSettings.HeaderControl.OverwriteIfHeaderAlreadySet:
-                    actionToModifyHeader = context.OverrideHeader;
-                    break;
-                case ContentTypeOptionsSettings.HeaderControl.IgnoreIfHeaderAlreadySet:
-                    actionToModifyHeader = context.AppendToHeader;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException($"Unknown enum-value '{mSettings.HeaderHandling}' of enum ${typeof(ContentTypeOptionsSettings.HeaderControl).FullName}");
-            }
-            actionToModifyHeader(XContentTypeOptionsHeaderName, XContentTypeOptionsHeaderValue);
+            context.OverrideHeader(XContentTypeOptionsHeaderName, XContentTypeOptionsHeaderValue);
         }
 
-        private bool SetHeader(Func<string, bool> headerExist) {
+        private bool HeaderShouldNotBeSet(Func<string, bool> headerExist) {
             if(mSettings.HeaderHandling == ContentTypeOptionsSettings.HeaderControl.OverwriteIfHeaderAlreadySet) {
-                return true;
+                return false;
             }
-            return !headerExist(XContentTypeOptionsHeaderName);
+
+            return headerExist(XContentTypeOptionsHeaderName) && mSettings.HeaderHandling == ContentTypeOptionsSettings.HeaderControl.IgnoreIfHeaderAlreadySet;
         }
     }
 }

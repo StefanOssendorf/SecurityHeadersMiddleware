@@ -22,7 +22,7 @@ namespace SecurityHeaders.Owin.Tests {
         [Fact]
         public async Task When_using_contentTypeOptionsMiddleware_and_header_is_already_set_it_should_net_be_overridden_with_set_configuration () {
             var client = CtoClientHelper.Create(
-                ctos => ctos.HeaderHandling = ContentTypeOptionsSettings.HeaderControl.IgnoreIfHeaderAlreadySet,
+                () => new ContentTypeOptionsSettings(ContentTypeOptionsSettings.HeaderControl.IgnoreIfHeaderAlreadySet),
                 ctx => ctx.Response.Headers.Set("X-Content-Type-Options", "krznbf")
             );
 
@@ -33,11 +33,9 @@ namespace SecurityHeaders.Owin.Tests {
 
     internal static class CtoClientHelper {
 
-        public static HttpClient Create() {
-            return Create(ctos => {});
-        }
+        public static HttpClient Create() => Create(() => new ContentTypeOptionsSettings());
 
-        public static HttpClient Create(Action<ContentTypeOptionsSettings> configureAction, Action<Microsoft.Owin.IOwinContext> modifyEndpoint = null) {
+        public static HttpClient Create(Func<ContentTypeOptionsSettings> configureAction, Action<Microsoft.Owin.IOwinContext> modifyEndpoint = null) {
             return TestServer.Create(builder => {
                 builder.UseOwin().ContentTypeOptions(configureAction);
                 builder
@@ -52,9 +50,7 @@ namespace SecurityHeaders.Owin.Tests {
     }
 
     internal static class Extension {
-        internal static BuildFunc UseOwin(this IAppBuilder builder) {
-            return middleware => builder.Use(middleware(builder.Properties));
-        }
+        internal static BuildFunc UseOwin(this IAppBuilder builder) => middleware => builder.Use(middleware(builder.Properties));
     }
 
     internal static class HeaderHelper {
@@ -66,9 +62,7 @@ namespace SecurityHeaders.Owin.Tests {
         //    return source.Headers.GetValues(HeaderConstants.StrictTransportSecurity).Single().Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(value => value.Trim());
         //}
 
-        public static string XContentTypeOptions(this HttpResponseMessage source) {
-            return source.Headers.GetValues("X-Content-Type-Options").Single();
-        }
+        public static string XContentTypeOptions(this HttpResponseMessage source) => source.Headers.GetValues("X-Content-Type-Options").Single();
 
         //public static string XssProtection(this HttpResponseMessage source) {
         //    return source.Headers.GetValues(HeaderConstants.XssProtection).First();

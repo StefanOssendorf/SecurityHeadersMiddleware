@@ -1,26 +1,21 @@
 ﻿namespace SecurityHeaders {
     /// <summary>
-    /// Defines the Content-Type-Options settings.
+    /// Defines the Content-Type-Options settings. <br/>
+    /// This type is immutable.
     /// </summary>
     public class ContentTypeOptionsSettings {
-        private HeaderControl mHeaderHandling;
-
+        
         /// <summary>
         /// Gets or sets the handling of the headervalue.
         /// </summary>
-        public HeaderControl HeaderHandling {
-            get { return mHeaderHandling; }
-            set {
-                Guard.MustBeDefined(value, nameof(value));
-                mHeaderHandling = value;
-            }
-        }
+        public HeaderControl HeaderHandling { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContentTypeOptionsSettings"/> class with <see cref="HeaderHandling"/> = <see cref="HeaderControl.OverwriteIfHeaderAlreadySet"/>
+        /// Initializes a new instance of the <see cref="ContentTypeOptionsSettings"/> class.
         /// </summary>
-        public ContentTypeOptionsSettings() {
-            HeaderHandling = HeaderControl.OverwriteIfHeaderAlreadySet;
+        /// <param name="headerHandling">How the header should be handled.</param>
+        public ContentTypeOptionsSettings(HeaderControl headerHandling = HeaderControl.OverwriteIfHeaderAlreadySet) {
+            HeaderHandling = headerHandling;
         }
 
         /// <summary>

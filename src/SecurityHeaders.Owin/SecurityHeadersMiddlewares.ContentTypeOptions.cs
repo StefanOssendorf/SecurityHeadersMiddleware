@@ -17,26 +17,21 @@ namespace SecurityHeaders.Owin {
         /// <param name="builder">The OWIN builder instance.</param>
         /// <returns>The OWIN builder instance.</returns>
         /// <exception cref="ArgumentNullException">builder is null.</exception>
-        public static BuildFunc ContentTypeOptions(this BuildFunc builder) {
-            return ContentTypeOptions(builder, cs => { });
-        }
+        public static BuildFunc ContentTypeOptions(this BuildFunc builder) => ContentTypeOptions(builder, () => new ContentTypeOptionsSettings());
 
         /// <summary>
         ///     Adds the "X-Content-Type-Options" header with value "nosniff" to the response. />.
         /// </summary>
         /// <param name="builder">The OWIN builder instance.</param>
-        /// <param name="configureSettings">The action to set the settings.</param>
+        /// <param name="getSettings">The func to create the settings.</param>
         /// <returns>The OWIN builder instance.</returns>
         /// <exception cref="ArgumentNullException">builder is null.</exception>
         /// <exception cref="ArgumentNullException">configureSettings is null.</exception>
-        public static BuildFunc ContentTypeOptions(this BuildFunc builder, Action<ContentTypeOptionsSettings> configureSettings) {
+        public static BuildFunc ContentTypeOptions(this BuildFunc builder, Func<ContentTypeOptionsSettings> getSettings) {
             Guard.NotNull(builder, nameof(builder));
-            Guard.NotNull(configureSettings, nameof(configureSettings));
-            
-            var settings = new ContentTypeOptionsSettings();
-            configureSettings(settings);
+            Guard.NotNull(getSettings, nameof(getSettings));
 
-            var middleware = new ContentTypeOptionsMiddleware(settings);
+            var middleware = new ContentTypeOptionsMiddleware(getSettings());
             builder(_ => next =>
                 env => {
                     var ctx = env.AsOwinContext();

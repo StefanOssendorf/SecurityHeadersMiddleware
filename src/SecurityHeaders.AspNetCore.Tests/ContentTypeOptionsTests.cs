@@ -14,7 +14,7 @@ namespace SecurityHeaders.AspNetCore.Tests {
         private HttpClient mClient;
         private Action<HttpContext> mModifyRun;
         private bool mUseDefault;
-        private Action<ContentTypeOptionsSettings> mSetSettings = settings => { };
+        private Func<ContentTypeOptionsSettings> mSetSettings = () => new ContentTypeOptionsSettings();
 
 
         private void Arrange() {
@@ -46,7 +46,7 @@ namespace SecurityHeaders.AspNetCore.Tests {
         [Fact]
         public async Task When_adding_header_with_do_not_override_and_header_already_exist_it_should_not_be_overridden() {
             mModifyRun = ctx => ctx.Response.Headers.Add(ContentTypeOptionsMiddleware.XContentTypeOptionsHeaderName, "invalidvalue");
-            mSetSettings = settings => settings.HeaderHandling = ContentTypeOptionsSettings.HeaderControl.IgnoreIfHeaderAlreadySet;
+            mSetSettings = () => new ContentTypeOptionsSettings(ContentTypeOptionsSettings.HeaderControl.IgnoreIfHeaderAlreadySet);
             Arrange();
             var result = await mClient.GetAsync("/");
             result.XContentTypeOptions().ShouldBe("invalidvalue");

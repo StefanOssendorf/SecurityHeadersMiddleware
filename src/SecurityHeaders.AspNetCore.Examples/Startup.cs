@@ -26,7 +26,7 @@ namespace SecurityHeaders.AspNetCore.Examples {
 
         private static void ContentTypeOptionsExamples(IApplicationBuilder app) {
             // Use the ContenTypeOptions middleware and do not set the header if already set.
-            app.UseContentTypeOptions(settings => settings.HeaderHandling = ContentTypeOptionsSettings.HeaderControl.IgnoreIfHeaderAlreadySet);
+            app.UseContentTypeOptions(() => new ContentTypeOptionsSettings(ContentTypeOptionsSettings.HeaderControl.IgnoreIfHeaderAlreadySet));
 
             // Default sets HeadeHandling to ContentTypeOptionsSettings.HeaderControl.OverwriteIfHeaderAlreadySet
             app.UseContentTypeOptions();

@@ -18,20 +18,6 @@ namespace SecurityHeaders.Tests {
             sut.ShouldNotThrow();
         }
 
-        [Fact]
-        public void When_header_does_not_exist_it_should_be_added_when_it_should_be_overridden() {
-            var cto = CreateCto(ContentTypeOptionsSettings.HeaderControl.OverwriteIfHeaderAlreadySet);
-            bool overrideCalled = false;
-            var ctx = new TestContext {
-                HeaderExistFunc = _ => false,
-                OverrideHeaderValueAction = (a, b) => overrideCalled = true,
-                AppendHeaderValueAction = Helper.IoExceptionThrower
-            };
-
-            cto.ApplyHeader(ctx);
-            overrideCalled.ShouldBeTrue();
-        }
-
         [Theory]
         [InlineData(ContentTypeOptionsSettings.HeaderControl.IgnoreIfHeaderAlreadySet, false)]
         [InlineData(ContentTypeOptionsSettings.HeaderControl.OverwriteIfHeaderAlreadySet, false)]
@@ -91,10 +77,6 @@ namespace SecurityHeaders.Tests {
             headerValue.ShouldBe("nosniff");
         }
 
-        private static ContentTypeOptionsMiddleware CreateCto(ContentTypeOptionsSettings.HeaderControl headerHandling) {
-            return new ContentTypeOptionsMiddleware(new ContentTypeOptionsSettings {
-                HeaderHandling = headerHandling
-            });
-        }
+        private static ContentTypeOptionsMiddleware CreateCto(ContentTypeOptionsSettings.HeaderControl headerHandling) => new ContentTypeOptionsMiddleware(new ContentTypeOptionsSettings(headerHandling));
     }
 }

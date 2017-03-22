@@ -14,7 +14,7 @@ namespace SecurityHeaders.Owin.Examples {
             buildFunc.ContentTypeOptions();
 
             // Use the ContenTypeOptions middleware and do not set the header if already set.
-            buildFunc.ContentTypeOptions(settings => settings.HeaderHandling = ContentTypeOptionsSettings.HeaderControl.IgnoreIfHeaderAlreadySet);
+            buildFunc.ContentTypeOptions(() => new ContentTypeOptionsSettings(ContentTypeOptionsSettings.HeaderControl.IgnoreIfHeaderAlreadySet));
         }
     }
 }

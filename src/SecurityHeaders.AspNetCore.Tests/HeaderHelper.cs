@@ -6,5 +6,9 @@ namespace SecurityHeaders.AspNetCore.Tests {
         public static string XContentTypeOptions(this HttpResponseMessage source) {
             return source.Headers.GetValues(ContentTypeOptionsMiddleware.XContentTypeOptionsHeaderName).Single();
         }
+
+        public static string XFrameOptions(this HttpResponseMessage source) {
+            return source.Headers.GetValues(AntiClickjackingMiddleware.XFrameOptionsHeaderName).Single();
+        }
     }
 }

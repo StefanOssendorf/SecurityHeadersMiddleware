@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
 namespace SecurityHeaders.AspNetCore {
+    /// <summary>
+    /// IApplicationBuilder extension methods.
+    /// </summary>
     public static partial class SecurityHeaders {
         private static void OnStarting<T>(this HttpResponse source, Func<T, Task> callback, T context) {
             source.OnStarting(ctx => callback(context), context);

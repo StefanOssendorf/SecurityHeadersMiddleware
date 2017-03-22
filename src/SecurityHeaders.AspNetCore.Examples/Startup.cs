@@ -17,7 +17,7 @@ namespace SecurityHeaders.AspNetCore.Examples {
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory) {
             ContentTypeOptionsExamples(app);
-
+            AntiClickJackingExamples(app);
 
             app.Run(async (context) => {
                 await context.Response.WriteAsync("Hello World!");
@@ -30,6 +30,19 @@ namespace SecurityHeaders.AspNetCore.Examples {
 
             // Default sets HeadeHandling to ContentTypeOptionsSettings.HeaderControl.OverwriteIfHeaderAlreadySet
             app.UseContentTypeOptions();
+        }
+
+        private static void AntiClickJackingExamples(IApplicationBuilder app) {
+            // Choose the desired header-value
+            var headerValue = XFrameOptionHeaderValue.Deny();
+            headerValue = XFrameOptionHeaderValue.SameOrigin();
+            headerValue = XFrameOptionHeaderValue.AllowFrom("http://www.example.org");
+
+            // Create a settings and pass the apropriate values to the constructor
+            app.UseAntiClickjacking(() => new AntiClickjackingSettings(headerValue, AntiClickjackingSettings.HeaderControl.IgnoreIfHeaderAlreadySet));
+
+            // Use AntiClickjackingMiddleware with default settings (Overwrite and DENY)
+            app.UseAntiClickjacking();
         }
     }
 }

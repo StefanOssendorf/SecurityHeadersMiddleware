@@ -21,13 +21,13 @@ namespace SecurityHeaders.Owin.AppBuilder {
         /// Adds the "X-Content-Type-Options" Header to the response.
         /// </summary>
         /// <param name="builder">The <see cref="IAppBuilder"/> instance.</param>
-        /// <param name="configureSettings">Action to configure the settings-object.</param>
+        /// <param name="getSettings">The func to get the settings.</param>
         /// <returns>The <see cref="IAppBuilder"/> instance.</returns>
-        public static IAppBuilder ContentTypeOptions(this IAppBuilder builder, Func<ContentTypeOptionsSettings> configureSettings) {
+        public static IAppBuilder ContentTypeOptions(this IAppBuilder builder, Func<ContentTypeOptionsSettings> getSettings) {
             Guard.NotNull(builder, nameof(builder));
-            Guard.NotNull(configureSettings, nameof(configureSettings));
+            Guard.NotNull(getSettings, nameof(getSettings));
 
-            builder.UseOwin().ContentTypeOptions(configureSettings);
+            builder.UseOwin().ContentTypeOptions(getSettings);
             return builder;
         }
     }

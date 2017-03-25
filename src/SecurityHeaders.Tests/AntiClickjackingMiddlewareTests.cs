@@ -32,6 +32,8 @@ namespace SecurityHeaders.Tests {
                 AppendHeaderValueAction = (a, b) => appendValueCalled = true
             };
 
+            cto.ApplyHeader(ctx);
+
             appendValueCalled.ShouldBeFalse();
         }
 

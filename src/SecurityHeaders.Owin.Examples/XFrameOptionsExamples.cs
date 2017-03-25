@@ -1,12 +1,18 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace SecurityHeaders.AspNetCore.Examples {
-    public partial class Startup {
-        private static void AntiClickJackingExamples(IApplicationBuilder app) {
+namespace SecurityHeaders.Owin.Examples {
+    using BuildFunc = Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>>;
+
+    public class XFrameOptionsExamples {    
+
+        public void Example() {
+            BuildFunc buildFunc = null;
 
             // Use AntiClickjackingMiddleware with default settings (Overwrite and DENY)
             // Results in: X-Frame-Options: DENY
-            app.UseAntiClickjacking();
+            buildFunc.UseAntiClickjacking();
 
             // Choose the desired header-value
             var headerValue = XFrameOptionHeaderValue.Deny();
@@ -18,7 +24,7 @@ namespace SecurityHeaders.AspNetCore.Examples {
             // - Results in: X-Frame-Options: DENY
             // - Results in: X-Frame-Options: SAMEORIGIN
             // - Results in: X-Frame-Options: ALLOW-FROM http://www.example.org
-            app.UseAntiClickjacking(
+            buildFunc.UseAntiClickjacking(
                 () =>
                     new AntiClickjackingSettings(headerValue,
                         AntiClickjackingSettings.HeaderControl.IgnoreIfHeaderAlreadySet));

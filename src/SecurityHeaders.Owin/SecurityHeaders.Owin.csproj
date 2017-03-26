@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.2</TargetFramework>
+    <TargetFramework>netstandard1.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>SecurityHeaders.Owin</AssemblyName>
     <PackageId>SecurityHeaders.Owin</PackageId>
@@ -14,6 +14,7 @@
     <!-- NuGet properties -->
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <SH_UsedFramework>OWIN</SH_UsedFramework>
+    <SH_UsedFrameworkTag>owin, katana</SH_UsedFrameworkTag>
   </PropertyGroup>
 
   <Import Project="..\..\shared.props" />

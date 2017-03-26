@@ -15,6 +15,7 @@
     <!-- NuGet properties-->
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <SH_UsedFramework>ASP.Net Core</SH_UsedFramework>
+    <SH_UsedFrameworkTag>aspnetcore</SH_UsedFrameworkTag>
     
   </PropertyGroup>
 

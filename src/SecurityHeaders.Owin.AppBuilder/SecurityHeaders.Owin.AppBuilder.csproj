@@ -12,6 +12,7 @@
     <!-- NuGet properties -->
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <SH_UsedFramework>IAppBuilder (Katana)</SH_UsedFramework>
+    <SH_UsedFrameworkTag>katana</SH_UsedFrameworkTag>
   </PropertyGroup>
 
   <Import Project="..\..\shared.props" />

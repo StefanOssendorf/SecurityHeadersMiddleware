@@ -11,7 +11,7 @@
       - X-Frame-Options
       -
     </Description>
-    <PackageTags>Security-Header, XSS, CSP, STS</PackageTags>
+    <PackageTags>$(SH_UsedFrameworkTag), asp.net, security, XSS, CSP, STS</PackageTags>
   </PropertyGroup>
   
 </Project>

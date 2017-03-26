@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>3.0.0</VersionPrefix>
     <TargetFramework>netstandard1.2</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>SecurityHeaders.Owin</AssemblyName>
@@ -11,7 +10,14 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    
+    <!-- NuGet properties -->
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <SH_UsedFramework>OWIN</SH_UsedFramework>
   </PropertyGroup>
+
+  <Import Project="..\..\shared.props" />
+  <Import Project="..\..\sharedIntegrationProj.props" />
 
   <ItemGroup>
     <Compile Include="..\SecurityHeaders\Guard.cs" Link="Guard.cs" />

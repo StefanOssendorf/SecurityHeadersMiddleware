@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{E768EE25-8180-4CAA-88F4-B9C8A5E16E66}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,7 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9795E771-F940-4C4F-AAD8-7638AA405C09}"
 	ProjectSection(SolutionItems) = preProject
-		src\SharedAssemblyInfo.cs = src\SharedAssemblyInfo.cs
+		shared.props = shared.props
+		sharedIntegrationProj.props = sharedIntegrationProj.props
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityHeaders", "src\SecurityHeaders\SecurityHeaders.csproj", "{A4C3A3C7-DED1-4DFA-8BC8-599AB2F0203B}"

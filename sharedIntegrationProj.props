@@ -1,0 +1,17 @@
+<Project>
+  
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Description>
+      Security Headers for $(SH_UsedFramework).
+      - X-Content-Type-Options
+      - X-Frame-Options
+      -
+    </Description>
+    <PackageTags>Security-Header, XSS, CSP, STS</PackageTags>
+  </PropertyGroup>
+  
+</Project>

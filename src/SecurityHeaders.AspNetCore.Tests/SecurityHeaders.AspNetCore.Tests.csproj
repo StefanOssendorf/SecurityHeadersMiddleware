@@ -13,6 +13,8 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
 
+  <Import Project="..\..\shared.props" />
+
   <ItemGroup>
     <ProjectReference Include="..\SecurityHeaders.AspNetCore\SecurityHeaders.AspNetCore.csproj" />
   </ItemGroup>

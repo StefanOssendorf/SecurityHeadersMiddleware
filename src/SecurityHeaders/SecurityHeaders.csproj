@@ -1,15 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>3.0.0</VersionPrefix>
-    <TargetFramework>netstandard1.2</TargetFramework>
+    <TargetFramework>netstandard1.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>SecurityHeaders</AssemblyName>
-    <PackageId>SecurityHeaders</PackageId>
+    <PackageId>SecurityHeaders.Core</PackageId>
     <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    
+    <!-- NuGet properties -->
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Description>Provides implementations of middlewares independently of the used framework. For usage in a specific Frameworks see the Integration-Packages of this Package. This package is typically not used on it's own.</Description>
+    <PackageReleaseNotes>Reimplementation for .Net Standard 1.0</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <Import Project="..\..\shared.props" />
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <TreatSpecificWarningsAsErrors />
   </PropertyGroup>
 
   <ItemGroup>

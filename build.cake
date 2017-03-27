@@ -21,9 +21,7 @@ Task("RestorePackages")
     .IsDependentOn("Clean")
     .Does(() =>
 {
-    NuGetRestore(solution, new NuGetRestoreSettings() {
-		MSBuildVersion = NuGetMSBuildVersion.MSBuild15
-	});
+    NuGetRestore(solution);
 });
 
 Task("Build")

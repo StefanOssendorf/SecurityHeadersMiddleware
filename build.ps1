@@ -143,14 +143,14 @@ if (!(Test-Path $PACKAGES_CONFIG)) {
 # }
 
 # Try download NuGet.exe if not exists
-if (!(Test-Path $NUGET_EXE)) {
+#if (!(Test-Path $NUGET_EXE)) {
     Write-Verbose -Message "Downloading NuGet.exe..."
     try {
         (New-Object System.Net.WebClient).DownloadFile($NUGET_URL, $NUGET_EXE)
     } catch {
         Throw "Could not download NuGet.exe."
     }
-}
+#}
 
 # Save nuget.exe path to environment to be available to child processed
 $ENV:NUGET_EXE = $NUGET_EXE

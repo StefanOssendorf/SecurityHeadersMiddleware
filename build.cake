@@ -21,29 +21,31 @@ Task("RestorePackages")
     .IsDependentOn("Clean")
     .Does(() =>
 {
-    NuGetRestore(solution);
+    NuGetRestore(solution, new NuGetRestoreSettings() {
+		MSBuildVersion = NuGetMSBuildVersion.MSBuild15
+	});
 });
 
 Task("Build")
     .IsDependentOn("RestorePackages")
     .Does(() =>
 {
-	DirectoryPath vsLatest  = VSWhereLatest();
-	FilePath msBuildPathX64 = (vsLatest==null)
-								? null
-								: vsLatest.CombineWithFilePath("./MSBuild/15.0/Bin/amd64/MSBuild.exe");
+	// DirectoryPath vsLatest  = VSWhereLatest();
+	// FilePath msBuildPathX64 = (vsLatest==null)
+								// ? null
+								// : vsLatest.CombineWithFilePath("./MSBuild/15.0/Bin/amd64/MSBuild.exe");
 
-	MSBuild(solution, new MSBuildSettings {
-		ToolPath = msBuildPathX64,
-		Configuration = configuration,
-		Verbosity = Verbosity.Minimal
-	});
+	// MSBuild(solution, new MSBuildSettings {
+		// ToolPath = msBuildPathX64,
+		// Configuration = configuration,
+		// Verbosity = Verbosity.Minimal
+	// });
 	
-    // MSBuild(solution, settings => settings
-        // .SetConfiguration(configuration)
-        // .SetVerbosity(Verbosity.Minimal)
-        // .UseToolVersion(MSBuildToolVersion.VS2017)
-    // );
+    MSBuild(solution, settings => settings
+        .SetConfiguration(configuration)
+        .SetVerbosity(Verbosity.Minimal)
+        .UseToolVersion(MSBuildToolVersion.VS2017)
+    );
 });
 
 Task("RunTests")

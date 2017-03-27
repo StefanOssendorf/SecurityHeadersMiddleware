@@ -2,6 +2,7 @@
 #addin "Cake.FileHelpers"
 #addin "Cake.Incubator"
 #tool "nuget:?package=xunit.runner.console"
+#tool "nuget:?package=vswhere"
 
 var target        = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
@@ -27,11 +28,22 @@ Task("Build")
     .IsDependentOn("RestorePackages")
     .Does(() =>
 {
-    MSBuild(solution, settings => settings
-        .SetConfiguration(configuration)
-        .SetVerbosity(Verbosity.Minimal)
-        .UseToolVersion(MSBuildToolVersion.VS2017)
-    );
+	DirectoryPath vsLatest  = VSWhereLatest();
+	FilePath msBuildPathX64 = (vsLatest==null)
+								? null
+								: vsLatest.CombineWithFilePath("./MSBuild/15.0/Bin/amd64/MSBuild.exe");
+
+	MSBuild(solution, new MSBuildSettings {
+		ToolPath = msBuildPathX64,
+		Configuration = configuration,
+		Verbosity = Verbosity.Minimal
+	});
+	
+    // MSBuild(solution, settings => settings
+        // .SetConfiguration(configuration)
+        // .SetVerbosity(Verbosity.Minimal)
+        // .UseToolVersion(MSBuildToolVersion.VS2017)
+    // );
 });
 
 Task("RunTests")

@@ -11,8 +11,6 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
 
-  <Import Project="..\..\shared.props" />
-
   <ItemGroup>
     <ProjectReference Include="..\SecurityHeaders.Owin\SecurityHeaders.Owin.csproj" />
   </ItemGroup>

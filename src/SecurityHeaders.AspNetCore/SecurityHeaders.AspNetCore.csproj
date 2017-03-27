@@ -19,7 +19,6 @@
     
   </PropertyGroup>
 
-  <Import Project="..\..\shared.props" />
   <Import Project="..\..\sharedIntegrationProj.props" />
 
   <ItemGroup>

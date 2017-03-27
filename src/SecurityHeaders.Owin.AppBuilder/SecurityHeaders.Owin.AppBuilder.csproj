@@ -15,7 +15,6 @@
     <SH_UsedFrameworkTag>katana</SH_UsedFrameworkTag>
   </PropertyGroup>
 
-  <Import Project="..\..\shared.props" />
   <Import Project="..\..\sharedIntegrationProj.props" />
 
   <ItemGroup>

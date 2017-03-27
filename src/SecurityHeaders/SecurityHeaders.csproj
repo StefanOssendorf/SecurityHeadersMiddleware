@@ -16,8 +16,6 @@
     <PackageReleaseNotes>Reimplementation for .Net Standard 1.0</PackageReleaseNotes>
   </PropertyGroup>
 
-  <Import Project="..\..\shared.props" />
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <TreatSpecificWarningsAsErrors />

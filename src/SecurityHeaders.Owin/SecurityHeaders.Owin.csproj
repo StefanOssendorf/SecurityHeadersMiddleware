@@ -17,7 +17,6 @@
     <SH_UsedFrameworkTag>owin, katana</SH_UsedFrameworkTag>
   </PropertyGroup>
 
-  <Import Project="..\..\shared.props" />
   <Import Project="..\..\sharedIntegrationProj.props" />
 
   <ItemGroup>

@@ -1,6 +1,7 @@
 #addin "nuget:?package=NuGet.Core"
 #addin "Cake.FileHelpers"
 #addin "Cake.Incubator"
+#addin "Cake.ExtendedNuGet"
 #tool "nuget:?package=xunit.runner.console"
 #tool "nuget:?package=vswhere"
 
@@ -27,18 +28,7 @@ Task("RestorePackages")
 Task("Build")
     .IsDependentOn("RestorePackages")
     .Does(() =>
-{
-	// DirectoryPath vsLatest  = VSWhereLatest();
-	// FilePath msBuildPathX64 = (vsLatest==null)
-								// ? null
-								// : vsLatest.CombineWithFilePath("./MSBuild/15.0/Bin/amd64/MSBuild.exe");
-
-	// MSBuild(solution, new MSBuildSettings {
-		// ToolPath = msBuildPathX64,
-		// Configuration = configuration,
-		// Verbosity = Verbosity.Minimal
-	// });
-	
+{	
     MSBuild(solution, settings => settings
         .SetConfiguration(configuration)
         .SetVerbosity(Verbosity.Minimal)

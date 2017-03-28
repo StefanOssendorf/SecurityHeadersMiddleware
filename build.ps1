@@ -154,6 +154,7 @@ if (!(Test-Path $PACKAGES_CONFIG)) {
 
 # Save nuget.exe path to environment to be available to child processed
 $ENV:NUGET_EXE = $NUGET_EXE
+$ENV:Path = "$($NUGET_EXE);$($ENV:Path)"
 
 # Restore tools from NuGet?
 if(-Not $SkipToolPackageRestore.IsPresent) {

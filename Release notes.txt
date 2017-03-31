@@ -6,6 +6,9 @@ Breaking Changed
 --- ContentTypeOptions
 ---- New overload added to control application if the header is already present
 
+- ContenTypeOptions
+- AntiClickjacking (XFrameOptions)
+
 
 
 2.1

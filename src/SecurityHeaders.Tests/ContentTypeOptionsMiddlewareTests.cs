@@ -4,7 +4,7 @@ using Xunit;
 
 namespace SecurityHeaders.Tests {
 
-    public class ContentTypeOptionsTests {
+    public class ContentTypeOptionsMiddlewareTests {
         [Fact]
         public void When_header_already_exist_it_should_not_be_added_or_overriden() {
             var cto = CreateCto(ContentTypeOptionsSettings.HeaderControl.IgnoreIfHeaderAlreadySet);
@@ -32,6 +32,8 @@ namespace SecurityHeaders.Tests {
                 AppendHeaderValueAction = (a, b) => appendValueCalled = true
             };
 
+            cto.ApplyHeader(ctx);
+
             appendValueCalled.ShouldBeFalse();
         }
 
@@ -46,7 +48,7 @@ namespace SecurityHeaders.Tests {
                 OverrideHeaderValueAction = (a, b) => overrideCalled = true
             };
             cto.ApplyHeader(ctx);
-            overrideCalled.ShouldBeTrue("Either Override or Append header should be called");
+            overrideCalled.ShouldBeTrue("Override header should be called");
         }
 
         [Fact]

@@ -35,5 +35,28 @@ namespace SecurityHeaders.Tests {
                 action.ShouldThrow<FormatException>();
             }
         }
+
+        [Fact]
+        public void When_creating_a_deny_it_should_have_the_value_deny() {
+            var header = XFrameOptionHeaderValue.Deny();
+
+            header.HeaderValue.ShouldBe("DENY");
+        }
+
+        [Fact]
+        public void When_creating_a_sameOrigin_it_should_have_the_vale_sameOrigin() {
+            var header = XFrameOptionHeaderValue.SameOrigin();
+
+            header.HeaderValue.ShouldBe("SAMEORIGIN");
+        }
+
+        [Theory]
+        [InlineData("http://www.example.org")]
+        [InlineData("https://www.example.org")]
+        public void When_creating_allowForm_it_should_have_the_correct_Value(string origin) {
+            var header = XFrameOptionHeaderValue.AllowFrom(origin);
+
+            header.HeaderValue.ShouldBe($"ALLOW-FROM {origin}");
+        }
     }
 }

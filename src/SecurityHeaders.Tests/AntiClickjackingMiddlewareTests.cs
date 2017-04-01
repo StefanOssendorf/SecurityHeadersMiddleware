@@ -49,7 +49,7 @@ namespace SecurityHeaders.Tests {
             };
             middleware.ApplyHeader(ctx);
 
-            overrideCalled.ShouldBeTrue("Either Override or Append header should be called");
+            overrideCalled.ShouldBeTrue("Override header should be called");
         }
 
         [Fact]

@@ -12,9 +12,9 @@ namespace SecurityHeaders.Owin.AppBuilder {
         /// </summary>
         /// <param name="builder">The <see cref="IAppBuilder"/> instance.</param>
         /// <returns>The <see cref="IAppBuilder"/> instance.</returns>
-        public static IAppBuilder ContentTypeOptions(this IAppBuilder builder) {
+        public static IAppBuilder UseContentTypeOptions(this IAppBuilder builder) {
             Guard.NotNull(builder, nameof(builder));
-            return ContentTypeOptions(builder, () => new ContentTypeOptionsSettings());
+            return UseContentTypeOptions(builder, () => new ContentTypeOptionsSettings());
         }
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace SecurityHeaders.Owin.AppBuilder {
         /// <param name="builder">The <see cref="IAppBuilder"/> instance.</param>
         /// <param name="getSettings">The func to get the settings.</param>
         /// <returns>The <see cref="IAppBuilder"/> instance.</returns>
-        public static IAppBuilder ContentTypeOptions(this IAppBuilder builder, Func<ContentTypeOptionsSettings> getSettings) {
+        public static IAppBuilder UseContentTypeOptions(this IAppBuilder builder, Func<ContentTypeOptionsSettings> getSettings) {
             Guard.NotNull(builder, nameof(builder));
             Guard.NotNull(getSettings, nameof(getSettings));
 

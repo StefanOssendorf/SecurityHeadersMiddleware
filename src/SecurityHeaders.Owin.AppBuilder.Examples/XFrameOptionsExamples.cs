@@ -1,4 +1,5 @@
 ﻿using Owin;
+// ReSharper disable ExpressionIsAlwaysNull
 
 namespace SecurityHeaders.Owin.AppBuilder.Examples {
     public class XFrameOptionsExamples {

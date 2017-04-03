@@ -11,9 +11,7 @@ namespace SecurityHeaders.Owin.Tests {
 
         public static string XContentTypeOptions(this HttpResponseMessage source) => source.Headers.GetValues(ContentTypeOptionsMiddleware.XContentTypeOptionsHeaderName).Single();
 
-        //public static string XssProtection(this HttpResponseMessage source) {
-        //    return source.Headers.GetValues(HeaderConstants.XssProtection).First();
-        //}
+        public static string XssProtection(this HttpResponseMessage source) => source.Headers.GetValues(XssProtectionMiddleware.XXssProtectionHeaderName).Single();
 
         //public static string Csp(this HttpResponseMessage source) {
         //    return source.Headers.GetValues(HeaderConstants.ContentSecurityPolicy).First();

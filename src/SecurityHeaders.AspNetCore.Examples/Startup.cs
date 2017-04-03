@@ -21,6 +21,7 @@ namespace SecurityHeaders.AspNetCore.Examples {
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory) {
             ContentTypeOptionsExamples(app);
             AntiClickJackingExamples(app);
+            XssProtection(app);
 
             app.Run(async (context) => {
                 await context.Response.WriteAsync("Hello World!");

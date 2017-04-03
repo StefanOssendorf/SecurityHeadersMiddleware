@@ -24,7 +24,7 @@ namespace SecurityHeaders.Owin.AppBuilder {
             Guard.NotNull(builder, nameof(builder));
             Guard.NotNull(getSettings, nameof(getSettings));
 
-            builder.UseOwin().UseAntiClickjacking(getSettings);
+            builder.UseOwin().AntiClickjacking(getSettings);
             return builder;
         }
     }

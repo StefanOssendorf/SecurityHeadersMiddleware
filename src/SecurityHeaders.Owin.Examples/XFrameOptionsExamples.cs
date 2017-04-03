@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+// ReSharper disable ExpressionIsAlwaysNull
 
 namespace SecurityHeaders.Owin.Examples {
     using BuildFunc = Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>>;
@@ -12,7 +13,7 @@ namespace SecurityHeaders.Owin.Examples {
 
             // Use AntiClickjackingMiddleware with default settings (Overwrite and DENY)
             // Results in: X-Frame-Options: DENY
-            buildFunc.UseAntiClickjacking();
+            buildFunc.AntiClickjacking();
 
             // Choose the desired header-value
             var headerValue = XFrameOptionHeaderValue.Deny();
@@ -24,7 +25,7 @@ namespace SecurityHeaders.Owin.Examples {
             // - Results in: X-Frame-Options: DENY
             // - Results in: X-Frame-Options: SAMEORIGIN
             // - Results in: X-Frame-Options: ALLOW-FROM http://www.example.org
-            buildFunc.UseAntiClickjacking(
+            buildFunc.AntiClickjacking(
                 () =>
                     new AntiClickjackingSettings(headerValue,
                         AntiClickjackingSettings.HeaderControl.IgnoreIfHeaderAlreadySet));

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace SecurityHeaders.Owin {
     using BuildFunc = Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>>;
 
-    public static partial class SecurityHeadersMiddlewares {
+    public static partial class SecurityHeaders {
 
         /// <summary>
         /// Adds the "X-Frame-Options" header with value "DENY" to the response.
@@ -13,7 +13,7 @@ namespace SecurityHeaders.Owin {
         /// <param name="builder">The OWIN builder instance.</param>
         /// <returns>The OWIN builder instance.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="builder"/> is null.</exception>
-        public static BuildFunc UseAntiClickjacking(this BuildFunc builder) => UseAntiClickjacking(builder, () => new AntiClickjackingSettings());
+        public static BuildFunc AntiClickjacking(this BuildFunc builder) => AntiClickjacking(builder, () => new AntiClickjackingSettings());
 
         /// <summary>
         /// Adds the "X-Frame-Options" header with the configured settings.
@@ -23,7 +23,7 @@ namespace SecurityHeaders.Owin {
         /// <returns>The OWIN builder instance.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="builder"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="getSettings"/> is null.</exception>
-        public static BuildFunc UseAntiClickjacking(this BuildFunc builder, Func<AntiClickjackingSettings> getSettings) {
+        public static BuildFunc AntiClickjacking(this BuildFunc builder, Func<AntiClickjackingSettings> getSettings) {
             Guard.NotNull(builder, nameof(builder));
             Guard.NotNull(getSettings, nameof(getSettings));
 

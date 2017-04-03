@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 
@@ -9,6 +10,10 @@ namespace SecurityHeaders.AspNetCore.Tests {
 
         public static string XFrameOptions(this HttpResponseMessage source) {
             return source.Headers.GetValues(AntiClickjackingMiddleware.XFrameOptionsHeaderName).Single();
+        }
+
+        public static string XssProtection(this HttpResponseMessage source) {
+            return source.Headers.GetValues(XssProtectionMiddleware.XXssProtectionHeaderName).Single();
         }
     }
 }

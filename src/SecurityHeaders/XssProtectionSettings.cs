@@ -20,7 +20,7 @@ namespace SecurityHeaders {
         /// <summary>
         /// Initializes a new instance of the <see cref="XssProtectionSettings"/> class with default behavior.
         /// </summary>
-        public XssProtectionSettings() : this(HeaderControl.OverwriteIfHeaderAlreadySet, XssProtectionHeaderValue.EnabledAndBlock()) {
+        public XssProtectionSettings() : this(XssProtectionHeaderValue.EnabledAndBlock()) {
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace SecurityHeaders {
         /// <param name="headerValue">The header value which should be applied. Must not be <code>null</code>.</param>
         /// <param name="headerHandling">How the header should be handled.</param>
         /// <exception cref="ArgumentNullException">When <paramref name="headerValue"/> is <code>null</code>.</exception>
-        public XssProtectionSettings(HeaderControl headerHandling, XssProtectionHeaderValue headerValue) {
+        public XssProtectionSettings(XssProtectionHeaderValue headerValue, HeaderControl headerHandling = HeaderControl.OverwriteIfHeaderAlreadySet) {
             Guard.NotNull(headerValue, nameof(headerValue));
             HeaderHandling = headerHandling;
             HeaderValue = headerValue;

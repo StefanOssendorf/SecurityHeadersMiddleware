@@ -127,7 +127,7 @@ namespace SecurityHeaders.Tests {
         }
 
         private static XssProtectionMiddleware CreateXp(XssProtectionSettings.HeaderControl headerControl, XssProtectionHeaderValue headerValue) {
-            return new XssProtectionMiddleware(new XssProtectionSettings(headerControl, headerValue));
+            return new XssProtectionMiddleware(new XssProtectionSettings(headerValue, headerControl));
         }
     }
 }

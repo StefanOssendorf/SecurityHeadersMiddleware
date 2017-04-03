@@ -33,7 +33,7 @@ namespace SecurityHeaders.AspNetCore.Tests {
                     app.UseXssProtection(() => settings);
                     app.Run(async ctx => {
                         ctx.Response.StatusCode = 200;
-                        await HttpResponseWritingExtensions.WriteAsync(ctx.Response, "Hello World!");
+                        await ctx.Response.WriteAsync("Hello World!");
                     });
                 });
             mServer = new TestServer(builder);

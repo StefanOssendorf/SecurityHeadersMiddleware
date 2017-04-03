@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+// ReSharper disable RedundantAssignment
 
 namespace SecurityHeaders.AspNetCore.Examples {
     public partial class Startup {

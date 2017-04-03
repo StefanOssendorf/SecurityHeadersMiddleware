@@ -1,5 +1,6 @@
 ﻿using Owin;
 // ReSharper disable ExpressionIsAlwaysNull
+// ReSharper disable RedundantAssignment
 
 namespace SecurityHeaders.Owin.AppBuilder.Examples {
     public class XssProtectionExamples {

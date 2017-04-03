@@ -6,13 +6,13 @@ namespace SecurityHeaders {
     ///  The middleware to apply the X-Frame-Options header.
     /// </summary>
     public class AntiClickjackingMiddleware {
-        
+
+        private readonly AntiClickjackingSettings mSettings;
+
         /// <summary>
         /// The http-header name of the x-frame-options header.
         /// </summary>
         public const string XFrameOptionsHeaderName = "X-Frame-Options";
-
-        private readonly AntiClickjackingSettings mSettings;
 
         /// <summary>
         /// Initializes a new instance of <see cref="AntiClickjackingMiddleware"/>.

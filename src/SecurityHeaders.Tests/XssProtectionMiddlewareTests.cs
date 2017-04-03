@@ -64,11 +64,10 @@ namespace SecurityHeaders.Tests {
             headerName.ShouldBe("X-Xss-Protection");
         }
 
-
         [Fact]
-        public void When_add_0_it_should_be_0() {
+        public void When_disabled_it_should_be_0() {
             string actualValueToBeAdded = "";
-            var middleware = CreateXp(XssProtectionSettings.HeaderControl.OverwriteIfHeaderAlreadySet);
+            var middleware = CreateXp(XssProtectionSettings.HeaderControl.OverwriteIfHeaderAlreadySet, XssProtectionHeaderValue.Disabled());
             var ctx = new TestContext {
                 HeaderExistFunc = _ => false,
                 OverrideHeaderValueAction = (a, b) => actualValueToBeAdded = b
@@ -80,21 +79,55 @@ namespace SecurityHeaders.Tests {
         }
 
         [Fact]
-        public void When_adding_the_header_the_correct_headerValue_should_be_added() {
-            var xpm = CreateXp(XssProtectionSettings.HeaderControl.OverwriteIfHeaderAlreadySet);
-            string headerValue = "";
+        public void When_enabled_it_should_be_1() {
+            string actualValueToBeAdded = "";
+            var middleware = CreateXp(XssProtectionSettings.HeaderControl.OverwriteIfHeaderAlreadySet, XssProtectionHeaderValue.Enabled());
             var ctx = new TestContext {
                 HeaderExistFunc = _ => false,
-                OverrideHeaderValueAction = (a, b) => headerValue = b
+                OverrideHeaderValueAction = (a, b) => actualValueToBeAdded = b
             };
 
-            xpm.ApplyHeader(ctx);
+            middleware.ApplyHeader(ctx);
 
-            headerValue.ShouldBe("nosniff");
+            actualValueToBeAdded.ShouldBe("1");
         }
 
-        private XssProtectionMiddleware CreateXp(XssProtectionSettings.HeaderControl headerControl) {
-            return new XssProtectionMiddleware();
+        [Fact]
+        public void When_enabled_and_block_it_should_be_1_and_block_mode() {
+            string actualValueToBeAdded = "";
+            var middleware = CreateXp(XssProtectionSettings.HeaderControl.OverwriteIfHeaderAlreadySet, XssProtectionHeaderValue.EnabledAndBlock());
+            var ctx = new TestContext {
+                HeaderExistFunc = _ => false,
+                OverrideHeaderValueAction = (a, b) => actualValueToBeAdded = b
+            };
+
+            middleware.ApplyHeader(ctx);
+
+            actualValueToBeAdded.ShouldBe("1; mode=block");
+        }
+
+        [Fact]
+        public void When_enabled_and_report_it_should_be_1_and_have_report_url() {
+            string actualValueToBeAdded = "";
+            string reportUrl = "http://www.exmampe.com";
+
+            var middleware = CreateXp(XssProtectionSettings.HeaderControl.OverwriteIfHeaderAlreadySet, XssProtectionHeaderValue.EnabledAndReport(reportUrl));
+            var ctx = new TestContext {
+                HeaderExistFunc = _ => false,
+                OverrideHeaderValueAction = (a, b) => actualValueToBeAdded = b
+            };
+
+            middleware.ApplyHeader(ctx);
+
+            actualValueToBeAdded.ShouldBe($"1; report={reportUrl}");
+        }
+
+        private static XssProtectionMiddleware CreateXp(XssProtectionSettings.HeaderControl headerControl) {
+            return CreateXp(headerControl, XssProtectionHeaderValue.Disabled());
+        }
+
+        private static XssProtectionMiddleware CreateXp(XssProtectionSettings.HeaderControl headerControl, XssProtectionHeaderValue headerValue) {
+            return new XssProtectionMiddleware(new XssProtectionSettings(headerControl, headerValue));
         }
     }
 }

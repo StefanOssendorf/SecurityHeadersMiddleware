@@ -1,5 +1,5 @@
 ﻿using System;
-using Shouldly;
+using FluentAssertions;
 using Xunit;
 
 namespace SecurityHeaders.Tests {
@@ -40,14 +40,14 @@ namespace SecurityHeaders.Tests {
         public void When_creating_a_deny_it_should_have_the_value_deny() {
             var header = XFrameOptionHeaderValue.Deny();
 
-            header.HeaderValue.ShouldBe("DENY");
+            header.HeaderValue.Should().Be("DENY");
         }
 
         [Fact]
         public void When_creating_a_sameOrigin_it_should_have_the_vale_sameOrigin() {
             var header = XFrameOptionHeaderValue.SameOrigin();
 
-            header.HeaderValue.ShouldBe("SAMEORIGIN");
+            header.HeaderValue.Should().Be("SAMEORIGIN");
         }
 
         [Theory]
@@ -56,7 +56,7 @@ namespace SecurityHeaders.Tests {
         public void When_creating_allowForm_it_should_have_the_correct_Value(string origin) {
             var header = XFrameOptionHeaderValue.AllowFrom(origin);
 
-            header.HeaderValue.ShouldBe($"ALLOW-FROM {origin}");
+            header.HeaderValue.Should().Be($"ALLOW-FROM {origin}");
         }
     }
 }

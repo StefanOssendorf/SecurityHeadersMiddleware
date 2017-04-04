@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
-using Shouldly;
 using Xunit;
 
 namespace SecurityHeaders.AspNetCore.Tests {
@@ -40,7 +40,7 @@ namespace SecurityHeaders.AspNetCore.Tests {
             mUseDefault = true;
             Arrange();
             var result = await mClient.GetAsync("/");
-            result.XContentTypeOptions().ShouldBe("nosniff");
+            result.XContentTypeOptions().Should().Be("nosniff");
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace SecurityHeaders.AspNetCore.Tests {
             mSetSettings = () => new ContentTypeOptionsSettings(ContentTypeOptionsSettings.HeaderControl.IgnoreIfHeaderAlreadySet);
             Arrange();
             var result = await mClient.GetAsync("/");
-            result.XContentTypeOptions().ShouldBe("invalidvalue");
+            result.XContentTypeOptions().Should().Be("invalidvalue");
         }
     }
 }

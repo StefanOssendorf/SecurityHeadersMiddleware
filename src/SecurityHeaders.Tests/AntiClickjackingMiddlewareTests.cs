@@ -1,5 +1,5 @@
 ﻿using System;
-using Shouldly;
+using FluentAssertions;
 using Xunit;
 
 namespace SecurityHeaders.Tests {
@@ -34,7 +34,7 @@ namespace SecurityHeaders.Tests {
 
             cto.ApplyHeader(ctx);
 
-            appendValueCalled.ShouldBeFalse();
+            appendValueCalled.Should().BeFalse();
         }
 
         [Theory]
@@ -49,7 +49,7 @@ namespace SecurityHeaders.Tests {
             };
             middleware.ApplyHeader(ctx);
 
-            overrideCalled.ShouldBeTrue("Override header should be called");
+            overrideCalled.Should().BeTrue("Override header should be called");
         }
 
         [Fact]
@@ -63,7 +63,7 @@ namespace SecurityHeaders.Tests {
 
             cto.ApplyHeader(ctx);
 
-            headerName.ShouldBe("X-Frame-Options");
+            headerName.Should().Be("X-Frame-Options");
         }
 
         [Fact]
@@ -77,7 +77,7 @@ namespace SecurityHeaders.Tests {
 
             middleware.ApplyHeader(ctx);
 
-            actualValueToBeAdded.ShouldBe("DENY");
+            actualValueToBeAdded.Should().Be("DENY");
         }
 
         [Fact]
@@ -91,7 +91,7 @@ namespace SecurityHeaders.Tests {
 
             middleware.ApplyHeader(ctx);
 
-            actualValueToBeAdded.ShouldBe("SAMEORIGIN");
+            actualValueToBeAdded.Should().Be("SAMEORIGIN");
         }
 
         [Fact]
@@ -105,7 +105,7 @@ namespace SecurityHeaders.Tests {
 
             middleware.ApplyHeader(ctx);
 
-            actualValueToBeAdded.ShouldBe("ALLOW-FROM http://www.example.org");
+            actualValueToBeAdded.Should().Be("ALLOW-FROM http://www.example.org");
         }
 
         private static AntiClickjackingMiddleware CreateXfo(AntiClickjackingSettings.HeaderControl headerHandling) {

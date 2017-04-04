@@ -1,5 +1,5 @@
 using System;
-using Shouldly;
+using FluentAssertions;
 using Xunit;
 
 namespace SecurityHeaders.Tests {
@@ -41,7 +41,7 @@ namespace SecurityHeaders.Tests {
         public void When_disabled_the_value_should_be_0() {
             var header = XssProtectionHeaderValue.Disabled();
 
-            header.HeaderValue.ShouldBe("0");
+            header.HeaderValue.Should().Be("0");
         }
     }
 }

@@ -18,9 +18,10 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+
 // ReSharper disable All
 
-namespace SecurityHeaders.Owin {
+namespace SecurityHeaders.Owin.Infrastructure {
 
     internal static partial class Constants {
         internal const string Https = "HTTPS";
@@ -734,7 +735,7 @@ namespace SecurityHeaders.Owin {
     }
 }
 
-namespace SecurityHeaders.Owin {
+namespace SecurityHeaders.Owin.Infrastructure {
 
 
 #if LIBOWIN_PUBLIC

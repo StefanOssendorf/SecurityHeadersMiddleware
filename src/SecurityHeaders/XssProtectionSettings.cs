@@ -31,6 +31,7 @@ namespace SecurityHeaders {
         /// <exception cref="ArgumentNullException">When <paramref name="headerValue"/> is <code>null</code>.</exception>
         public XssProtectionSettings(XssProtectionHeaderValue headerValue, HeaderControl headerHandling = HeaderControl.OverwriteIfHeaderAlreadySet) {
             Guard.NotNull(headerValue, nameof(headerValue));
+            Guard.MustBeDefined(headerHandling, nameof(headerHandling));
             HeaderHandling = headerHandling;
             HeaderValue = headerValue;
         }

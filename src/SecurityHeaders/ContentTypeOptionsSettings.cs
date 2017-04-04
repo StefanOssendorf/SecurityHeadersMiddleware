@@ -15,6 +15,7 @@
         /// </summary>
         /// <param name="headerHandling">How the header should be handled.</param>
         public ContentTypeOptionsSettings(HeaderControl headerHandling = HeaderControl.OverwriteIfHeaderAlreadySet) {
+            Guard.MustBeDefined(headerHandling, nameof(headerHandling));
             HeaderHandling = headerHandling;
         }
 

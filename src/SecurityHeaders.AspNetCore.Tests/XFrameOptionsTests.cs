@@ -1,10 +1,10 @@
 using System.Net.Http;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
-using Shouldly;
 using Xunit;
 
 namespace SecurityHeaders.AspNetCore.Tests {
@@ -23,13 +23,26 @@ namespace SecurityHeaders.AspNetCore.Tests {
             Arrange(settings);
             var result = await mClient.GetAsync("/");
 
-            result.XFrameOptions().ShouldBe(expected);
+            result.XFrameOptions().Should().Be(expected);
+        }
+
+        [Fact]
+        public async Task When_adding_the_default_middleware_the_header_should_be_set() {
+            Arrange(null);
+            var result = await mClient.GetAsync("/", HttpCompletionOption.ResponseHeadersRead);
+
+            result.XFrameOptions().Should().Be("DENY");
         }
 
         private void Arrange(AntiClickjackingSettings settings) {
             var builder = new WebHostBuilder()
                 .Configure(app => {
-                    app.UseAntiClickjacking(() => settings);
+                    if (settings == null) {
+                        app.UseAntiClickjacking();
+                    } else {
+                        app.UseAntiClickjacking(() => settings);
+                    }
+                    
                     app.Run(async ctx => {
                         ctx.Response.StatusCode = 200;
                         await ctx.Response.WriteAsync("Hello World!");

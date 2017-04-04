@@ -1,3 +1,5 @@
+using SecurityHeaders.Owin.Infrastructure;
+
 namespace SecurityHeaders.Owin {
 
     /// <summary>

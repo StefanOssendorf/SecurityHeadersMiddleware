@@ -62,5 +62,44 @@ namespace SecurityHeaders {
         public static implicit operator string(XFrameOptionHeaderValue headerValue) {
             return headerValue.HeaderValue;
         }
+
+        #region ReSharper-Equals generated
+        /// <inheritdoc />
+        protected bool Equals(XFrameOptionHeaderValue other) {
+            return string.Equals(HeaderValue, other.HeaderValue, StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object obj) {
+            if (ReferenceEquals(null, obj)) {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj)) {
+                return true;
+            }
+
+            if (obj.GetType() != this.GetType()) {
+                return false;
+            }
+
+            return Equals((XFrameOptionHeaderValue) obj);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode() {
+            return StringComparer.OrdinalIgnoreCase.GetHashCode(HeaderValue);
+        }
+
+        /// <inheritdoc />
+        public static bool operator ==(XFrameOptionHeaderValue left, XFrameOptionHeaderValue right) {
+            return Equals(left, right);
+        }
+
+        /// <inheritdoc />
+        public static bool operator !=(XFrameOptionHeaderValue left, XFrameOptionHeaderValue right) {
+            return !Equals(left, right);
+        }
+        #endregion
     }
 }

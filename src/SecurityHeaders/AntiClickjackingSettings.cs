@@ -34,6 +34,7 @@ namespace SecurityHeaders {
         /// <exception cref="ArgumentNullException">When <paramref name="headerValue"/> is <code>null</code>.</exception>
         public AntiClickjackingSettings(XFrameOptionHeaderValue headerValue, HeaderControl headerHandling = HeaderControl.OverwriteIfHeaderAlreadySet) {
             Guard.NotNull(headerValue, nameof(headerValue));
+            Guard.MustBeDefined(headerHandling, nameof(headerHandling));
             HeaderValue = headerValue;
             HeaderHandling = headerHandling;
         }

@@ -1,4 +1,5 @@
-﻿using Shouldly;
+﻿using FluentAssertions;
+using SecurityHeaders.Owin.Infrastructure;
 using Xunit;
 
 namespace SecurityHeaders.Owin.Tests {
@@ -10,8 +11,8 @@ namespace SecurityHeaders.Owin.Tests {
 
             internalContext.AppendToHeader("Test", "Test");
 
-            owinContext.Response.Headers.Keys.ShouldContain("Test");
-            owinContext.Response.Headers["Test"].ShouldBe("Test");
+            owinContext.Response.Headers.Keys.Should().Contain("Test");
+            owinContext.Response.Headers["Test"].Should().Be("Test");
         }
 
         [Fact]
@@ -22,7 +23,7 @@ namespace SecurityHeaders.Owin.Tests {
 
             internalContext.AppendToHeader("Test", "Test");
 
-            owinContext.Response.Headers["Test"].ShouldBe("Abcd,Test");
+            owinContext.Response.Headers["Test"].Should().Be("Abcd,Test");
         }
 
         [Fact]
@@ -30,7 +31,7 @@ namespace SecurityHeaders.Owin.Tests {
             var owinContext = new OwinContext();
             var internalContext = new OwinHttpContext(owinContext.Environment);
 
-            internalContext.HeaderExist("Test").ShouldBeFalse();
+            internalContext.HeaderExist("Test").Should().BeFalse();
         }
 
         [Fact]
@@ -39,7 +40,7 @@ namespace SecurityHeaders.Owin.Tests {
             var internalContext = new OwinHttpContext(owinContext.Environment);
             owinContext.Response.Headers.Add("Test", new []{"Test"});
 
-            internalContext.HeaderExist("Test").ShouldBeTrue();
+            internalContext.HeaderExist("Test").Should().BeTrue();
         }
 
         [Fact]
@@ -49,8 +50,8 @@ namespace SecurityHeaders.Owin.Tests {
 
             internalContext.OverrideHeader("Test", "Test");
 
-            owinContext.Response.Headers.Keys.ShouldContain("Test");
-            owinContext.Response.Headers["Test"].ShouldBe("Test");
+            owinContext.Response.Headers.Keys.Should().Contain("Test");
+            owinContext.Response.Headers["Test"].Should().Be("Test");
         }
 
         [Fact]
@@ -61,7 +62,7 @@ namespace SecurityHeaders.Owin.Tests {
 
             internalContext.OverrideHeader("Test", "krznbf");
 
-            owinContext.Response.Headers["Test"].ShouldBe("krznbf");
+            owinContext.Response.Headers["Test"].Should().Be("krznbf");
         }
     }
 }

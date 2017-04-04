@@ -1,5 +1,5 @@
 ﻿using System;
-using Shouldly;
+using FluentAssertions;
 using Xunit;
 
 namespace SecurityHeaders.Tests {
@@ -34,7 +34,7 @@ namespace SecurityHeaders.Tests {
 
             cto.ApplyHeader(ctx);
 
-            appendValueCalled.ShouldBeFalse();
+            appendValueCalled.Should().BeFalse();
         }
 
         [Theory]
@@ -48,7 +48,7 @@ namespace SecurityHeaders.Tests {
                 OverrideHeaderValueAction = (a, b) => overrideCalled = true
             };
             cto.ApplyHeader(ctx);
-            overrideCalled.ShouldBeTrue("Override header should be called");
+            overrideCalled.Should().BeTrue("Override header should be called");
         }
 
         [Fact]
@@ -62,7 +62,7 @@ namespace SecurityHeaders.Tests {
 
             cto.ApplyHeader(ctx);
 
-            headerName.ShouldBe("X-Content-Type-Options");
+            headerName.Should().Be("X-Content-Type-Options");
         }
 
         [Fact]
@@ -76,7 +76,7 @@ namespace SecurityHeaders.Tests {
 
             cto.ApplyHeader(ctx);
 
-            headerValue.ShouldBe("nosniff");
+            headerValue.Should().Be("nosniff");
         }
 
         private static ContentTypeOptionsMiddleware CreateCto(ContentTypeOptionsSettings.HeaderControl headerHandling) => new ContentTypeOptionsMiddleware(new ContentTypeOptionsSettings(headerHandling));

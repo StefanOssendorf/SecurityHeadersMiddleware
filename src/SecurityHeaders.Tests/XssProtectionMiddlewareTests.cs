@@ -1,5 +1,5 @@
 ﻿using System;
-using Shouldly;
+using FluentAssertions;
 using Xunit;
 
 namespace SecurityHeaders.Tests {
@@ -33,7 +33,7 @@ namespace SecurityHeaders.Tests {
 
             xpm.ApplyHeader(ctx);
 
-            appendValueCalled.ShouldBeFalse();
+            appendValueCalled.Should().BeFalse();
         }
 
         [Theory]
@@ -47,7 +47,7 @@ namespace SecurityHeaders.Tests {
                 OverrideHeaderValueAction = (a, b) => overrideCalled = true
             };
             xpm.ApplyHeader(ctx);
-            overrideCalled.ShouldBeTrue("Override header should be called");
+            overrideCalled.Should().BeTrue("Override header should be called");
         }
 
         [Fact]
@@ -61,7 +61,7 @@ namespace SecurityHeaders.Tests {
 
             xpm.ApplyHeader(ctx);
 
-            headerName.ShouldBe("X-Xss-Protection");
+            headerName.Should().Be("X-Xss-Protection");
         }
 
         [Fact]
@@ -75,7 +75,7 @@ namespace SecurityHeaders.Tests {
 
             middleware.ApplyHeader(ctx);
 
-            actualValueToBeAdded.ShouldBe("0");
+            actualValueToBeAdded.Should().Be("0");
         }
 
         [Fact]
@@ -89,7 +89,7 @@ namespace SecurityHeaders.Tests {
 
             middleware.ApplyHeader(ctx);
 
-            actualValueToBeAdded.ShouldBe("1");
+            actualValueToBeAdded.Should().Be("1");
         }
 
         [Fact]
@@ -103,7 +103,7 @@ namespace SecurityHeaders.Tests {
 
             middleware.ApplyHeader(ctx);
 
-            actualValueToBeAdded.ShouldBe("1; mode=block");
+            actualValueToBeAdded.Should().Be("1; mode=block");
         }
 
         [Fact]
@@ -119,7 +119,7 @@ namespace SecurityHeaders.Tests {
 
             middleware.ApplyHeader(ctx);
 
-            actualValueToBeAdded.ShouldBe($"1; report={reportUrl}");
+            actualValueToBeAdded.Should().Be($"1; report={reportUrl}");
         }
 
         private static XssProtectionMiddleware CreateXp(XssProtectionSettings.HeaderControl headerControl) {

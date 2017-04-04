@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.Owin.Testing;
 using Owin;
-using Shouldly;
 using Xunit;
 
 namespace SecurityHeaders.Owin.Tests {
@@ -19,7 +19,16 @@ namespace SecurityHeaders.Owin.Tests {
 
             var response = await client.GetAsync("http://www.example.org");
 
-            response.XFrameOptions().ShouldBe(expected);
+            response.XFrameOptions().Should().Be(expected);
+        }
+
+        [Fact]
+        public async Task When_adding_default_middleware_header_should_be_set() {
+            var client = XfoClientHelper.Create();
+
+            var response = await client.GetAsync("http://www.exmpale.org");
+
+            response.XFrameOptions().Should().Be("DENY");
         }
 
         private static XFrameOptionHeaderValue DetermineHeaderValue(string value) {
@@ -34,11 +43,17 @@ namespace SecurityHeaders.Owin.Tests {
         }
 
         private static class XfoClientHelper {
+            public static HttpClient Create() => Create(null);
 
             public static HttpClient Create(Func<AntiClickjackingSettings> configureAction,
                 Action<Microsoft.Owin.IOwinContext> modifyEndpoint = null) {
                 return TestServer.Create(builder => {
-                    builder.UseOwin().AntiClickjacking(configureAction);
+                    if (configureAction == null) {
+                        builder.UseOwin().AntiClickjacking();
+                    } else {
+                        builder.UseOwin().AntiClickjacking(configureAction);
+                    }
+                    
                     builder
                         .Use((context, next) => {
                             context.Response.StatusCode = 200;
@@ -48,6 +63,8 @@ namespace SecurityHeaders.Owin.Tests {
                         });
                 }).HttpClient;
             }
+
+            
         }
     }
 }

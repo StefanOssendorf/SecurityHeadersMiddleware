@@ -1,0 +1,8 @@
+version: 1.0.{build}
+branches:
+  only:
+  - dotnetCore
+image: Visual Studio 2017
+build_script:
+- ps: .\build.ps1
+test: off

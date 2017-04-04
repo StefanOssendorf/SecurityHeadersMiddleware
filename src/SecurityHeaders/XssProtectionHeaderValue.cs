@@ -62,7 +62,6 @@ namespace SecurityHeaders {
 
         private static XssProtectionHeaderValue Create(string headerValue) => new XssProtectionHeaderValue(headerValue);
 
-
         /// <summary>
         /// Extracts the header value for implicit usage on strings.
         /// </summary>
@@ -70,5 +69,44 @@ namespace SecurityHeaders {
         public static implicit operator string(XssProtectionHeaderValue headerValue) {
             return headerValue.HeaderValue;
         }
+
+        #region ReSharper-Equals generated
+        /// <inheritdoc />
+        protected bool Equals(XssProtectionHeaderValue other) {
+            return string.Equals(HeaderValue, other.HeaderValue, StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object obj) {
+            if(ReferenceEquals(null, obj)) {
+                return false;
+            }
+
+            if(ReferenceEquals(this, obj)) {
+                return true;
+            }
+
+            if(obj.GetType() != this.GetType()) {
+                return false;
+            }
+
+            return Equals((XssProtectionHeaderValue)obj);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode() {
+            return StringComparer.OrdinalIgnoreCase.GetHashCode(HeaderValue);
+        }
+
+        /// <inheritdoc />
+        public static bool operator ==(XssProtectionHeaderValue left, XssProtectionHeaderValue right) {
+            return Equals(left, right);
+        }
+
+        /// <inheritdoc />
+        public static bool operator !=(XssProtectionHeaderValue left, XssProtectionHeaderValue right) {
+            return !Equals(left, right);
+        }
+        #endregion
     }
 }

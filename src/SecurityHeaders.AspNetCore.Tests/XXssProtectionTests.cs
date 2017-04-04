@@ -1,10 +1,10 @@
 using System.Net.Http;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
-using Shouldly;
 using Xunit;
 
 namespace SecurityHeaders.AspNetCore.Tests {
@@ -24,13 +24,25 @@ namespace SecurityHeaders.AspNetCore.Tests {
             Arrange(settings);
             var result = await mClient.GetAsync("/");
 
-            result.XssProtection().ShouldBe(expected);
+            result.XssProtection().Should().Be(expected);
+        }
+
+        [Fact]
+        public async Task When_adding_the_default_middleware_the_header_should_be_set() {
+            Arrange(null);
+            var result = await mClient.GetAsync("/", HttpCompletionOption.ResponseHeadersRead);
+
+            result.XssProtection().Should().Be("1; mode=block");
         }
 
         private void Arrange(XssProtectionSettings settings) {
             var builder = new WebHostBuilder()
                 .Configure(app => {
-                    app.UseXssProtection(() => settings);
+                    if (settings == null) {
+                        app.UseXssProtection();
+                    } else {
+                        app.UseXssProtection(() => settings);
+                    }
                     app.Run(async ctx => {
                         ctx.Response.StatusCode = 200;
                         await ctx.Response.WriteAsync("Hello World!");

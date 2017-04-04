@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using SecurityHeaders.Owin.Infrastructure;
 
 namespace SecurityHeaders.Owin {
     /// <summary>

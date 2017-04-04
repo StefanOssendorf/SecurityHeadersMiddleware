@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\SecurityHeaders.Owin\LibOwin.cs" Link="LibOwin.cs" />
+    <Compile Include="..\SecurityHeaders.Owin\Infrastructure\LibOwin.cs" Link="LibOwin.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,11 +29,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="4.19.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="Microsoft.NETCore.Platforms" Version="1.1.0" />
-    <PackageReference Include="Shouldly" Version="2.8.2" />
     <PackageReference Include="Microsoft.Owin.Testing" Version="3.0.1" />
     <PackageReference Include="Microsoft.Owin.Hosting" Version="3.0.1" />
     <PackageReference Include="Microsoft.Owin" Version="3.0.1" />

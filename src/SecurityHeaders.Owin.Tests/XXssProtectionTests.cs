@@ -1,9 +1,9 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.Owin.Testing;
 using Owin;
-using Shouldly;
 using Xunit;
 
 namespace SecurityHeaders.Owin.Tests {
@@ -19,7 +19,16 @@ namespace SecurityHeaders.Owin.Tests {
 
             var response = await client.GetAsync("http://www.example.org");
 
-            response.XssProtection().ShouldBe(expected);
+            response.XssProtection().Should().Be(expected);
+        }
+
+        [Fact]
+        public async Task When_adding_default_middleware_header_should_be_set() {
+            var client = XpoClientHelper.Create();
+
+            var response = await client.GetAsync("http://www.exmpale.org");
+
+            response.XssProtection().Should().Be("1; mode=block");
         }
 
         private static XssProtectionHeaderValue DetermineHeaderValue(string value) {
@@ -38,10 +47,16 @@ namespace SecurityHeaders.Owin.Tests {
 
         private static class XpoClientHelper {
 
+            public static HttpClient Create() => Create(null);
+
             public static HttpClient Create(Func<XssProtectionSettings> configureAction,
                 Action<Microsoft.Owin.IOwinContext> modifyEndpoint = null) {
                 return TestServer.Create(builder => {
-                    builder.UseOwin().XssProtection(configureAction);
+                    if (configureAction == null) {
+                        builder.UseOwin().XssProtection();
+                    } else {
+                        builder.UseOwin().XssProtection(configureAction);
+                    }
                     builder
                         .Use((context, next) => {
                             context.Response.StatusCode = 200;

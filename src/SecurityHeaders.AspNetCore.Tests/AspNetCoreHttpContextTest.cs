@@ -1,5 +1,5 @@
+using FluentAssertions;
 using Microsoft.AspNetCore.Http;
-using Shouldly;
 using Xunit;
 
 namespace SecurityHeaders.AspNetCore.Tests {
@@ -11,8 +11,8 @@ namespace SecurityHeaders.AspNetCore.Tests {
 
             internalContext.AppendToHeader("Test", "Test");
 
-            httpContext.Response.Headers.Keys.ShouldContain("Test");
-            httpContext.Response.Headers["Test"].Equals("Test").ShouldBeTrue();
+            httpContext.Response.Headers.Keys.Should().Contain("Test");
+            httpContext.Response.Headers["Test"].Equals("Test").Should().BeTrue();
         }
 
         [Fact]
@@ -23,7 +23,7 @@ namespace SecurityHeaders.AspNetCore.Tests {
 
             internalContext.AppendToHeader("Test", "Test");
 
-            httpContext.Response.Headers["Test"].ToString().ShouldBe("Abcd,Test");
+            httpContext.Response.Headers["Test"].ToString().Should().Be("Abcd,Test");
         }
 
         [Fact]
@@ -31,7 +31,7 @@ namespace SecurityHeaders.AspNetCore.Tests {
             var httpContext = new DefaultHttpContext();
             var internalContext = new AspNetCoreHttpContext(httpContext);
 
-            internalContext.HeaderExist("Test").ShouldBeFalse();
+            internalContext.HeaderExist("Test").Should().BeFalse();
         }
 
         [Fact]
@@ -40,7 +40,7 @@ namespace SecurityHeaders.AspNetCore.Tests {
             var internalContext = new AspNetCoreHttpContext(httpContext);
             httpContext.Response.Headers.Add("Test", new[] { "Test" });
 
-            internalContext.HeaderExist("Test").ShouldBeTrue();
+            internalContext.HeaderExist("Test").Should().BeTrue();
         }
 
         [Fact]
@@ -50,8 +50,8 @@ namespace SecurityHeaders.AspNetCore.Tests {
 
             internalContext.OverrideHeader("Test", "Test");
 
-            httpContext.Response.Headers.Keys.ShouldContain("Test");
-            httpContext.Response.Headers["Test"].Equals("Test").ShouldBeTrue();
+            httpContext.Response.Headers.Keys.Should().Contain("Test");
+            httpContext.Response.Headers["Test"].Equals("Test").Should().BeTrue();
         }
 
         [Fact]
@@ -62,7 +62,7 @@ namespace SecurityHeaders.AspNetCore.Tests {
 
             internalContext.OverrideHeader("Test", "krznbf");
 
-            httpContext.Response.Headers["Test"].Equals("krznbf").ShouldBeTrue();
+            httpContext.Response.Headers["Test"].Equals("krznbf").Should().BeTrue();
         }
     }
 }

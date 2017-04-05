@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Headers;
 
 namespace SecurityHeaders.AspNetCore {
@@ -24,6 +26,15 @@ namespace SecurityHeaders.AspNetCore {
 
         /// <inheritdoc />
         public void AppendToHeader(string headerName, string value) => TypedHeaders.Append(headerName, value);
+
+        /// <inheritdoc />
+        public bool IsSecure => mContext.Request.IsHttps;
+
+        /// <inheritdoc />
+        public Uri RequestUri => new Uri(mContext.Request.GetEncodedUrl());
+
+        /// <inheritdoc />
+        public void PermanentRedirectTo(Uri redirectedTo) => mContext.Response.Redirect(redirectedTo.ToString(), true);
 
         /// <inheritdoc />
         public void OverrideHeader(string headerName, string value) {

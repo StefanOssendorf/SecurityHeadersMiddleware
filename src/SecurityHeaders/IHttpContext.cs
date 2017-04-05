@@ -1,4 +1,6 @@
-﻿namespace SecurityHeaders {
+﻿using System;
+
+namespace SecurityHeaders {
     /// <summary>
     /// Defines the interface which all header middlewares will use to work.
     /// </summary>
@@ -24,5 +26,21 @@
         /// <param name="headerName">The header name.</param>
         /// <param name="value">The value for the header.</param>
         void AppendToHeader(string headerName, string value);
+
+        /// <summary>
+        /// Get if the underlying connection is secure.
+        /// </summary>
+        bool IsSecure { get; }
+
+        /// <summary>
+        /// Get the uri of the request.
+        /// </summary>
+        Uri RequestUri { get; }
+
+        /// <summary>
+        /// Set the response to permanent redirect (301).
+        /// </summary>
+        /// <param name="redirectedTo">The url where the redirect point to.</param>
+        void PermanentRedirectTo(Uri redirectedTo);
     }
 }

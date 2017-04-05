@@ -2,6 +2,7 @@
 
 namespace SecurityHeaders.Tests {
     public static class Helper {
-        public static readonly Action<string, string> IoExceptionThrower = (a, b) => throw new InvalidOperationException();
+        public static void IoExceptionThrower(string a) => throw new InvalidOperationException();
+        public static void IoExceptionThrower(string a, string b) => throw new InvalidOperationException();
     }
 }

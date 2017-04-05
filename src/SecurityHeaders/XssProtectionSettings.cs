@@ -18,7 +18,7 @@ namespace SecurityHeaders {
         public XssProtectionHeaderValue HeaderValue { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="XssProtectionSettings"/> class with default behavior.
+        /// Initializes a new instance of the <see cref="XssProtectionSettings"/> with default behavior.
         /// </summary>
         public XssProtectionSettings() : this(XssProtectionHeaderValue.EnabledAndBlock()) {
         }

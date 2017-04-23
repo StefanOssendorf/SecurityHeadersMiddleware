@@ -13,9 +13,9 @@ namespace SecurityHeaders.Owin.AppBuilder.Examples {
             buildFunc.UseAntiClickjacking();
 
             // Choose the desired header-value
-            var headerValue = XFrameOptionHeaderValue.Deny();
-            headerValue = XFrameOptionHeaderValue.SameOrigin();
-            headerValue = XFrameOptionHeaderValue.AllowFrom("http://www.example.org");
+            var headerValue = AntiClickjackingHeaderValue.Deny();
+            headerValue = AntiClickjackingHeaderValue.SameOrigin();
+            headerValue = AntiClickjackingHeaderValue.AllowFrom("http://www.example.org");
 
             // Create a settings and pass the apropriate values to the constructor
             // Results in (depending on the choosen header value):

@@ -5,14 +5,14 @@ namespace SecurityHeaders {
     /// <summary>
     /// The X-Frame-Option header value.
     /// </summary>
-    public class XFrameOptionHeaderValue {
+    public class AntiClickjackingHeaderValue {
 
         /// <summary>
         /// Gets the header value for the x-frame-option.
         /// </summary>
         public string HeaderValue { get; }
 
-        private XFrameOptionHeaderValue(string headerValue) {
+        private AntiClickjackingHeaderValue(string headerValue) {
             Guard.NotNullOrWhiteSpace(headerValue, nameof(headerValue));
             HeaderValue = headerValue;
         }
@@ -21,13 +21,13 @@ namespace SecurityHeaders {
         /// Creates a header value with DENY.
         /// </summary>
         /// <returns>The represented header value.</returns>
-        public static XFrameOptionHeaderValue Deny() => Create("DENY");
+        public static AntiClickjackingHeaderValue Deny() => Create("DENY");
 
         /// <summary>
         /// Creates a header value with SAMEORIGIN.
         /// </summary>
         /// <returns>The represented header value.</returns>
-        public static XFrameOptionHeaderValue SameOrigin() => Create("SAMEORIGIN");
+        public static AntiClickjackingHeaderValue SameOrigin() => Create("SAMEORIGIN");
 
         /// <summary>
         /// Creates a header value of ALLOW-FROM with the provided <paramref name="origin"/>.
@@ -37,7 +37,7 @@ namespace SecurityHeaders {
         /// <exception cref="ArgumentNullException">When <paramref name="origin"/> is null.</exception>
         /// <exception cref="ArgumentException">When <paramref name="origin"/> is empty or whitespace.</exception>
         /// <exception cref="FormatException">When <paramref name="origin"/> is not a valid <see cref="Uri"/>.</exception>
-        public static XFrameOptionHeaderValue AllowFrom(string origin) {
+        public static AntiClickjackingHeaderValue AllowFrom(string origin) {
             Guard.NotNullOrWhiteSpace(origin, nameof(origin));
             return AllowFrom(new Uri(origin));
         }
@@ -48,24 +48,24 @@ namespace SecurityHeaders {
         /// <param name="origin">The origin which should be allowed.</param>
         /// <returns>The represented header value.</returns>
         /// <exception cref="ArgumentNullException">When <paramref name="origin"/> is null.</exception>
-        public static XFrameOptionHeaderValue AllowFrom(Uri origin) {
+        public static AntiClickjackingHeaderValue AllowFrom(Uri origin) {
             Guard.NotNull(origin, nameof(origin));
             return Create($"ALLOW-FROM {Rfc6454Utility.SerializeOrigin(origin)}");
         }
 
-        private static XFrameOptionHeaderValue Create(string value) => new XFrameOptionHeaderValue(value);
+        private static AntiClickjackingHeaderValue Create(string value) => new AntiClickjackingHeaderValue(value);
 
         /// <summary>
         /// Extracts the header value for implicit usage on strings.
         /// </summary>
-        /// <param name="headerValue">The <see cref="XFrameOptionHeaderValue"/> instance where the value should be extracted.</param>
-        public static implicit operator string(XFrameOptionHeaderValue headerValue) {
+        /// <param name="headerValue">The <see cref="AntiClickjackingHeaderValue"/> instance where the value should be extracted.</param>
+        public static implicit operator string(AntiClickjackingHeaderValue headerValue) {
             return headerValue.HeaderValue;
         }
 
         #region ReSharper-Equals generated
         /// <inheritdoc />
-        protected bool Equals(XFrameOptionHeaderValue other) {
+        protected bool Equals(AntiClickjackingHeaderValue other) {
             return string.Equals(HeaderValue, other.HeaderValue, StringComparison.OrdinalIgnoreCase);
         }
 
@@ -83,7 +83,7 @@ namespace SecurityHeaders {
                 return false;
             }
 
-            return Equals((XFrameOptionHeaderValue) obj);
+            return Equals((AntiClickjackingHeaderValue) obj);
         }
 
         /// <inheritdoc />
@@ -92,12 +92,12 @@ namespace SecurityHeaders {
         }
 
         /// <inheritdoc />
-        public static bool operator ==(XFrameOptionHeaderValue left, XFrameOptionHeaderValue right) {
+        public static bool operator ==(AntiClickjackingHeaderValue left, AntiClickjackingHeaderValue right) {
             return Equals(left, right);
         }
 
         /// <inheritdoc />
-        public static bool operator !=(XFrameOptionHeaderValue left, XFrameOptionHeaderValue right) {
+        public static bool operator !=(AntiClickjackingHeaderValue left, AntiClickjackingHeaderValue right) {
             return !Equals(left, right);
         }
         #endregion

@@ -13,6 +13,10 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;ASPNETCORE;NETCOREAPP1_0</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <Content Include="..\xunit.runner.json" Link="xunit.runner.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -34,5 +38,7 @@
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
+
+  <Import Project="..\SecurityHeaders.Shared.Tests\SecurityHeaders.Shared.Tests.projitems" Label="Shared" />
 
 </Project>

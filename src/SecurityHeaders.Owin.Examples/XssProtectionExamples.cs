@@ -15,12 +15,6 @@ namespace SecurityHeaders.Owin.Examples {
             // Results in: X-Xss-Protection: 1; mode=block
             buildFunc.XssProtection();
 
-            // Choose the desired header-value
-            var headerValue = XssProtectionHeaderValue.Disabled();
-            headerValue = XssProtectionHeaderValue.Enabled();
-            headerValue = XssProtectionHeaderValue.EnabledAndBlock();
-            headerValue = XssProtectionHeaderValue.EnabledAndReport("http://www.example.org");
-
             // Create a settings and pass the apropriate values to the constructor
             // Results in (depending on the choosen header value):
             // - Results in: X-Xss-Protection: 0
@@ -28,9 +22,13 @@ namespace SecurityHeaders.Owin.Examples {
             // - Results in: X-Xss-Protection: 1; mode=block
             // - Results in: X-Xss-Protection: 1; report=http://www.example.org
             buildFunc.XssProtection(
-                () =>
-                    new XssProtectionSettings(headerValue,
-                        XssProtectionSettings.HeaderControl.IgnoreIfHeaderAlreadySet));
+                settings =>
+                            //settings.Disabled()
+                            //settings.Enabled()
+                            //settings.EnabledAndBlock()
+                            settings.EnabledAndReport(new Uri("http://www.example.org"))
+                            .IgnoreIfHeaderIsPresent()
+            );
         }
     }
 }

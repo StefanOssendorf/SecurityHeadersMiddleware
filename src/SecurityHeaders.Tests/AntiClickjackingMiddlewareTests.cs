@@ -69,7 +69,7 @@ namespace SecurityHeaders.Tests {
         [Fact]
         public void When_add_deny_it_should_set_deny() {
             string actualValueToBeAdded = "";
-            var middleware = CreateXfo(AntiClickjackingSettings.HeaderControl.OverwriteIfHeaderAlreadySet, XFrameOptionHeaderValue.Deny());
+            var middleware = CreateXfo(AntiClickjackingSettings.HeaderControl.OverwriteIfHeaderAlreadySet, AntiClickjackingHeaderValue.Deny());
             var ctx = new TestContext {
                 HeaderExistFunc = _ => false,
                 OverrideHeaderValueAction = (a, b) => actualValueToBeAdded = b
@@ -83,7 +83,7 @@ namespace SecurityHeaders.Tests {
         [Fact]
         public void When_add_sameOrigin_it_should_set_sameOrigin() {
             string actualValueToBeAdded = "";
-            var middleware = CreateXfo(AntiClickjackingSettings.HeaderControl.OverwriteIfHeaderAlreadySet, XFrameOptionHeaderValue.SameOrigin());
+            var middleware = CreateXfo(AntiClickjackingSettings.HeaderControl.OverwriteIfHeaderAlreadySet, AntiClickjackingHeaderValue.SameOrigin());
             var ctx = new TestContext {
                 HeaderExistFunc = _ => false,
                 OverrideHeaderValueAction = (a, b) => actualValueToBeAdded = b
@@ -97,7 +97,7 @@ namespace SecurityHeaders.Tests {
         [Fact]
         public void When_add_allowFrom_it_should_set_allowFrom_with_origin() {
             string actualValueToBeAdded = "";
-            var middleware = CreateXfo(AntiClickjackingSettings.HeaderControl.OverwriteIfHeaderAlreadySet, XFrameOptionHeaderValue.AllowFrom("http://www.example.org"));
+            var middleware = CreateXfo(AntiClickjackingSettings.HeaderControl.OverwriteIfHeaderAlreadySet, AntiClickjackingHeaderValue.AllowFrom("http://www.example.org"));
             var ctx = new TestContext {
                 HeaderExistFunc = _ => false,
                 OverrideHeaderValueAction = (a, b) => actualValueToBeAdded = b
@@ -109,9 +109,9 @@ namespace SecurityHeaders.Tests {
         }
 
         private static AntiClickjackingMiddleware CreateXfo(AntiClickjackingSettings.HeaderControl headerHandling) {
-            return CreateXfo(headerHandling, XFrameOptionHeaderValue.Deny());
+            return CreateXfo(headerHandling, AntiClickjackingHeaderValue.Deny());
         }
-        private static AntiClickjackingMiddleware CreateXfo(AntiClickjackingSettings.HeaderControl headerHandling, XFrameOptionHeaderValue headerValue) {
+        private static AntiClickjackingMiddleware CreateXfo(AntiClickjackingSettings.HeaderControl headerHandling, AntiClickjackingHeaderValue headerValue) {
             return new AntiClickjackingMiddleware(new AntiClickjackingSettings(headerValue, headerHandling));
         }
     }

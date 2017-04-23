@@ -14,22 +14,20 @@ namespace SecurityHeaders.Owin.Examples {
 
             // Use AntiClickjackingMiddleware with default settings (Overwrite and DENY)
             // Results in: X-Frame-Options: DENY
-            buildFunc.AntiClickjacking();
-
-            // Choose the desired header-value
-            var headerValue = XFrameOptionHeaderValue.Deny();
-            headerValue = XFrameOptionHeaderValue.SameOrigin();
-            headerValue = XFrameOptionHeaderValue.AllowFrom("http://www.example.org");
+            buildFunc.XFrameOptions();
 
             // Create a settings and pass the apropriate values to the constructor
             // Results in (depending on the choosen header value):
             // - Results in: X-Frame-Options: DENY
             // - Results in: X-Frame-Options: SAMEORIGIN
             // - Results in: X-Frame-Options: ALLOW-FROM http://www.example.org
-            buildFunc.AntiClickjacking(
-                () =>
-                    new AntiClickjackingSettings(headerValue,
-                        AntiClickjackingSettings.HeaderControl.IgnoreIfHeaderAlreadySet));
+            buildFunc.XFrameOptions(
+                settings =>
+                            //settings.Deny()
+                            //settings.SameOrigin()
+                            settings.AllowFrom(new Uri("http://www.example.org"))
+                            .IgnoreIfHeaderIsPresent()
+            );
         }
     }
 }

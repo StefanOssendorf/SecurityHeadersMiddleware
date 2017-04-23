@@ -18,16 +18,14 @@
     <SH_UsedFrameworkTag>aspnetcore</SH_UsedFrameworkTag>
     
   </PropertyGroup>
+  
+  <Import Project="..\SecurityHeaders.Shared\SecurityHeaders.Shared.projitems" Label="Shared" />
 
   <Import Project="..\..\sharedIntegrationProj.props" />
 
-  <ItemGroup>
-    <Compile Include="..\SecurityHeaders\Guard.cs" Link="Guard.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
+  <!--<ItemGroup>
     <ProjectReference Include="..\SecurityHeaders\SecurityHeaders.csproj" />
-  </ItemGroup>
+  </ItemGroup>-->
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="1.1.1" />

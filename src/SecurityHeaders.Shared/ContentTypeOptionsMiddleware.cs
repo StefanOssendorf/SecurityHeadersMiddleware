@@ -4,7 +4,7 @@ namespace SecurityHeaders {
     /// <summary>
     /// The middleware to apply the content-type-options header.
     /// </summary>
-    public class ContentTypeOptionsMiddleware {
+    internal class ContentTypeOptionsMiddleware {
         /// <summary>
         /// The http-header name of the content-type-options header.
         /// </summary>

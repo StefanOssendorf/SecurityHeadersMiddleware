@@ -1,10 +1,11 @@
 ﻿using System;
 
 namespace SecurityHeaders {
+    
     /// <summary>
     /// Defines the interface which all header middlewares will use to work.
     /// </summary>
-    public interface IHttpContext {
+    internal interface IHttpContext {
         
         /// <summary>
         /// Checks if the header is already present in the response or not.

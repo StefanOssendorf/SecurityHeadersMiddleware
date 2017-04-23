@@ -17,18 +17,17 @@
     <SH_UsedFrameworkTag>owin, katana</SH_UsedFrameworkTag>
   </PropertyGroup>
 
+  <Import Project="..\SecurityHeaders.Shared\SecurityHeaders.Shared.projitems" Label="Shared" />
+
   <Import Project="..\..\sharedIntegrationProj.props" />
 
-  <ItemGroup>
-    <Compile Include="..\SecurityHeaders\Guard.cs" Link="Guard.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
+  <!--<ItemGroup>
     <ProjectReference Include="..\SecurityHeaders\SecurityHeaders.csproj" />
-  </ItemGroup>
+  </ItemGroup>-->
 
   <ItemGroup>
     <PackageReference Include="System.Globalization.Extensions" Version="4.3.0" />
+    <PackageReference Include="System.Runtime" Version="4.3.0" />
     <PackageReference Include="System.Security.Claims" Version="4.3.0" />
   </ItemGroup>
 

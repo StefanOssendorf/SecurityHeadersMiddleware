@@ -6,7 +6,7 @@ namespace SecurityHeaders.Owin {
     /// <summary>
     /// Represents the OWIN Environment-Wrapper.
     /// </summary>
-    public class OwinHttpContext : IHttpContext {
+    internal class OwinHttpContext : IHttpContext {
         private readonly OwinContext mContext;
 
         private const string LocationHeaderName = "Location";

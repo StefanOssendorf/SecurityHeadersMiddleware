@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{E768EE25-8180-4CAA-88F4-B9C8A5E16E66}"
 	ProjectSection(SolutionItems) = preProject
@@ -36,7 +36,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityHeaders.Owin.AppBui
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityHeaders.Owin.Tests", "src\SecurityHeaders.Owin.Tests\SecurityHeaders.Owin.Tests.csproj", "{96CF3BEE-3B6A-4E49-82EB-6C2889AE385D}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SecurityHeaders.Shared", "src\SecurityHeaders.Shared\SecurityHeaders.Shared.shproj", "{58E35357-1FF7-4A9A-AAAD-6CA304922949}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SecurityHeaders.Shared.Tests", "src\SecurityHeaders.Shared.Tests\SecurityHeaders.Shared.Tests.shproj", "{F283275F-EB5F-4FF5-A6EB-7441448E259C}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\SecurityHeaders.Shared\SecurityHeaders.Shared.projitems*{58e35357-1ff7-4a9a-aaad-6ca304922949}*SharedItemsImports = 13
+		src\SecurityHeaders.Shared.Tests\SecurityHeaders.Shared.Tests.projitems*{f283275f-eb5f-4ff5-a6eb-7441448e259c}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

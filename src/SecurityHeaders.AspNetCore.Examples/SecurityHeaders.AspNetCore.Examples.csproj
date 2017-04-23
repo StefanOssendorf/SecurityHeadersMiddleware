@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SecurityHeaders.AspNetCore\SecurityHeaders.AspNetCore.csproj" />
-    <ProjectReference Include="..\SecurityHeaders\SecurityHeaders.csproj" />
+    <!--<ProjectReference Include="..\SecurityHeaders\SecurityHeaders.csproj" />-->
   </ItemGroup>
 
   <ItemGroup>

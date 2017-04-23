@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SecurityHeaders.Builders;
 using SecurityHeaders.Owin.Infrastructure;
 
 namespace SecurityHeaders.Owin {
@@ -14,21 +15,24 @@ namespace SecurityHeaders.Owin {
         /// <param name="builder">The OWIN builder instance.</param>
         /// <returns>The OWIN builder instance.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="builder"/> is null.</exception>
-        public static BuildFunc XssProtection(this BuildFunc builder) => XssProtection(builder, () => new XssProtectionSettings());
+        public static BuildFunc XssProtection(this BuildFunc builder) => builder.XssProtection(_ => { });
 
         /// <summary>
         /// Adds the "X-Xss-Protection" header with the configured settings.
         /// </summary>
         /// <param name="builder">The OWIN builder instance.</param>
-        /// <param name="getSettings">The func to get the settings.</param>
+        /// <param name="builderAction">The action to configure the settings.</param>
         /// <returns>The OWIN builder instance.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="builder"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="getSettings"/> is null.</exception>
-        public static BuildFunc XssProtection(this BuildFunc builder, Func<XssProtectionSettings> getSettings) {
+        /// <exception cref="ArgumentNullException"><paramref name="builderAction"/> is null.</exception>
+        public static BuildFunc XssProtection(this BuildFunc builder, Action<IFluentXpSettingsBuilder> builderAction) {
             Guard.NotNull(builder, nameof(builder));
-            Guard.NotNull(getSettings, nameof(getSettings));
+            Guard.NotNull(builderAction, nameof(builderAction));
 
-            var middleware = new XssProtectionMiddleware(getSettings());
+            var settingsBuilder = new XpSettingsBuilder();
+            builderAction(settingsBuilder);
+            XssProtectionSettings settings = settingsBuilder.Build();
+            var middleware = new XssProtectionMiddleware(settings);
             builder(_ => next =>
                 env => {
                     var ctx = env.AsOwinContext();

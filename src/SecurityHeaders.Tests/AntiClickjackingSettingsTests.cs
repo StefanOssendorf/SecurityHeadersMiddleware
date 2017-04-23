@@ -6,7 +6,7 @@ namespace SecurityHeaders.Tests {
         public void Default_ctor_should_have_the_expected_default_values() {
             var settings = new AntiClickjackingSettings();
             settings.HeaderHandling.Should().Be(AntiClickjackingSettings.HeaderControl.OverwriteIfHeaderAlreadySet);
-            settings.HeaderValue.Should().Be(XFrameOptionHeaderValue.Deny());
+            settings.HeaderValue.Should().Be(AntiClickjackingHeaderValue.Deny());
         }
     }
 

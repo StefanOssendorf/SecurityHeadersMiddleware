@@ -52,15 +52,15 @@ namespace SecurityHeaders.AspNetCore.Tests {
             mClient = mServer.CreateClient();
         }
 
-        private static XFrameOptionHeaderValue DetermineHeaderValue(string value) {
+        private static AntiClickjackingHeaderValue DetermineHeaderValue(string value) {
             if(value.Equals("DENY")) {
-                return XFrameOptionHeaderValue.Deny();
+                return AntiClickjackingHeaderValue.Deny();
             }
             if(value.Equals("SAMEORIGIN")) {
-                return XFrameOptionHeaderValue.SameOrigin();
+                return AntiClickjackingHeaderValue.SameOrigin();
             }
 
-            return XFrameOptionHeaderValue.AllowFrom(value.Substring(10).Trim());
+            return AntiClickjackingHeaderValue.AllowFrom(value.Substring(10).Trim());
         }
     }
 }

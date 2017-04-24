@@ -1,28 +1,27 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 // ReSharper disable RedundantAssignment
 
 namespace SecurityHeaders.AspNetCore.Examples {
     public partial class Startup {
         private static void AntiClickJackingExamples(IApplicationBuilder app) {
 
-            // Use AntiClickjackingMiddleware with default settings (Overwrite and DENY)
+            // Use X-Frame-Options middleware with default settings (Overwrite and DENY)
             // Results in: X-Frame-Options: DENY
-            app.UseAntiClickjacking();
+            app.UseXFrameOptions();
 
-            // Choose the desired header-value
-            var headerValue = AntiClickjackingHeaderValue.Deny();
-            headerValue = AntiClickjackingHeaderValue.SameOrigin();
-            headerValue = AntiClickjackingHeaderValue.AllowFrom("http://www.example.org");
-
-            // Create a settings and pass the apropriate values to the constructor
-            // Results in (depending on the choosen header value):
+            // Configure the settings via the fluent api.
+            // This results in (depending on the choosen options):
             // - Results in: X-Frame-Options: DENY
             // - Results in: X-Frame-Options: SAMEORIGIN
             // - Results in: X-Frame-Options: ALLOW-FROM http://www.example.org
-            app.UseAntiClickjacking(
-                () =>
-                    new AntiClickjackingSettings(headerValue,
-                        AntiClickjackingSettings.HeaderControl.IgnoreIfHeaderAlreadySet));
+            app.UseXFrameOptions(
+                 settings =>
+                            //settings.Deny()
+                            //settings.SameOrigin()
+                            settings.AllowFrom(new Uri("http://www.example.org"))
+                            .IgnoreIfHeaderIsPresent()
+            );
         }
     }
 }

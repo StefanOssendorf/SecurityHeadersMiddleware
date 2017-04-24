@@ -1,5 +1,6 @@
 ﻿using System;
 using Owin;
+using SecurityHeaders.Builders;
 
 namespace SecurityHeaders.Owin.AppBuilder {
 
@@ -7,27 +8,29 @@ namespace SecurityHeaders.Owin.AppBuilder {
     /// Provides the extension methods for <see cref="IAppBuilder"/>.
     /// </summary>
     public static partial class SecurityHeaders {
+        
         /// <summary>
-        /// Adds the "X-Content-Type-Options" Header with default settings. to the response with <see cref="ContentTypeOptionsSettings.HeaderControl.OverwriteIfHeaderAlreadySet"/>.
+        /// Adds the "X-Content-Type-Options" header with value "nosniff" to the response. <br/>
+        /// Possible already present header will be overwritten.
         /// </summary>
         /// <param name="builder">The <see cref="IAppBuilder"/> instance.</param>
         /// <returns>The <see cref="IAppBuilder"/> instance.</returns>
-        public static IAppBuilder UseContentTypeOptions(this IAppBuilder builder) {
-            Guard.NotNull(builder, nameof(builder));
-            return UseContentTypeOptions(builder, () => new ContentTypeOptionsSettings());
-        }
+        /// <exception cref="ArgumentNullException"><paramref name="builder"/> is null.</exception>
+        public static IAppBuilder UseContentTypeOptions(this IAppBuilder builder) => builder.UseContentTypeOptions(_ => { });
 
         /// <summary>
-        /// Adds the "X-Content-Type-Options" Header to the response.
+        /// Adds the "X-Content-Type-Options" header with value "nosniff" to the response depending on the settings.
         /// </summary>
         /// <param name="builder">The <see cref="IAppBuilder"/> instance.</param>
-        /// <param name="getSettings">The func to get the settings.</param>
+        /// <param name="builderAction">The action to configure the settings.</param>
         /// <returns>The <see cref="IAppBuilder"/> instance.</returns>
-        public static IAppBuilder UseContentTypeOptions(this IAppBuilder builder, Func<ContentTypeOptionsSettings> getSettings) {
+        /// <exception cref="ArgumentNullException"><paramref name="builder"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="builderAction"/> is null.</exception>
+        public static IAppBuilder UseContentTypeOptions(this IAppBuilder builder, Action<IFluentCtoSettingsBuilder> builderAction) {
             Guard.NotNull(builder, nameof(builder));
-            Guard.NotNull(getSettings, nameof(getSettings));
+            Guard.NotNull(builderAction, nameof(builderAction));
 
-            builder.UseOwin().ContentTypeOptions(getSettings);
+            builder.UseOwin().ContentTypeOptions(builderAction);
             return builder;
         }
     }

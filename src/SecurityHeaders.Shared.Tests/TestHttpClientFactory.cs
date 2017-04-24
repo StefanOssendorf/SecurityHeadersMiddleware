@@ -28,24 +28,5 @@ namespace SecurityHeaders.Tests {
             return CreateOwinXp(settingsBuilder, headerValue);
 #endif
         }
-
-#if ASPNETCORE
-        private static HttpClient CreateClient(Action<IApplicationBuilder> addMiddleware, Action<HttpContext> modifyRun = null) {
-            var builder = new WebHostBuilder()
-                .Configure(app => {
-                    addMiddleware(app);
-                    app.Run(async ctx => {
-                        ctx.Response.StatusCode = 200;
-                        modifyRun?.Invoke(ctx);
-                        await ctx.Response.WriteAsync("Hello World!");
-                    });
-                });
-            return new TestServer(builder).CreateClient();
-        }
-#else
-        private static HttpClient CreateClient() {
-            return new HttpClient();
-        }
-#endif
     }
 }

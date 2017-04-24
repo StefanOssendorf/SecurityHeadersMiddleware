@@ -7,12 +7,8 @@ namespace SecurityHeaders.AspNetCore {
     /// IApplicationBuilder extension methods.
     /// </summary>
     public static partial class SecurityHeaders {
-        private static void OnStarting<T>(this HttpResponse source, Func<T, Task> callback, T context) {
-            source.OnStarting(ctx => callback(context), context);
-        }
+        private static void OnStarting<T>(this HttpResponse source, Func<T, Task> callback, T context) => source.OnStarting(ctx => callback(context), context);
 
-        private static AspNetCoreHttpContext AsInternalCtx(this HttpContext source) {
-            return new AspNetCoreHttpContext(source);
-        }
+        private static AspNetCoreHttpContext AsInternalCtx(this HttpContext source) => new AspNetCoreHttpContext(source);
     }
 }

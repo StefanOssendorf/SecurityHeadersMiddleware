@@ -11,13 +11,6 @@ namespace SecurityHeaders.Owin {
 
         private const string LocationHeaderName = "Location";
 
-        /// <summary>
-        /// Initializes a new <see cref="OwinHttpContext"/>-Instance.
-        /// </summary>
-        /// <param name="environment">The current OWIN environment.</param>
-        public OwinHttpContext(IDictionary<string, object> environment) : this(environment.AsOwinContext()) {
-        }
-
         internal OwinHttpContext(OwinContext context) {
             mContext = context;
         }

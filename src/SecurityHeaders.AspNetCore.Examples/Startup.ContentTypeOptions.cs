@@ -7,10 +7,11 @@ namespace SecurityHeaders.AspNetCore.Examples {
             // Results in : X-Content-Type-Options: nosniff
             app.UseContentTypeOptions();
 
-            // Use the ContenTypeOptions middleware and do not set the header if already set.
+            // Use the X-Content-Type-Options middleware and do not set the header if already set.
             // Results in : X-Content-Type-Options: nosniff, if the header is not already set
             app.UseContentTypeOptions(
-                () => new ContentTypeOptionsSettings(ContentTypeOptionsSettings.HeaderControl.IgnoreIfHeaderAlreadySet));
+                settings => settings.IgnoreIfHeaderIsPresent()
+            );
         }
     }
 }

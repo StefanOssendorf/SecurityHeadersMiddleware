@@ -15,8 +15,8 @@ namespace SecurityHeaders.Owin.Examples {
             // Results in: X-Xss-Protection: 1; mode=block
             buildFunc.XssProtection();
 
-            // Create a settings and pass the apropriate values to the constructor
-            // Results in (depending on the choosen header value):
+            // Configure the settings via the fluent api.
+            // This results in (depending on the choosen options):
             // - Results in: X-Xss-Protection: 0
             // - Results in: X-Xss-Protection: 1
             // - Results in: X-Xss-Protection: 1; mode=block

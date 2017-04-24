@@ -14,7 +14,7 @@ namespace SecurityHeaders.Owin.Examples {
             // Results in : X-Content-Type-Options: nosniff
             buildFunc.ContentTypeOptions();
 
-            // Use the ContenTypeOptions middleware and do not set the header if already set.
+            // Use the X-Content-Type-Options middleware and do not set the header if already set.
             // Results in : X-Content-Type-Options: nosniff, if the header is not already set
             buildFunc.ContentTypeOptions(
                 settings => settings.IgnoreIfHeaderIsPresent()

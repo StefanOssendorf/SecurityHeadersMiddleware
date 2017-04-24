@@ -355,6 +355,8 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+#Custom excludes
 /src/packages
 *.nupkg
 /packages

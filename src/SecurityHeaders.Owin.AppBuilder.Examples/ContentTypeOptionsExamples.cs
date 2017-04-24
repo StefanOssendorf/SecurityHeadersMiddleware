@@ -10,9 +10,11 @@ namespace SecurityHeaders.Owin.AppBuilder.Examples {
             // Results in : X-Content-Type-Options: nosniff
             buildFunc.UseContentTypeOptions();
 
-            // Use the ContenTypeOptions middleware and do not set the header if already set.
+            // Use the X-Content-Type-Options middleware and do not set the header if already set.
             // Results in : X-Content-Type-Options: nosniff, if the header is not already set
-            buildFunc.UseContentTypeOptions(() => new ContentTypeOptionsSettings(ContentTypeOptionsSettings.HeaderControl.IgnoreIfHeaderAlreadySet));
+            buildFunc.UseContentTypeOptions(
+                settings => settings.IgnoreIfHeaderIsPresent()
+            );
         }
     }
 }

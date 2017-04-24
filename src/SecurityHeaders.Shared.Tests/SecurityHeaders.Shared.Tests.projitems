@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ContentTypeOptionsMiddlewareTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HttpClientHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StrictTransportSecurityMiddlewareTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestHttpClientFactory.AspNetCore.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestHttpClientFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestHttpClientFactory.Owin.cs" />

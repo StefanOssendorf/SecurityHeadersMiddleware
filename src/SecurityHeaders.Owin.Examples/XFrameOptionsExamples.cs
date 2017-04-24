@@ -12,12 +12,12 @@ namespace SecurityHeaders.Owin.Examples {
         public void Example() {
             BuildFunc buildFunc = null;
 
-            // Use AntiClickjackingMiddleware with default settings (Overwrite and DENY)
+            // Use X-Frame-Options middleware with default settings (Overwrite and DENY)
             // Results in: X-Frame-Options: DENY
             buildFunc.XFrameOptions();
 
-            // Create a settings and pass the apropriate values to the constructor
-            // Results in (depending on the choosen header value):
+            // Configure the settings via the fluent api.
+            // This results in (depending on the choosen options):
             // - Results in: X-Frame-Options: DENY
             // - Results in: X-Frame-Options: SAMEORIGIN
             // - Results in: X-Frame-Options: ALLOW-FROM http://www.example.org

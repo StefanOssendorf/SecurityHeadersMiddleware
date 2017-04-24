@@ -33,6 +33,7 @@ namespace SecurityHeaders.Owin {
             builderAction(settingsBuilder);
             XFrameOptionsSettings settings = settingsBuilder.Build();
             var middleware = new XFrameOptionsMiddleware(settings);
+
             builder(_ => next =>
                 env => {
                     var ctx = env.AsOwinContext();

@@ -1,4 +1,5 @@
-﻿using Owin;
+﻿using System;
+using Owin;
 // ReSharper disable ExpressionIsAlwaysNull
 // ReSharper disable RedundantAssignment
 
@@ -8,21 +9,22 @@ namespace SecurityHeaders.Owin.AppBuilder.Examples {
         public void Example() {
             IAppBuilder buildFunc = null;
 
-            // Use AntiClickjackingMiddleware with default settings (Overwrite and DENY)
+            // Use X-Frame-Options middleware with default settings (Overwrite and DENY)
             // Results in: X-Frame-Options: DENY
-            buildFunc.UseAntiClickjacking();
+            buildFunc.XFrameOptions();
 
-            // Choose the desired header-value
-            var headerValue = AntiClickjackingHeaderValue.Deny();
-            headerValue = AntiClickjackingHeaderValue.SameOrigin();
-            headerValue = AntiClickjackingHeaderValue.AllowFrom("http://www.example.org");
-
-            // Create a settings and pass the apropriate values to the constructor
-            // Results in (depending on the choosen header value):
+            // Configure the settings via the fluent api.
+            // This results in (depending on the choosen options):
             // - Results in: X-Frame-Options: DENY
             // - Results in: X-Frame-Options: SAMEORIGIN
             // - Results in: X-Frame-Options: ALLOW-FROM http://www.example.org
-            buildFunc.UseAntiClickjacking(() => new AntiClickjackingSettings(headerValue, AntiClickjackingSettings.HeaderControl.IgnoreIfHeaderAlreadySet));
+            buildFunc.XFrameOptions(
+                 settings =>
+                            //settings.Deny()
+                            //settings.SameOrigin()
+                            settings.AllowFrom(new Uri("http://www.example.org"))
+                            .IgnoreIfHeaderIsPresent()
+            );
         }
     }
 }

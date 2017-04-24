@@ -33,6 +33,7 @@ namespace SecurityHeaders.Owin {
             builderAction(settingsBuilder);
             XssProtectionSettings settings = settingsBuilder.Build();
             var middleware = new XssProtectionMiddleware(settings);
+
             builder(_ => next =>
                 env => {
                     var ctx = env.AsOwinContext();

@@ -28,5 +28,13 @@ namespace SecurityHeaders.Tests {
             return CreateOwinXp(settingsBuilder, headerValue);
 #endif
         }
+
+        public static HttpClient CreateSts(Action<IFluentStsMaxAgeSettingsBuilder> settingsBuilder, string headerValue) {
+#if ASPNETCORE
+            return CreateCoreSts(settingsBuilder, headerValue);
+#else
+            return CreateOwinSts(settingsBuilder, headerValue);
+#endif
+        }
     }
 }

@@ -1,18 +1,19 @@
 ﻿using System.Net.Http;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
 
 namespace SecurityHeaders.Tests {
     internal static class HttpClientHelper {
         public const string XContentTypeOptionsHeaderName = "X-Content-Type-Options";
         public const string XFrameOptionsHeaderName = "X-Frame-Options";
         public const string XXssProtectionHeaderName = "X-Xss-Protection";
+        public const string StrictTransportSecurityHeaderName = "Strict-Transport-Security";
 
         public static string XFrameOptions(this HttpResponseMessage source) => source.Headers.GetValues(XFrameOptionsHeaderName).First();
 
-        //public static IEnumerable<string> StsHeader(this HttpResponseMessage source) {
-        //    return source.Headers.GetValues(HeaderHelper.StrictTransportSecurity).Single().Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(value => value.Trim());
-        //}
+        public static IList<string> StrictTransportSecurity(this HttpResponseMessage source) => source.Headers.GetValues(StrictTransportSecurityHeaderName).Single().Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(value => value.Trim()).ToList();
 
         public static string XContentTypeOptions(this HttpResponseMessage source) => source.Headers.GetValues(XContentTypeOptionsHeaderName).Single();
 

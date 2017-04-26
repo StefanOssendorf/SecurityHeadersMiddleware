@@ -56,6 +56,21 @@ namespace SecurityHeaders.Tests {
             );
         }
 
+        private static HttpClient CreateCoreSts(Action<IFluentStsMaxAgeSettingsBuilder> settingsBuilder, string headerValue) {
+            Action<HttpContext> maybeAddHeader = null;
+            if(headerValue != null) {
+                maybeAddHeader = ctx => ctx.Response.Headers.Add("Strict-Transport-Security", headerValue);
+            }
+            return CreateCoreBased(app => {
+                if(settingsBuilder == null) {
+                    app.UseStrictTransportSecurity();
+                } else {
+                    app.UseStrictTransportSecurity(settingsBuilder);
+                }
+            }, maybeAddHeader
+            );
+        }
+
         private static HttpClient CreateCoreBased(Action<IApplicationBuilder> addMiddleware, Action<HttpContext> modifyEndpoint = null) {
             var builder = new WebHostBuilder()
                 .Configure(app => {

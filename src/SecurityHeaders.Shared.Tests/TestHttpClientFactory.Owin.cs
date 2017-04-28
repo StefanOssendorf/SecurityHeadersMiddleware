@@ -60,7 +60,22 @@ namespace SecurityHeaders.Tests {
             );
         }
 
-            private static HttpClient CreateOwinBased(Action<BuildFunc> addMiddleware, Action<IOwinContext> modifyEndpoint = null) {
+        private static HttpClient CreateOwinSts(Action<IFluentStsMaxAgeSettingsBuilder> settingsBuilder, string headerValue) {
+            Action<IOwinContext> maybeAddHeader = null;
+            if(headerValue != null) {
+                maybeAddHeader = ctx => ctx.Response.Headers.Set("Strict-Transport-Security", headerValue);
+            }
+            return CreateOwinBased(buildFunc => {
+                if(settingsBuilder == null) {
+                    buildFunc.StrictTransportSecurity();
+                } else {
+                    buildFunc.StrictTransportSecurity(settingsBuilder);
+                }
+            }, maybeAddHeader
+            );
+        }
+
+        private static HttpClient CreateOwinBased(Action<BuildFunc> addMiddleware, Action<IOwinContext> modifyEndpoint = null) {
             var app = new AppBuilder();
             addMiddleware(app.UseOwin());
             app.Use((context, next) => {

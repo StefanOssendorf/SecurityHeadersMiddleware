@@ -11,7 +11,21 @@ namespace SecurityHeaders.Tests {
         private const string HttpsExampleOrgUrl = "http://www.example.org";
 
         public class HeaderAlreadyPresent {
-            
+            [Fact]
+            public async Task When_header_should_be_ignoredIfPresent_it_should_not_modify_the_header() {
+                using(var client = CreateClient(b => b.WithMaxAge(0).IncludeSubdomains().WithoutPreload().IgnoreIfHeaderIsPresent(), "test")) {
+                    var response = await client.GetHeaderAsync(HttpsExampleOrgUrl);
+                    response.XssProtection().Should().Be("test");
+                }
+            }
+
+            [Fact]
+            public async Task When_header_should_be_overwritten_it_should_be_the_expected_value() {
+                using(var client = CreateClient(b => b.WithMaxAge(0).IncludeSubdomains().WithoutPreload().OverwriteHeaderIfHeaderIsPresent(), "test")) {
+                    var response = await client.GetHeaderAsync(HttpsExampleOrgUrl);
+                    response.XssProtection().Should().Be("1");
+                }
+            }
         }
 
         public class HeaderNotPresent {
@@ -25,9 +39,9 @@ namespace SecurityHeaders.Tests {
                     headerValues[1].Should().Be("includeSubDomains");
                 }
             }
-
-            
         }
+
+        
 
         private static HttpClient CreateClient(Action<IFluentStsMaxAgeSettingsBuilder> settingsBuilder = null, string headerValue = null) => TestHttpClientFactory.CreateSts(settingsBuilder, headerValue);
 

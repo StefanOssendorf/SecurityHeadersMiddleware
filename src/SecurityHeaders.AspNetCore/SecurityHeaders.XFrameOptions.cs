@@ -6,7 +6,7 @@ using SecurityHeaders.Builders;
 namespace SecurityHeaders.AspNetCore {
     public static partial class SecurityHeaders {
 
-       /// <summary>
+        /// <summary>
         /// Adds the "X-Frame-Options" header with value "DENY" to the response.
         /// </summary>
         /// <param name="builder">The <see cref="IApplicationBuilder"/> instance.</param>
@@ -14,7 +14,7 @@ namespace SecurityHeaders.AspNetCore {
         /// <exception cref="ArgumentNullException"><paramref name="builder"/> is null.</exception>
         public static IApplicationBuilder UseXFrameOptions(this IApplicationBuilder builder) => builder.UseXFrameOptions(_ => { });
 
-       /// <summary>
+        /// <summary>
         /// Adds the "X-Frame-Options" header with the configured settings.
         /// </summary>
         /// <param name="builder">The <see cref="IApplicationBuilder"/> instance.</param>

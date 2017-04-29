@@ -34,7 +34,7 @@ namespace SecurityHeaders {
                 return;
             }
 
-            context.OverrideHeader(XXssProtectionHeaderName, mSettings.HeaderValue);
+            context.SetHeader(XXssProtectionHeaderName, mSettings.HeaderValue);
         }
 
         private bool HeaderShouldNotBeSet(Func<string, bool> headerExist) {

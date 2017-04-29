@@ -25,9 +25,6 @@ namespace SecurityHeaders.AspNetCore {
         public bool HeaderExist(string headerName) => Headers.ContainsKey(headerName);
 
         /// <inheritdoc />
-        public void AppendToHeader(string headerName, string value) => TypedHeaders.Append(headerName, value);
-
-        /// <inheritdoc />
         public bool IsSecure => mContext.Request.IsHttps;
 
         /// <inheritdoc />
@@ -37,7 +34,7 @@ namespace SecurityHeaders.AspNetCore {
         public void PermanentRedirectTo(Uri redirectedTo) => mContext.Response.Redirect(redirectedTo.ToString(), true);
 
         /// <inheritdoc />
-        public void OverrideHeader(string headerName, string value) {
+        public void SetHeader(string headerName, string value) {
             if(Headers.ContainsKey(headerName)) {
                 Headers.Remove(headerName);
             }

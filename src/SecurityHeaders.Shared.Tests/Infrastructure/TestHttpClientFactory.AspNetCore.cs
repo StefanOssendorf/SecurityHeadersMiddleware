@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.TestHost;
 using SecurityHeaders.AspNetCore;
 using SecurityHeaders.Builders;
 
-namespace SecurityHeaders.Tests {
+namespace SecurityHeaders.Tests.Infrastructure {
 
     static partial class TestHttpClientFactory {
         private static HttpClient CreateCoreCto(Action<IFluentCtoSettingsBuilder> settingsBuilder = null, string headerValue = null) {

@@ -10,7 +10,7 @@ using SecurityHeaders.Builders;
 using SecurityHeaders.Owin;
 
 
-namespace SecurityHeaders.Tests {
+namespace SecurityHeaders.Tests.Infrastructure {
     using BuildFunc = Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>>;
 
     internal static partial class TestHttpClientFactory {

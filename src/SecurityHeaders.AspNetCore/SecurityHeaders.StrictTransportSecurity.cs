@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using SecurityHeaders.Builders;
 
@@ -24,6 +23,28 @@ namespace SecurityHeaders.AspNetCore {
         /// <exception cref="ArgumentNullException"><paramref name="builder"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="builderAction"/> is null.</exception>
         public static IApplicationBuilder UseStrictTransportSecurity(this IApplicationBuilder builder, Action<IFluentStsMaxAgeSettingsBuilder> builderAction) {
+            Guard.NotNull(builder, nameof(builder));
+            Guard.NotNull(builderAction, nameof(builderAction));
+
+            var settingsBuilder = new StsSettingsBuilder();
+            builderAction(settingsBuilder);
+            StrictTransportSecuritySettings settings = settingsBuilder.Build();
+            var middleware = new StrictTransportSecurityMiddleware(settings);
+
+            builder.Use(async (context, next) => {
+
+                var beforeResult = middleware.BeforeNext(context.AsInternalCtx());
+                if(beforeResult.EndPipeline) {
+                    return;
+                }
+
+                context.Response.OnStarting(innerCtx => {
+                    middleware.ApplyHeader(innerCtx);
+                    return Task.CompletedTask;
+                }, context.AsInternalCtx());
+                await next.Invoke();
+            });
+
             return builder;
         }
     }

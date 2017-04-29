@@ -10,12 +10,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ContentTypeOptionsMiddlewareTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)HttpClientHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Infrastructure\HttpClientHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StrictTransportSecurityMiddlewareTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TestHttpClientFactory.AspNetCore.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TestHttpClientFactory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TestHttpClientFactory.Owin.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Infrastructure\TestHttpClientFactory.AspNetCore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Infrastructure\TestHttpClientFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Infrastructure\TestHttpClientFactory.Owin.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XFrameOptionsMiddlewareTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XXssProtectionMiddlewareTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Infrastructure\" />
   </ItemGroup>
 </Project>

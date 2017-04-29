@@ -9,7 +9,14 @@
     <Import_RootNamespace>SecurityHeaders</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BeforeNextResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Builders\IFluentStsIncludeSubdomainSettingsBuilder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Builders\IFluentStsMaxAgeSettingsBuilder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Builders\IFluentStsPreloadSettingsBuilder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Builders\IFluentStsRedirectSettingsBuilder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Builders\StsSettingsBuilder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StrictTransportSecurityHeaderValue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StrictTransportSecuritySettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XFrameOptionsHeaderValue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XFrameOptionsMiddleware.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XFrameOptionsSettings.cs" />

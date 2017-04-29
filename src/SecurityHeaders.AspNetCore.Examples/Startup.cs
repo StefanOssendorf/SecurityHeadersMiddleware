@@ -22,6 +22,7 @@ namespace SecurityHeaders.AspNetCore.Examples {
             ContentTypeOptionsExamples(app);
             AntiClickJackingExamples(app);
             XssProtection(app);
+            StrictTransportSecurityExample(app);
 
             app.Run(async (context) => {
                 await context.Response.WriteAsync("Hello World!");

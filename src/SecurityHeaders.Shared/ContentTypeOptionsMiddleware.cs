@@ -39,7 +39,7 @@ namespace SecurityHeaders {
                 return;
             }
 
-            context.OverrideHeader(XContentTypeOptionsHeaderName, XContentTypeOptionsHeaderValue);
+            context.SetHeader(XContentTypeOptionsHeaderName, XContentTypeOptionsHeaderValue);
         }
 
         private bool HeaderShouldNotBeSet(Func<string, bool> headerExist) {

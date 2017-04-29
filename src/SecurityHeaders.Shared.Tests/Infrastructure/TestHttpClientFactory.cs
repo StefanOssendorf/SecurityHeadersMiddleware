@@ -2,7 +2,7 @@
 using System.Net.Http;
 using SecurityHeaders.Builders;
 
-namespace SecurityHeaders.Tests {
+namespace SecurityHeaders.Tests.Infrastructure {
     internal static partial class TestHttpClientFactory {
 
         public static HttpClient CreateCto(Action<IFluentCtoSettingsBuilder> settingsBuilder = null, string headerValue = null) {

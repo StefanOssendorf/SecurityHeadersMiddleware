@@ -19,14 +19,7 @@ namespace SecurityHeaders {
         /// </summary>
         /// <param name="headerName">The header name.</param>
         /// <param name="value">The value for the header.</param>
-        void OverrideHeader(string headerName, string value);
-        
-        /// <summary>
-        /// Appends the value to the header. If the header does not exist, it is addded.
-        /// </summary>
-        /// <param name="headerName">The header name.</param>
-        /// <param name="value">The value for the header.</param>
-        void AppendToHeader(string headerName, string value);
+        void SetHeader(string headerName, string value);
 
         /// <summary>
         /// Get if the underlying connection is secure.

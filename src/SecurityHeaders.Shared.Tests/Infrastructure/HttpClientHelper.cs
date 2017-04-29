@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 
-namespace SecurityHeaders.Tests {
+namespace SecurityHeaders.Tests.Infrastructure {
     internal static class HttpClientHelper {
         public const string XContentTypeOptionsHeaderName = "X-Content-Type-Options";
         public const string XFrameOptionsHeaderName = "X-Frame-Options";
         public const string XXssProtectionHeaderName = "X-Xss-Protection";
         public const string StrictTransportSecurityHeaderName = "Strict-Transport-Security";
 
-        public static string XFrameOptions(this HttpResponseMessage source) => source.Headers.GetValues(XFrameOptionsHeaderName).First();
+        public static string XFrameOptions(this HttpResponseMessage source) => source.Headers.GetValues(XFrameOptionsHeaderName).Single();
 
         public static IList<string> StrictTransportSecurity(this HttpResponseMessage source) => source.Headers.GetValues(StrictTransportSecurityHeaderName).Single().Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(value => value.Trim()).ToList();
 

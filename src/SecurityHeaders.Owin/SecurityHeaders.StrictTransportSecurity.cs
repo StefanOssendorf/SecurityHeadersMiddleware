@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SecurityHeaders.Builders;
+using SecurityHeaders.Owin.Infrastructure;
 
 namespace SecurityHeaders.Owin {
     using BuildFunc = Action<Func<IDictionary<string, object>, Func<Func<IDictionary<string, object>, Task>, Func<IDictionary<string, object>, Task>>>>;
@@ -16,7 +17,7 @@ namespace SecurityHeaders.Owin {
         /// <param name="builder">The OWIN builder instance.</param>
         /// <returns>The OWIN builder instance.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="builder"/> is null.</exception>
-        public static BuildFunc StrictTransportSecurity(this BuildFunc builder) => builder.ContentTypeOptions(_ => { });
+        public static BuildFunc StrictTransportSecurity(this BuildFunc builder) => builder.StrictTransportSecurity(_ => { });
 
         /// <summary>
         /// Adds the "Strict-Transport-Security" header with the configured settings.
@@ -30,17 +31,23 @@ namespace SecurityHeaders.Owin {
             Guard.NotNull(builder, nameof(builder));
             Guard.NotNull(builderAction, nameof(builderAction));
 
-            //dynamic settingsBuilder = null;
-            //builderAction(settingsBuilder);
-            //var settings = settingsBuilder.Build();
-            //var middleware = new StrictTransportSecurityMiddleware(settings);
+            var settingsBuilder = new StsSettingsBuilder();
+            builderAction(settingsBuilder);
+            var settings = settingsBuilder.Build();
+            var middleware = new StrictTransportSecurityMiddleware(settings);
 
-            //builder(_ => next =>
-            //    env => {
-            //        var ctx = env.AsOwinContext();
-            //        ctx.Response.OnSendingHeaders(ctx2 => middleware.ApplyHeader(ctx2), ctx.AsInternalCtx());
-            //        return next(env);
-            //    });
+            builder(_ => next =>
+                env => {
+                    var ctx = env.AsOwinContext();
+
+                    var beforeResult = middleware.BeforeNext(ctx.AsInternalCtx());
+                    if(beforeResult.EndPipeline) {
+                        return Task.FromResult(0);
+                    }
+                    
+                    ctx.Response.OnSendingHeaders(ctx2 => middleware.ApplyHeader(ctx2), ctx.AsInternalCtx());
+                    return next(env);
+                });
 
             return builder;
         }

@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using SecurityHeaders.Builders;
+using SecurityHeaders.Tests.Infrastructure;
 using Xunit;
 
 namespace SecurityHeaders.Tests {

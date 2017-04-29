@@ -26,6 +26,12 @@ namespace SecurityHeaders {
                 throw new ArgumentOutOfRangeException($"{source} is not a defined value on {enumType} (Parameter {paramName}");
             }
         }
+
+        public static void AtLeast(int value, int minValue, string paramName) {
+            if(value < minValue) {
+                throw new ArgumentOutOfRangeException(paramName, value, $"The value of {paramName} is less than {minValue}. But it must be at least {minValue}.");
+            }
+        }
     }
 
 

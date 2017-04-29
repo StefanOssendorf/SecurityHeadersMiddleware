@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using SecurityHeaders.Owin.Infrastructure;
 
 namespace SecurityHeaders.Owin {
@@ -18,13 +17,8 @@ namespace SecurityHeaders.Owin {
         /// <inheritdoc />
         public bool HeaderExist(string headerName) => mContext.Response.Headers.ContainsKey(headerName);
 
-
         /// <inheritdoc />
-        public void OverrideHeader(string headerName, string value) => mContext.Response.Headers.Set(headerName, value);
-
-
-        /// <inheritdoc />
-        public void AppendToHeader(string headerName, string value) => mContext.Response.Headers.Append(headerName, value);
+        public void SetHeader(string headerName, string value) => mContext.Response.Headers.Set(headerName, value);
 
         /// <inheritdoc />
         public bool IsSecure => mContext.Request.IsSecure;
@@ -36,7 +30,8 @@ namespace SecurityHeaders.Owin {
         public void PermanentRedirectTo(Uri redirectedTo) {
             var response = mContext.Response;
             response.StatusCode = 301;
-            response.Headers[LocationHeaderName] = redirectedTo.ToString();
+            response.ReasonPhrase = "";
+            response.Headers.Set(LocationHeaderName, redirectedTo.ToString());
         }
     }
 }

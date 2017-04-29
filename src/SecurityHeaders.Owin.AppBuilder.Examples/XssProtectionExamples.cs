@@ -6,11 +6,11 @@ using Owin;
 namespace SecurityHeaders.Owin.AppBuilder.Examples {
     public class XssProtectionExamples {
         public void Example() {
-            IAppBuilder buildFunc = null;
+            IAppBuilder builder = null;
 
             // Use XssProtectionMiddleware with default settings (Overwrite and "1; mode=block")
             // Results in: X-Xss-Protection: 1; mode=block
-            buildFunc.UseXssProtection();
+            builder.UseXssProtection();
 
             // Configure the settings via the fluent api.
             // This results in (depending on the choosen options):
@@ -18,7 +18,7 @@ namespace SecurityHeaders.Owin.AppBuilder.Examples {
             // - Results in: X-Xss-Protection: 1
             // - Results in: X-Xss-Protection: 1; mode=block
             // - Results in: X-Xss-Protection: 1; report=http://www.example.org
-            buildFunc.UseXssProtection(
+            builder.UseXssProtection(
                 settings =>
                             //settings.Disabled()
                             //settings.Enabled()

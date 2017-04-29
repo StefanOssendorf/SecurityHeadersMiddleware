@@ -11,7 +11,11 @@ namespace SecurityHeaders.Owin.AppBuilder {
         /// <param name="builder">The <see cref="IAppBuilder"/> instance.</param>
         /// <returns>The <see cref="IAppBuilder"/> instance.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="builder"/> is null.</exception>
-        public static IAppBuilder XFrameOptions(this IAppBuilder builder) => builder.XFrameOptions(_ => {});
+        public static IAppBuilder XFrameOptions(this IAppBuilder builder) {
+            Guard.NotNull(builder, nameof(builder));
+            builder.UseOwin().XFrameOptions();
+            return builder;
+        }
 
         /// <summary>
         /// Adds the "X-Frame-Options" header with the configured settings.

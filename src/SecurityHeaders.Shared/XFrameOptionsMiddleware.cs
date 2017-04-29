@@ -36,7 +36,7 @@ namespace SecurityHeaders {
                 return;
             }
 
-            context.OverrideHeader(XFrameOptionsHeaderName, mSettings.HeaderValue);
+            context.SetHeader(XFrameOptionsHeaderName, mSettings.HeaderValue);
         }
 
         private bool HeaderShouldNotBeSet(Func<string, bool> headerExist) {
